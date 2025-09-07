@@ -9,7 +9,7 @@ import { authenticateAdmin } from '@/lib/auth';
 // GET single category
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
@@ -19,7 +19,8 @@ export async function GET(
 
     await connectDB();
     
-    const category = await Category.findById(params.id);
+    const { id } = await params;
+    const category = await Category.findById(id);
     
     if (!category) {
       return NextResponse.json(
@@ -45,7 +46,7 @@ export async function GET(
 // PUT update category
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
@@ -55,6 +56,7 @@ export async function PUT(
 
     await connectDB();
     
+    const { id } = await params;
     const { name, slug, description, color, order, isActive } = await request.json();
 
     if (!name || !slug) {
@@ -67,7 +69,7 @@ export async function PUT(
     // Check if slug already exists (excluding current category)
     const existingCategory = await Category.findOne({ 
       slug: slug.toLowerCase(), 
-      _id: { $ne: params.id } 
+      _id: { $ne: id } 
     });
     
     if (existingCategory) {
@@ -78,7 +80,7 @@ export async function PUT(
     }
 
     const category = await Category.findByIdAndUpdate(
-      params.id,
+      id,
       {
         name,
         slug: slug.toLowerCase(),
@@ -114,7 +116,7 @@ export async function PUT(
 // DELETE category
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
@@ -124,8 +126,10 @@ export async function DELETE(
 
     await connectDB();
     
+    const { id } = await params;
+    
     // Check if category has articles
-    const articleCount = await Article.countDocuments({ category: params.id });
+    const articleCount = await Article.countDocuments({ category: id });
     
     if (articleCount > 0) {
       return NextResponse.json(
@@ -134,7 +138,7 @@ export async function DELETE(
       );
     }
 
-    const category = await Category.findByIdAndDelete(params.id);
+    const category = await Category.findByIdAndDelete(id);
     
     if (!category) {
       return NextResponse.json(

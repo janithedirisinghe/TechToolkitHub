@@ -10,7 +10,7 @@ import sanitizeHtml from 'sanitize-html';
 // GET single article
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
@@ -49,7 +49,7 @@ export async function GET(
 // PUT update article
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
@@ -189,7 +189,7 @@ export async function PUT(
 // DELETE article
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await authenticateAdmin(request);
