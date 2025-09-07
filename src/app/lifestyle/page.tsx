@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SafeImage from '@/components/SafeImage';
 
 export const metadata: Metadata = {
   title: "Lifestyle & Tips - Sri Lanka How",
@@ -132,6 +133,17 @@ export default async function LifestylePage() {
                 {featuredArticles.map((article) => (
                   <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
+                      {article.featuredImage && (
+                        <SafeImage
+                          src={article.featuredImage}
+                          alt={article.title}
+                          fill
+                          className="object-cover"
+                          priority
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          hideOnError
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 opacity-20"></div>
                       <div className="absolute top-4 left-4">
                         <span className="bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -178,8 +190,18 @@ export default async function LifestylePage() {
                 {allArticles.map((article) => (
                   <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0">
-                        <div className="w-full h-full bg-gradient-to-r from-pink-500 to-rose-500 opacity-20 rounded-lg"></div>
+                      <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0 relative overflow-hidden">
+                        {article.featuredImage && (
+                          <SafeImage
+                            src={article.featuredImage}
+                            alt={article.title}
+                            fill
+                            className="object-cover"
+                            sizes="128px"
+                            hideOnError
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 opacity-20 rounded-lg"></div>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2 flex-wrap">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SafeImage from '@/components/SafeImage';
 import type { Metadata } from "next";
 import type { Article, Category } from '@/types/article';
 
@@ -100,9 +101,20 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredArticles.map((article) => (
+                {featuredArticles.map((article) => (
               <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48 bg-gray-200">
+                  {article.featuredImage && (
+                    <SafeImage
+                      src={article.featuredImage}
+                      alt={article.title}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      hideOnError
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
                   <div className="absolute top-4 left-4">
                     <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -220,8 +232,18 @@ export default async function HomePage() {
               <div className="space-y-6">
                 {featuredArticles.slice(0, 4).map((article) => (
                   <div key={article._id} className="flex gap-4 pb-6 border-b border-gray-200 last:border-b-0">
-                    <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0">
-                      <div className="w-full h-full bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
+                    <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 relative overflow-hidden">
+                      {article.featuredImage && (
+                        <SafeImage
+                          src={article.featuredImage}
+                          alt={article.title}
+                          fill
+                          className="object-cover"
+                          sizes="96px"
+                          hideOnError
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
