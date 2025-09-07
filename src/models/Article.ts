@@ -1,4 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Admin from './Admin'; // Import Admin model to ensure it's registered before Article
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Category from './Category'; // Import Category model to ensure it's registered before Article
 
 export interface IArticle extends Document {
   title: string;
@@ -95,7 +99,7 @@ const ArticleSchema: Schema = new Schema({
 });
 
 // Indexes for better performance
-ArticleSchema.index({ slug: 1 });
+// Note: slug index is already created by unique: true in schema
 ArticleSchema.index({ status: 1, publishedAt: -1 });
 ArticleSchema.index({ category: 1, status: 1 });
 ArticleSchema.index({ featured: 1, status: 1 });

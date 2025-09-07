@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { Article, Category } from '@/types/article';
 
 export const metadata: Metadata = {
   title: "Culture & Lifestyle - Sri Lanka How",
@@ -9,33 +10,6 @@ export const metadata: Metadata = {
     description: "Explore Sri Lankan culture, traditions, festivals, food, and lifestyle. Learn about local customs and cultural experiences.",
   },
 };
-
-interface Article {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: string;
-  category: {
-    name: string;
-    slug: string;
-    color: string;
-  };
-  tags: string[];
-  featured: boolean;
-  publishedAt: string;
-  views: number;
-}
-
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  description: string;
-  color: string;
-  order: number;
-  articleCount: number;
-}
 
 // Fetch data from APIs
 async function getCultureArticles(): Promise<Article[]> {

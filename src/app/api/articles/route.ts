@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import Article from '@/models/Article';
-import Category from '@/models/Category';
 
 // GET published articles (public)
 export async function GET(request: NextRequest) {
   try {
     await connectDB();
+  // Ensure referenced models are registered before queries that populate
+  try { mongoose.model('Category'); } catch { await import('@/models/Category'); }
+  try { mongoose.model('Admin'); } catch { await import('@/models/Admin'); }
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
@@ -22,6 +25,7 @@ export async function GET(request: NextRequest) {
     const query: Record<string, any> = { status: 'published' };
     
     if (category) {
+      const { default: Category } = await import('@/models/Category');
       const categoryDoc = await Category.findOne({ slug: category });
       if (categoryDoc) {
         query.category = categoryDoc._id;

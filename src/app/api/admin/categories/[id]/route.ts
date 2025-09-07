@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';

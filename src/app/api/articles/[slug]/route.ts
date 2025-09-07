@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import Article from '@/models/Article';
 
 // GET single published article by slug (public)
@@ -10,8 +11,14 @@ export async function GET(
   try {
     await connectDB();
     
+  // Ensure referenced models are registered before populate
+  try { mongoose.model('Category'); } catch { await import('@/models/Category'); }
+  try { mongoose.model('Admin'); } catch { await import('@/models/Admin'); }
+
+    const { slug } = await params;
+    
     const article = await Article.findOne({ 
-      slug: params.slug, 
+      slug: slug, 
       status: 'published' 
     })
       .populate('category', 'name slug color')

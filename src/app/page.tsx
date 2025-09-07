@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import type { Article, Category } from '@/types/article';
 
 export const metadata: Metadata = {
   title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
@@ -10,33 +11,6 @@ export const metadata: Metadata = {
     images: ["/hero-sri-lanka.jpg"],
   },
 };
-
-interface Article {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: string;
-  category: {
-    name: string;
-    slug: string;
-    color: string;
-  };
-  tags: string[];
-  featured: boolean;
-  publishedAt: string;
-  views: number;
-}
-
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  description: string;
-  color: string;
-  order: number;
-  articleCount: number;
-}
 
 // Fetch data from APIs
 async function getFeaturedArticles(): Promise<Article[]> {
