@@ -1,7 +1,6 @@
 'use client';
 
 import AdminLayout from '@/components/AdminLayout';
-import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -12,7 +11,6 @@ interface Category {
 }
 
 export default function NewArticlePage() {
-  const RichTextEditor = dynamic(() => import('@/components/RichTextEditor'), { ssr: false });
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -159,13 +157,20 @@ export default function NewArticlePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Content *
+                    Content (HTML) *
                   </label>
-                  <RichTextEditor
+                  <textarea
+                    name="content"
                     value={formData.content}
-                    onChange={(html: string) => setFormData(prev => ({ ...prev, content: html }))}
-                    placeholder="Write your article content with formatting (bold, italic, tables, etc.)"
+                    onChange={handleInputChange}
+                    rows={14}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 font-mono"
+                    placeholder="Paste or type your HTML here (e.g., <h2>Title</h2><p>Paragraph text...</p>)"
+                    required
                   />
+                  <p className="mt-2 text-xs text-gray-500">
+                    Tip: You can include HTML tags like &lt;p&gt;, &lt;h2&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;table&gt;, etc. Unsafe markup will be sanitized on save.
+                  </p>
                 </div>
               </div>
 

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 // Image rendering handled by SafeImage client component
 import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
+import ArticleEnhancements from '@/components/ArticleEnhancements';
 import type { Article } from '@/types/article';
 
 interface ArticlePageProps {
@@ -120,11 +121,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Reading Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
-        <div
-          className="h-full bg-blue-600 transition-all duration-150"
-          style={{ width: '0%' }}
-          id="reading-progress"
-        />
+        <div className="h-full bg-blue-600 transition-all duration-150" id="reading-progress" />
       </div>
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
@@ -237,11 +234,26 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {/* Article Content */}
         {article.content ? (
-          <div
-            id="article-content"
-            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:underline prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+          <div className="overflow-x-auto">
+            <div
+              id="article-content"
+              className="prose prose-lg max-w-none text-gray-800 leading-relaxed 
+                prose-headings:font-semibold prose-headings:text-gray-900 prose-headings:mt-8 prose-headings:mb-4
+                prose-h2:text-2xl prose-h2:border-b prose-h2:border-gray-200 prose-h2:pb-2
+                prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                prose-p:mb-4 prose-p:leading-relaxed
+                prose-ul:mb-4 prose-ul:pl-6 prose-li:mb-2 prose-li:leading-relaxed
+                prose-ol:mb-4 prose-ol:pl-6
+                prose-strong:font-semibold prose-strong:text-gray-900
+                prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
+                prose-img:rounded-lg prose-img:shadow-md
+                prose-headings:scroll-mt-24 
+                prose-pre:bg-gray-900 prose-pre:text-gray-100 
+                prose-code:before:content-[''] prose-code:after:content-['']
+                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic"
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
+          </div>
         ) : (
           <div className="text-gray-600 italic text-center py-12">
             <div className="text-6xl mb-4">📝</div>
@@ -313,58 +325,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
       </article>
 
-      {/* Reading Progress Script */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.addEventListener('DOMContentLoaded', function() {
-              const progressBar = document.getElementById('reading-progress');
-              const article = document.querySelector('article');
-              const shareBtn = document.getElementById('share-button');
-
-              if (progressBar && article) {
-                function updateProgress() {
-                  const scrollTop = window.pageYOffset;
-                  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                  const scrollPercent = (scrollTop / docHeight) * 100;
-                  progressBar.style.width = Math.min(scrollPercent, 100) + '%';
-                }
-
-                window.addEventListener('scroll', updateProgress);
-                updateProgress(); // Initial call
-              }
-
-              if (shareBtn) {
-                shareBtn.addEventListener('click', async function() {
-                  const url = ${JSON.stringify(articleUrl)};
-                  const title = ${JSON.stringify('' + (typeof article.title === 'string' ? article.title : ''))};
-                  const text = ${JSON.stringify('' + (typeof article.excerpt === 'string' ? (article.excerpt as string) : ''))};
-                  try {
-                    if (navigator.share) {
-                      await navigator.share({ title, text, url });
-                    } else if (navigator.clipboard) {
-                      await navigator.clipboard.writeText(url);
-                      alert('Link copied to clipboard!');
-                    }
-                  } catch (e) { /* ignore */ }
-                });
-              }
-
-              // Enhance content links and tables
-              const contentEl = document.getElementById('article-content');
-              if (contentEl) {
-                contentEl.querySelectorAll('a[href]').forEach((a) => {
-                  a.setAttribute('target', '_blank');
-                  a.setAttribute('rel', 'noopener noreferrer nofollow');
-                });
-                contentEl.querySelectorAll('table').forEach((t) => {
-                  t.classList.add('article-table');
-                });
-              }
-            });
-          `
-        }}
-      />
+  {/* Client-only enhancements to avoid hydration mismatches */}
+  <ArticleEnhancements articleUrl={articleUrl} title={article.title} excerpt={article.excerpt || ''} />
 
       {/* Structured Data for SEO */}
       <script

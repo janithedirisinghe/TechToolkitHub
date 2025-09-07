@@ -116,10 +116,16 @@ export async function PUT(
 
     // Update article
     const cleanContent = sanitizeHtml(content, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'h1', 'h2', 'h3', 'table', 'thead', 'tbody', 'tr', 'th', 'td']),
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+        'img',
+        'h1','h2','h3','h4','h5','h6',
+        'p','ul','ol','li','blockquote','pre','code','strong','em','u','s','hr','br','sup','sub',
+        'figure','figcaption',
+        'table','thead','tbody','tfoot','tr','th','td','caption','colgroup','col'
+      ]),
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
-        a: ['href', 'name', 'target', 'rel'],
+        a: ['href', 'name', 'target', 'rel', 'title'],
         img: ['src', 'alt', 'title', 'width', 'height'],
         td: ['colspan', 'rowspan'],
         th: ['colspan', 'rowspan'],

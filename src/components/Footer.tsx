@@ -103,27 +103,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Signup */}
-        <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="text-center">
-            <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
-            <p className="text-gray-300 mb-4">Get the latest Sri Lanka tips and guides delivered to your inbox</p>
-            <div className="max-w-md mx-auto flex">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-              />
-              <button
-                type="button"
-                className="px-6 py-2 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-700 transition-colors"
-              >
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} Sri Lanka How. All rights reserved.</p>

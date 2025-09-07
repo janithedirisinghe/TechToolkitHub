@@ -312,27 +312,6 @@ export default async function LifestylePage() {
                   ))}
                 </div>
               </div>
-
-              {/* Newsletter */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Lifestyle Tips</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Get weekly lifestyle tips, budget advice, and life hacks for Sri Lanka.
-                </p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm"
-                  />
-                  <button
-                    type="button"
-                    className="w-full bg-pink-600 text-white py-2 rounded-lg font-medium hover:bg-pink-700 transition-colors text-sm"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>

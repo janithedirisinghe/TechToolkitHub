@@ -298,27 +298,6 @@ export default async function TravelPage() {
                   <li>• Driving: Left-hand side</li>
                 </ul>
               </div>
-
-              {/* Newsletter */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Get Travel Updates</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Subscribe to receive the latest travel guides and tips for Sri Lanka.
-                </p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
-                  />
-                  <button
-                    type="button"
-                    className="w-full bg-emerald-600 text-white py-2 rounded-lg font-medium hover:bg-emerald-700 transition-colors text-sm"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>

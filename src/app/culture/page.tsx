@@ -229,46 +229,6 @@ export default async function CulturePage() {
                   <li>• Home to 8 UNESCO World Heritage Sites</li>
                 </ul>
               </div>
-
-              {/* Cultural Events */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Upcoming Festivals</h3>
-                <div className="space-y-3 text-sm">
-                  <div className="border-l-4 border-orange-500 pl-3">
-                    <div className="font-medium text-gray-900">Vesak Festival</div>
-                    <div className="text-gray-600">May 2025 • Buddhist celebration</div>
-                  </div>
-                  <div className="border-l-4 border-orange-500 pl-3">
-                    <div className="font-medium text-gray-900">Kandy Perahera</div>
-                    <div className="text-gray-600">August 2025 • Cultural parade</div>
-                  </div>
-                  <div className="border-l-4 border-orange-500 pl-3">
-                    <div className="font-medium text-gray-900">Diwali</div>
-                    <div className="text-gray-600">October 2025 • Festival of lights</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Newsletter */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Cultural Updates</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Get notified about cultural events, festivals, and new articles.
-                </p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
-                  />
-                  <button
-                    type="button"
-                    className="w-full bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition-colors text-sm"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>

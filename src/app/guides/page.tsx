@@ -282,27 +282,6 @@ export default async function GuidesPage() {
                   <li>• Research local customs beforehand</li>
                 </ul>
               </div>
-
-              {/* Newsletter */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Guide Updates</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Get notified when we publish new how-to guides and updates.
-                </p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
-                  />
-                  <button
-                    type="button"
-                    className="w-full bg-purple-600 text-white py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors text-sm"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>

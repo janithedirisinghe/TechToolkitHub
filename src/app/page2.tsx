@@ -231,38 +231,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter Signup Section */}
-      <section className="py-16 bg-emerald-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-lg p-8 shadow-xl">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Get Your Free 7-Day Sri Lanka Travel Guide
-            </h2>
-            <p className="text-xl text-gray-600 mb-6">
-              Subscribe to our newsletter and receive our comprehensive travel guide plus weekly tips and updates.
-            </p>
-            <div className="max-w-md mx-auto">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
-                <button
-                  type="button"
-                  className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors whitespace-nowrap"
-                >
-                  Get Free Guide
-                </button>
-              </div>
-              <p className="text-sm text-gray-500 mt-3">
-                No spam, unsubscribe at any time. We respect your privacy.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Latest Updates Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
