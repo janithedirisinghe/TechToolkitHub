@@ -199,7 +199,7 @@ export default function Home() {
               Explore by Category
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Find exactly what you&apos;re looking for with our organized content categories.
+              Find exactly what you're looking for with our organized content categories.
             </p>
           </div>
 
@@ -323,7 +323,7 @@ export default function Home() {
                 <h3 className="text-lg font-semibold text-emerald-800 mb-3">Quick Tip</h3>
                 <p className="text-emerald-700 text-sm">
                   Always carry a reusable water bottle in Sri Lanka. Many places have safe drinking water, 
-                  and it&apos;s an eco-friendly way to stay hydrated while exploring!
+                  and is an eco-friendly way to stay hydrated while exploring!
                 </p>
               </div>
             </div>
