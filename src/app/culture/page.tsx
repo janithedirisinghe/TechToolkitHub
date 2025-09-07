@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
 import type { Article, Category } from '@/types/article';
+import { fetchApi } from '@/lib/url';
 
 export const metadata: Metadata = {
   title: "Culture & Lifestyle - Sri Lanka How",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 // Fetch data from APIs
 async function getCultureArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=culture`, {
+    const response = await fetchApi('/api/articles?category=culture', {
       cache: 'no-store'
     });
 
@@ -33,7 +34,7 @@ async function getCultureArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+    const response = await fetchApi('/api/categories', {
       cache: 'no-store'
     });
 

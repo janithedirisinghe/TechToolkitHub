@@ -5,6 +5,7 @@ import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import ArticleEnhancements from '@/components/ArticleEnhancements';
 import type { Article } from '@/types/article';
+import { fetchApi, getBaseUrl } from '@/lib/url';
 
 interface ArticlePageProps {
   params: {
@@ -16,7 +17,7 @@ interface ArticlePageProps {
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles/${slug}`, {
+    const response = await fetchApi(`/api/articles/${slug}`, {
       cache: 'no-store'
     });
 
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       openGraph: {
         title: article.title,
         description: article.excerpt || article.metaDescription,
-        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/articles/${article.slug}`,
+        url: `${getBaseUrl()}/articles/${article.slug}`,
         siteName: 'Sri Lanka How',
         images: [
           {
@@ -62,7 +63,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
         images: [article.featuredImage || article.image || '/default-article-image.jpg'],
       },
       alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/articles/${article.slug}`,
+        canonical: `${getBaseUrl()}/articles/${article.slug}`,
       },
       robots: {
         index: true,
@@ -88,7 +89,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 // Fetch article data
 async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles/${slug}`, {
+    const response = await fetchApi(`/api/articles/${slug}`, {
       cache: 'no-store'
     });
 
@@ -115,7 +116,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   // Calculate estimated read time (roughly 200 words per minute)
   const wordCount = article.content?.split(' ').length || 0;
   const readTime = Math.ceil(wordCount / 200);
-  const articleUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
+  const articleUrl = `${getBaseUrl()}/articles/${article.slug}`;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -349,12 +350,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               "name": "Sri Lanka How",
               "logo": {
                 "@type": "ImageObject",
-                "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/Logo.png`
+                "url": `${getBaseUrl()}/Logo.png`
               }
             },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/articles/${article.slug}`
+              "@id": `${getBaseUrl()}/articles/${article.slug}`
             },
             "articleSection": article.category.name,
             "keywords": article.tags?.join(', '),

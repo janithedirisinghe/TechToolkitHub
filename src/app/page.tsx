@@ -2,6 +2,7 @@ import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
 import type { Metadata } from "next";
 import type { Article, Category } from '@/types/article';
+import { fetchApi } from '@/lib/url';
 
 export const metadata: Metadata = {
   title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 // Fetch data from APIs
 async function getFeaturedArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?featured=true&limit=6`, {
+    const response = await fetchApi('/api/articles?featured=true&limit=6', {
       cache: 'no-store'
     });
 
@@ -34,7 +35,7 @@ async function getFeaturedArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+    const response = await fetchApi('/api/categories', {
       cache: 'no-store'
     });
 

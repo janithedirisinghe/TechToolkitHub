@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
+import { fetchApi } from '@/lib/url';
 
 export const metadata: Metadata = {
   title: "How-to Guides - Sri Lanka How",
@@ -41,7 +42,7 @@ interface Category {
 // Fetch data from APIs
 async function getGuidesArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=guides`, {
+    const response = await fetchApi('/api/articles?category=guides', {
       cache: 'no-store'
     });
 
@@ -59,7 +60,7 @@ async function getGuidesArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+    const response = await fetchApi('/api/categories', {
       cache: 'no-store'
     });
 
