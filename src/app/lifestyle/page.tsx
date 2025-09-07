@@ -10,110 +10,76 @@ export const metadata: Metadata = {
   },
 };
 
-const lifestyleArticles = [
-  {
-    id: 1,
-    title: "Student Guide to Sri Lanka: Budget Tips & Resources",
-    excerpt: "Complete guide for students visiting or studying in Sri Lanka, including budget accommodation, student discounts, and study resources.",
-    image: "/articles/student-guide.jpg",
-    category: "Student Life",
-    slug: "student-guide-sri-lanka",
-    readTime: "12 min read",
-    featured: true,
-    tags: ["Budget", "Education", "Youth"]
-  },
-  {
-    id: 2,
-    title: "Digital Nomad Guide to Sri Lanka",
-    excerpt: "Everything digital nomads need to know about working remotely from Sri Lanka, including wifi, co-working spaces, and visa requirements.",
-    image: "/articles/digital-nomad.jpg",
-    category: "Remote Work",
-    slug: "digital-nomad-sri-lanka-guide",
-    readTime: "15 min read",
-    featured: true,
-    tags: ["Work", "Technology", "Lifestyle"]
-  },
-  {
-    id: 3,
-    title: "Living in Sri Lanka as an Expat",
-    excerpt: "Comprehensive guide for expats moving to Sri Lanka, covering housing, healthcare, banking, and integration into local communities.",
-    image: "/articles/expat-life.jpg",
-    category: "Expat Life",
-    slug: "expat-guide-living-sri-lanka",
-    readTime: "20 min read",
-    featured: true,
-    tags: ["Expat", "Long-term", "Practical"]
-  },
-  {
-    id: 4,
-    title: "Budget Backpacking Sri Lanka: $20/Day Guide",
-    excerpt: "How to travel Sri Lanka on an ultra-tight budget with accommodation, food, and transport tips for backpackers.",
-    image: "/articles/backpacking.jpg",
-    category: "Budget Travel",
-    slug: "budget-backpacking-sri-lanka",
-    readTime: "18 min read",
-    featured: false,
-    tags: ["Budget", "Backpacking", "Travel"]
-  },
-  {
-    id: 5,
-    title: "Health & Wellness Guide for Sri Lanka",
-    excerpt: "Stay healthy during your Sri Lanka trip with vaccination info, common health issues, and finding medical care.",
-    image: "/articles/health-wellness.jpg",
-    category: "Health",
-    slug: "health-wellness-sri-lanka",
-    readTime: "14 min read",
-    featured: true,
-    tags: ["Health", "Safety", "Wellness"]
-  },
-  {
-    id: 6,
-    title: "Solo Female Travel in Sri Lanka",
-    excerpt: "Safety tips, accommodation recommendations, and cultural insights for women traveling alone in Sri Lanka.",
-    image: "/articles/solo-female.jpg",
-    category: "Solo Travel",
-    slug: "solo-female-travel-sri-lanka",
-    readTime: "16 min read",
-    featured: false,
-    tags: ["Solo", "Women", "Safety"]
-  },
-  {
-    id: 7,
-    title: "Shopping Guide: What to Buy in Sri Lanka",
-    excerpt: "Best souvenirs, local products, markets, and shopping tips for authentic Sri Lankan goods and avoiding tourist traps.",
-    image: "/articles/shopping.jpg",
-    category: "Shopping",
-    slug: "shopping-guide-sri-lanka",
-    readTime: "11 min read",
-    featured: false,
-    tags: ["Shopping", "Souvenirs", "Local"]
-  },
-  {
-    id: 8,
-    title: "Sustainable Travel in Sri Lanka",
-    excerpt: "How to travel responsibly in Sri Lanka, supporting local communities and minimizing environmental impact.",
-    image: "/articles/sustainable-travel.jpg",
-    category: "Eco Travel",
-    slug: "sustainable-travel-sri-lanka",
-    readTime: "13 min read",
-    featured: true,
-    tags: ["Sustainability", "Eco", "Responsible"]
+interface Article {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: string;
+  category: {
+    name: string;
+    slug: string;
+    color: string;
+  };
+  tags: string[];
+  featured: boolean;
+  publishedAt: string;
+  views: number;
+}
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  order: number;
+  articleCount: number;
+}
+
+// Fetch data from APIs
+async function getLifestyleArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=lifestyle`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch lifestyle articles');
+    }
+
+    const data = await response.json();
+    return data.articles || [];
+  } catch (error) {
+    console.error('Error fetching lifestyle articles:', error);
+    return [];
   }
-];
+}
 
-const categories = [
-  { name: "All", count: lifestyleArticles.length },
-  { name: "Student Life", count: lifestyleArticles.filter(a => a.category === "Student Life").length },
-  { name: "Remote Work", count: lifestyleArticles.filter(a => a.category === "Remote Work").length },
-  { name: "Expat Life", count: lifestyleArticles.filter(a => a.category === "Expat Life").length },
-  { name: "Budget Travel", count: lifestyleArticles.filter(a => a.category === "Budget Travel").length },
-  { name: "Health", count: lifestyleArticles.filter(a => a.category === "Health").length },
-  { name: "Solo Travel", count: lifestyleArticles.filter(a => a.category === "Solo Travel").length },
-  { name: "Shopping", count: lifestyleArticles.filter(a => a.category === "Shopping").length },
-  { name: "Eco Travel", count: lifestyleArticles.filter(a => a.category === "Eco Travel").length },
-];
+async function getCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+      cache: 'no-store'
+    });
 
-export default function LifestylePage() {
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories');
+    }
+
+    const data = await response.json();
+    return data.categories || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
+export default async function LifestylePage() {
+  const [lifestyleArticles, categories] = await Promise.all([
+    getLifestyleArticles(),
+    getCategories()
+  ]);
+
   const featuredArticles = lifestyleArticles.filter(article => article.featured);
   const allArticles = lifestyleArticles;
 
@@ -164,17 +130,12 @@ export default function LifestylePage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Lifestyle Guides</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {featuredArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
                       <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-rose-500 opacity-20"></div>
                       <div className="absolute top-4 left-4">
                         <span className="bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          {article.category}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <span className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          {article.readTime}
+                          {article.category.name}
                         </span>
                       </div>
                     </div>
@@ -215,7 +176,7 @@ export default function LifestylePage() {
 
               <div className="space-y-6">
                 {allArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0">
                         <div className="w-full h-full bg-gradient-to-r from-pink-500 to-rose-500 opacity-20 rounded-lg"></div>
@@ -223,9 +184,9 @@ export default function LifestylePage() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2 flex-wrap">
                           <span className="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs font-medium">
-                            {article.category}
+                            {article.category.name}
                           </span>
-                          <span className="text-sm text-gray-500">{article.readTime}</span>
+                          <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-pink-600 transition-colors">
                           <Link href={`/articles/${article.slug}`}>
@@ -269,7 +230,7 @@ export default function LifestylePage() {
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-pink-50 hover:text-pink-700 transition-colors flex items-center justify-between"
                     >
                       <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.count})</span>
+                      <span className="text-sm text-gray-500">({category.articleCount})</span>
                     </button>
                   ))}
                 </div>

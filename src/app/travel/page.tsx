@@ -10,100 +10,76 @@ export const metadata: Metadata = {
   },
 };
 
-// Sample travel articles data
-const travelArticles = [
-  {
-    id: 1,
-    title: "Complete Guide to Sigiriya Rock Fortress",
-    excerpt: "Everything you need to know about visiting Sri Lanka's ancient rock fortress, including tickets, best times to visit, and insider tips.",
-    image: "/articles/sigiriya.jpg",
-    category: "Destinations",
-    slug: "sigiriya-complete-guide",
-    readTime: "8 min read",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Best Time to Visit Sri Lanka",
-    excerpt: "Weather patterns, seasonal guides, and the optimal times to visit different regions of Sri Lanka for your perfect trip.",
-    image: "/articles/best-time.jpg",
-    category: "Planning",
-    slug: "best-time-visit-sri-lanka",
-    readTime: "6 min read",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Budget Travel in Sri Lanka: Complete Guide",
-    excerpt: "How to travel Sri Lanka on a budget with tips for accommodation, transport, food, and activities that won't break the bank.",
-    image: "/articles/budget-travel.jpg",
-    category: "Budget Travel",
-    slug: "budget-travel-sri-lanka",
-    readTime: "15 min read",
-    featured: true
-  },
-  {
-    id: 4,
-    title: "Ultimate Guide to Kandy - Cultural Capital",
-    excerpt: "Explore Kandy's temples, botanical gardens, cultural shows, and hidden gems with our comprehensive city guide.",
-    image: "/articles/kandy.jpg",
-    category: "Destinations",
-    slug: "kandy-ultimate-guide",
-    readTime: "10 min read",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "Transportation Guide: Getting Around Sri Lanka",
-    excerpt: "Complete guide to trains, buses, tuk-tuks, and other transport options for traveling around Sri Lanka efficiently.",
-    image: "/articles/transport.jpg",
-    category: "Transportation",
-    slug: "sri-lanka-transportation-guide",
-    readTime: "12 min read",
-    featured: false
-  },
-  {
-    id: 6,
-    title: "Galle Fort Walking Guide",
-    excerpt: "Discover the Dutch colonial architecture, museums, cafes, and shops in this UNESCO World Heritage site.",
-    image: "/articles/galle.jpg",
-    category: "Destinations",
-    slug: "galle-fort-walking-guide",
-    readTime: "7 min read",
-    featured: false
-  },
-  {
-    id: 7,
-    title: "7-Day Sri Lanka Itinerary for First-Time Visitors",
-    excerpt: "Perfect week-long itinerary covering cultural triangle, hill country, and beaches for first-time visitors.",
-    image: "/articles/7-day-itinerary.jpg",
-    category: "Itineraries",
-    slug: "7-day-sri-lanka-itinerary",
-    readTime: "18 min read",
-    featured: true
-  },
-  {
-    id: 8,
-    title: "Beach Guide: Best Beaches in Sri Lanka",
-    excerpt: "From Unawatuna to Arugam Bay, discover the best beaches for swimming, surfing, and relaxation.",
-    image: "/articles/beaches.jpg",
-    category: "Destinations",
-    slug: "best-beaches-sri-lanka",
-    readTime: "14 min read",
-    featured: false
+interface Article {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: string;
+  category: {
+    name: string;
+    slug: string;
+    color: string;
+  };
+  tags: string[];
+  featured: boolean;
+  publishedAt: string;
+  views: number;
+}
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  order: number;
+  articleCount: number;
+}
+
+// Fetch data from APIs
+async function getTravelArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=travel`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch travel articles');
+    }
+
+    const data = await response.json();
+    return data.articles || [];
+  } catch (error) {
+    console.error('Error fetching travel articles:', error);
+    return [];
   }
-];
+}
 
-const categories = [
-  { name: "All", count: travelArticles.length },
-  { name: "Destinations", count: travelArticles.filter(a => a.category === "Destinations").length },
-  { name: "Planning", count: travelArticles.filter(a => a.category === "Planning").length },
-  { name: "Transportation", count: travelArticles.filter(a => a.category === "Transportation").length },
-  { name: "Itineraries", count: travelArticles.filter(a => a.category === "Itineraries").length },
-  { name: "Budget Travel", count: travelArticles.filter(a => a.category === "Budget Travel").length },
-];
+async function getCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+      cache: 'no-store'
+    });
 
-export default function TravelPage() {
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories');
+    }
+
+    const data = await response.json();
+    return data.categories || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
+export default async function TravelPage() {
+  const [travelArticles, categories] = await Promise.all([
+    getTravelArticles(),
+    getCategories()
+  ]);
+
   const featuredArticles = travelArticles.filter(article => article.featured);
   const allArticles = travelArticles;
 
@@ -154,17 +130,12 @@ export default function TravelPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Travel Guides</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {featuredArticles.slice(0, 2).map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
                       <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
                       <div className="absolute top-4 left-4">
                         <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          {article.category}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <span className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          {article.readTime}
+                          {article.category.name}
                         </span>
                       </div>
                     </div>
@@ -189,12 +160,12 @@ export default function TravelPage() {
               {featuredArticles.length > 2 && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {featuredArticles.slice(2).map((article) => (
-                    <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="relative h-40 bg-gray-200">
                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
                         <div className="absolute top-3 left-3">
                           <span className="bg-emerald-600 text-white px-2 py-1 rounded-full text-xs font-medium">
-                            {article.category}
+                            {article.category.name}
                           </span>
                         </div>
                       </div>
@@ -212,7 +183,6 @@ export default function TravelPage() {
                           >
                             Read More →
                           </Link>
-                          <span className="text-xs text-gray-500">{article.readTime}</span>
                         </div>
                       </div>
                     </article>
@@ -232,7 +202,7 @@ export default function TravelPage() {
 
               <div className="space-y-6">
                 {allArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0">
                         <div className="w-full h-full bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
@@ -240,9 +210,9 @@ export default function TravelPage() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full text-xs font-medium">
-                            {article.category}
+                            {article.category.name}
                           </span>
-                          <span className="text-sm text-gray-500">{article.readTime}</span>
+                          <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
                           <Link href={`/articles/${article.slug}`}>
@@ -279,7 +249,7 @@ export default function TravelPage() {
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-700 transition-colors flex items-center justify-between"
                     >
                       <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.count})</span>
+                      <span className="text-sm text-gray-500">({category.articleCount})</span>
                     </button>
                   ))}
                 </div>

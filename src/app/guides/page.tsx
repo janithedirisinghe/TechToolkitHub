@@ -10,117 +10,78 @@ export const metadata: Metadata = {
   },
 };
 
-const guidesArticles = [
-  {
-    id: 1,
-    title: "How to Get a SIM Card in Sri Lanka",
-    excerpt: "Step-by-step guide to getting a local SIM card for tourists and visitors in Sri Lanka, including best networks and data plans.",
-    image: "/articles/sim-card.jpg",
-    category: "Communication",
-    slug: "sim-card-sri-lanka-guide",
-    readTime: "5 min read",
-    featured: true,
-    difficulty: "Easy"
-  },
-  {
-    id: 2,
-    title: "How to Book Train Tickets in Sri Lanka",
-    excerpt: "Complete guide to booking train tickets online and at stations, including classes, routes, and insider tips for scenic journeys.",
-    image: "/articles/train-booking.jpg",
-    category: "Transportation",
-    slug: "how-to-book-train-tickets",
-    readTime: "8 min read",
-    featured: true,
-    difficulty: "Medium"
-  },
-  {
-    id: 3,
-    title: "How to Apply for Sri Lanka Visa Online",
-    excerpt: "Step-by-step process to apply for Electronic Travel Authorization (ETA) for Sri Lanka, including requirements and fees.",
-    image: "/articles/visa-application.jpg",
-    category: "Documentation",
-    slug: "sri-lanka-visa-application-guide",
-    readTime: "10 min read",
-    featured: true,
-    difficulty: "Easy"
-  },
-  {
-    id: 4,
-    title: "How to Exchange Money in Sri Lanka",
-    excerpt: "Best places to exchange currency, current rates, and tips to get the best value for your money in Sri Lanka.",
-    image: "/articles/money-exchange.jpg",
-    category: "Finance",
-    slug: "how-to-exchange-money-sri-lanka",
-    readTime: "6 min read",
-    featured: false,
-    difficulty: "Easy"
-  },
-  {
-    id: 5,
-    title: "How to Hire a Tuk-Tuk in Sri Lanka",
-    excerpt: "Complete guide to hiring tuk-tuks, negotiating prices, safety tips, and what to expect from this popular transport method.",
-    image: "/articles/tuk-tuk-guide.jpg",
-    category: "Transportation",
-    slug: "how-to-hire-tuk-tuk-sri-lanka",
-    readTime: "7 min read",
-    featured: true,
-    difficulty: "Easy"
-  },
-  {
-    id: 6,
-    title: "How to Find Accommodation in Sri Lanka",
-    excerpt: "Guide to finding the best places to stay, from budget guesthouses to luxury hotels, including booking tips and recommendations.",
-    image: "/articles/accommodation.jpg",
-    category: "Accommodation",
-    slug: "how-to-find-accommodation-sri-lanka",
-    readTime: "12 min read",
-    featured: false,
-    difficulty: "Medium"
-  },
-  {
-    id: 7,
-    title: "How to Stay Safe While Traveling in Sri Lanka",
-    excerpt: "Essential safety tips, common scams to avoid, emergency contacts, and general precautions for a safe trip to Sri Lanka.",
-    image: "/articles/safety-guide.jpg",
-    category: "Safety",
-    slug: "how-to-stay-safe-sri-lanka",
-    readTime: "15 min read",
-    featured: true,
-    difficulty: "Medium"
-  },
-  {
-    id: 8,
-    title: "How to Navigate Colombo Public Transport",
-    excerpt: "Complete guide to buses, trains, and other public transport options in Colombo, including routes, fares, and tips.",
-    image: "/articles/colombo-transport.jpg",
-    category: "Transportation",
-    slug: "colombo-public-transport-guide",
-    readTime: "9 min read",
-    featured: false,
-    difficulty: "Medium"
+interface Article {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: string;
+  category: {
+    name: string;
+    slug: string;
+    color: string;
+  };
+  tags: string[];
+  featured: boolean;
+  publishedAt: string;
+  views: number;
+}
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  order: number;
+  articleCount: number;
+}
+
+// Fetch data from APIs
+async function getGuidesArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=guides`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch guides articles');
+    }
+
+    const data = await response.json();
+    return data.articles || [];
+  } catch (error) {
+    console.error('Error fetching guides articles:', error);
+    return [];
   }
-];
+}
 
-const categories = [
-  { name: "All", count: guidesArticles.length },
-  { name: "Communication", count: guidesArticles.filter(a => a.category === "Communication").length },
-  { name: "Transportation", count: guidesArticles.filter(a => a.category === "Transportation").length },
-  { name: "Documentation", count: guidesArticles.filter(a => a.category === "Documentation").length },
-  { name: "Finance", count: guidesArticles.filter(a => a.category === "Finance").length },
-  { name: "Accommodation", count: guidesArticles.filter(a => a.category === "Accommodation").length },
-  { name: "Safety", count: guidesArticles.filter(a => a.category === "Safety").length },
-];
+async function getCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+      cache: 'no-store'
+    });
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Easy": return "bg-green-100 text-green-800";
-    case "Medium": return "bg-yellow-100 text-yellow-800";
-    case "Hard": return "bg-red-100 text-red-800";
-    default: return "bg-gray-100 text-gray-800";
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories');
+    }
+
+    const data = await response.json();
+    return data.categories || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
   }
-};
+}
 
-export default function GuidesPage() {
+
+
+export default async function GuidesPage() {
+  const [guidesArticles, categories] = await Promise.all([
+    getGuidesArticles(),
+    getCategories()
+  ]);
+
   const featuredArticles = guidesArticles.filter(article => article.featured);
   const allArticles = guidesArticles;
 
@@ -171,20 +132,12 @@ export default function GuidesPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Essential How-to Guides</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {featuredArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-20"></div>
-                      <div className="absolute top-4 left-4 flex gap-2">
+                      <div className="absolute top-4 left-4">
                         <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          {article.category}
-                        </span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(article.difficulty)}`}>
-                          {article.difficulty}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <span className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          {article.readTime}
+                          {article.category.name}
                         </span>
                       </div>
                     </div>
@@ -218,20 +171,17 @@ export default function GuidesPage() {
 
               <div className="space-y-6">
                 {allArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0">
                         <div className="w-full h-full bg-gradient-to-r from-purple-500 to-indigo-500 opacity-20 rounded-lg"></div>
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <div className="flex items-center gap-2 mb-2">
                           <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium">
-                            {article.category}
+                            {article.category.name}
                           </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(article.difficulty)}`}>
-                            {article.difficulty}
-                          </span>
-                          <span className="text-sm text-gray-500">{article.readTime}</span>
+                          <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-purple-600 transition-colors">
                           <Link href={`/articles/${article.slug}`}>
@@ -268,7 +218,7 @@ export default function GuidesPage() {
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors flex items-center justify-between"
                     >
                       <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.count})</span>
+                      <span className="text-sm text-gray-500">({category.articleCount})</span>
                     </button>
                   ))}
                 </div>

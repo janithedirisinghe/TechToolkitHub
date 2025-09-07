@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -12,96 +11,76 @@ export const metadata: Metadata = {
   },
 };
 
-// Sample data for featured articles
-const featuredArticles = [
-  {
-    id: 1,
-    title: "Complete Guide to Sigiriya Rock Fortress",
-    excerpt: "Everything you need to know about visiting Sri Lanka's ancient rock fortress, including tickets, best times to visit, and insider tips.",
-    image: "/articles/sigiriya.jpg",
-    category: "Travel",
-    slug: "sigiriya-complete-guide",
-    readTime: "8 min read"
-  },
-  {
-    id: 2,
-    title: "How to Get a SIM Card in Sri Lanka",
-    excerpt: "Step-by-step guide to getting a local SIM card for tourists and visitors in Sri Lanka, including best networks and data plans.",
-    image: "/articles/sim-card.jpg",
-    category: "Guides",
-    slug: "sim-card-sri-lanka-guide",
-    readTime: "5 min read"
-  },
-  {
-    id: 3,
-    title: "Sri Lankan Food Culture: A Beginner's Guide",
-    excerpt: "Discover the rich culinary traditions of Sri Lanka, from street food to home cooking, and learn about must-try dishes.",
-    image: "/articles/food-culture.jpg",
-    category: "Culture",
-    slug: "sri-lankan-food-culture",
-    readTime: "12 min read"
-  },
-  {
-    id: 4,
-    title: "Best Time to Visit Sri Lanka",
-    excerpt: "Weather patterns, seasonal guides, and the optimal times to visit different regions of Sri Lanka for your perfect trip.",
-    image: "/articles/best-time.jpg",
-    category: "Travel",
-    slug: "best-time-visit-sri-lanka",
-    readTime: "6 min read"
-  },
-  {
-    id: 5,
-    title: "Traditional Sri Lankan Festivals",
-    excerpt: "Experience the vibrant festivals of Sri Lanka, from Vesak to Kandy Esala Perahera, and learn about their cultural significance.",
-    image: "/articles/festivals.jpg",
-    category: "Culture",
-    slug: "traditional-sri-lankan-festivals",
-    readTime: "10 min read"
-  },
-  {
-    id: 6,
-    title: "Budget Travel in Sri Lanka: Complete Guide",
-    excerpt: "How to travel Sri Lanka on a budget with tips for accommodation, transport, food, and activities that won't break the bank.",
-    image: "/articles/budget-travel.jpg",
-    category: "Travel",
-    slug: "budget-travel-sri-lanka",
-    readTime: "15 min read"
-  }
-];
+interface Article {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: string;
+  category: {
+    name: string;
+    slug: string;
+    color: string;
+  };
+  tags: string[];
+  featured: boolean;
+  publishedAt: string;
+  views: number;
+}
 
-const categories = [
-  {
-    name: "Travel",
-    description: "Places to visit, transport guides, and itineraries",
-    icon: "🗺️",
-    href: "/travel",
-    articleCount: 45
-  },
-  {
-    name: "Culture & Lifestyle",
-    description: "Festivals, food, traditions, and local customs",
-    icon: "🎭",
-    href: "/culture",
-    articleCount: 32
-  },
-  {
-    name: "Guides",
-    description: "Step-by-step how-to guides for everything",
-    icon: "📋",
-    href: "/guides",
-    articleCount: 28
-  },
-  {
-    name: "Tips & Hacks",
-    description: "Budget travel, student guides, and life hacks",
-    icon: "💡",
-    href: "/lifestyle",
-    articleCount: 19
-  }
-];
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  order: number;
+  articleCount: number;
+}
 
-export default function Home() {
+// Fetch data from APIs
+async function getFeaturedArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?featured=true&limit=6`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch featured articles');
+    }
+
+    const data = await response.json();
+    return data.articles || [];
+  } catch (error) {
+    console.error('Error fetching featured articles:', error);
+    return [];
+  }
+}
+
+async function getCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories');
+    }
+
+    const data = await response.json();
+    return data.categories || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const [featuredArticles, categories] = await Promise.all([
+    getFeaturedArticles(),
+    getCategories()
+  ]);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -148,17 +127,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredArticles.map((article) => (
-              <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48 bg-gray-200">
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
                   <div className="absolute top-4 left-4">
                     <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {article.category}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-4 right-4">
-                    <span className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                      {article.readTime}
+                      {article.category.name}
                     </span>
                   </div>
                 </div>
@@ -207,10 +181,9 @@ export default function Home() {
             {categories.map((category) => (
               <Link
                 key={category.name}
-                href={category.href}
+                href={`/${category.slug}`}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow group"
               >
-                <div className="text-4xl mb-4">{category.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
                   {category.name}
                 </h3>
@@ -272,15 +245,15 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Updates</h2>
               <div className="space-y-6">
                 {featuredArticles.slice(0, 4).map((article) => (
-                  <div key={article.id} className="flex gap-4 pb-6 border-b border-gray-200 last:border-b-0">
+                  <div key={article._id} className="flex gap-4 pb-6 border-b border-gray-200 last:border-b-0">
                     <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0">
                       <div className="w-full h-full bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm text-emerald-600 font-medium">{article.category}</span>
+                        <span className="text-sm text-emerald-600 font-medium">{article.category.name}</span>
                         <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-gray-500">{article.readTime}</span>
+                        <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
                         <Link href={`/articles/${article.slug}`}>
@@ -302,7 +275,7 @@ export default function Home() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular This Week</h3>
                 <div className="space-y-4">
                   {featuredArticles.slice(0, 3).map((article, index) => (
-                    <div key={article.id} className="flex items-start gap-3">
+                    <div key={article._id} className="flex items-start gap-3">
                       <span className="bg-emerald-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                         {index + 1}
                       </span>
@@ -312,7 +285,7 @@ export default function Home() {
                             {article.title}
                           </Link>
                         </h4>
-                        <p className="text-xs text-gray-500 mt-1">{article.readTime}</p>
+                        <p className="text-xs text-gray-500 mt-1">{new Date(article.publishedAt).toLocaleDateString()}</p>
                       </div>
                     </div>
                   ))}

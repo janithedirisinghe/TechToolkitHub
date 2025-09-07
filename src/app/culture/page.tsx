@@ -10,80 +10,76 @@ export const metadata: Metadata = {
   },
 };
 
-const cultureArticles = [
-  {
-    id: 1,
-    title: "Sri Lankan Food Culture: A Beginner's Guide",
-    excerpt: "Discover the rich culinary traditions of Sri Lanka, from street food to home cooking, and learn about must-try dishes.",
-    image: "/articles/food-culture.jpg",
-    category: "Food & Cuisine",
-    slug: "sri-lankan-food-culture",
-    readTime: "12 min read",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Traditional Sri Lankan Festivals",
-    excerpt: "Experience the vibrant festivals of Sri Lanka, from Vesak to Kandy Esala Perahera, and learn about their cultural significance.",
-    image: "/articles/festivals.jpg",
-    category: "Festivals",
-    slug: "traditional-sri-lankan-festivals",
-    readTime: "10 min read",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Buddhist Temples: Etiquette and Customs",
-    excerpt: "Learn the proper way to visit Buddhist temples in Sri Lanka, including dress codes, behavior, and cultural sensitivity.",
-    image: "/articles/temple-etiquette.jpg",
-    category: "Religion",
-    slug: "buddhist-temple-etiquette",
-    readTime: "8 min read",
-    featured: true
-  },
-  {
-    id: 4,
-    title: "Traditional Sri Lankan Arts and Crafts",
-    excerpt: "Explore the rich tradition of Sri Lankan handicrafts including batik, woodcarving, mask making, and traditional jewelry.",
-    image: "/articles/arts-crafts.jpg",
-    category: "Arts & Crafts",
-    slug: "traditional-arts-crafts",
-    readTime: "15 min read",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "Wedding Traditions in Sri Lanka",
-    excerpt: "Understanding Sri Lankan wedding customs, ceremonies, and traditions across different communities and religions.",
-    image: "/articles/weddings.jpg",
-    category: "Traditions",
-    slug: "sri-lankan-wedding-traditions",
-    readTime: "13 min read",
-    featured: false
-  },
-  {
-    id: 6,
-    title: "Ayurveda and Traditional Medicine",
-    excerpt: "Learn about Sri Lanka's ancient Ayurvedic traditions, treatments, and how to experience authentic wellness practices.",
-    image: "/articles/ayurveda.jpg",
-    category: "Wellness",
-    slug: "ayurveda-traditional-medicine",
-    readTime: "11 min read",
-    featured: true
+interface Article {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: string;
+  category: {
+    name: string;
+    slug: string;
+    color: string;
+  };
+  tags: string[];
+  featured: boolean;
+  publishedAt: string;
+  views: number;
+}
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  order: number;
+  articleCount: number;
+}
+
+// Fetch data from APIs
+async function getCultureArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/articles?category=culture`, {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch culture articles');
+    }
+
+    const data = await response.json();
+    return data.articles || [];
+  } catch (error) {
+    console.error('Error fetching culture articles:', error);
+    return [];
   }
-];
+}
 
-const categories = [
-  { name: "All", count: cultureArticles.length },
-  { name: "Food & Cuisine", count: cultureArticles.filter(a => a.category === "Food & Cuisine").length },
-  { name: "Festivals", count: cultureArticles.filter(a => a.category === "Festivals").length },
-  { name: "Religion", count: cultureArticles.filter(a => a.category === "Religion").length },
-  { name: "Arts & Crafts", count: cultureArticles.filter(a => a.category === "Arts & Crafts").length },
-  { name: "Traditions", count: cultureArticles.filter(a => a.category === "Traditions").length },
-  { name: "Wellness", count: cultureArticles.filter(a => a.category === "Wellness").length },
-];
+async function getCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/categories`, {
+      cache: 'no-store'
+    });
 
-export default function CulturePage() {
+    if (!response.ok) {
+      throw new Error('Failed to fetch categories');
+    }
+
+    const data = await response.json();
+    return data.categories || [];
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
+export default async function CulturePage() {
+  const [cultureArticles, categories] = await Promise.all([
+    getCultureArticles(),
+    getCategories()
+  ]);
+
   const featuredArticles = cultureArticles.filter(article => article.featured);
   const allArticles = cultureArticles;
 
@@ -134,17 +130,12 @@ export default function CulturePage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Cultural Guides</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {featuredArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
                       <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 opacity-20"></div>
                       <div className="absolute top-4 left-4">
                         <span className="bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          {article.category}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <span className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
-                          {article.readTime}
+                          {article.category.name}
                         </span>
                       </div>
                     </div>
@@ -178,7 +169,7 @@ export default function CulturePage() {
 
               <div className="space-y-6">
                 {allArticles.map((article) => (
-                  <article key={article.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                  <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0">
                         <div className="w-full h-full bg-gradient-to-r from-orange-500 to-red-500 opacity-20 rounded-lg"></div>
@@ -186,9 +177,9 @@ export default function CulturePage() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">
-                            {article.category}
+                            {article.category.name}
                           </span>
-                          <span className="text-sm text-gray-500">{article.readTime}</span>
+                          <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-orange-600 transition-colors">
                           <Link href={`/articles/${article.slug}`}>
@@ -225,7 +216,7 @@ export default function CulturePage() {
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-700 transition-colors flex items-center justify-between"
                     >
                       <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.count})</span>
+                      <span className="text-sm text-gray-500">({category.articleCount})</span>
                     </button>
                   ))}
                 </div>
