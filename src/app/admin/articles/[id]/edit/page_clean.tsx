@@ -11,22 +11,6 @@ interface Category {
   slug: string;
 }
 
-interface Article {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  category: {
-    name: string;
-    slug: string;
-  };
-  status: string;
-  featured: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export default function EditArticlePage() {
   const router = useRouter();
   const params = useParams();

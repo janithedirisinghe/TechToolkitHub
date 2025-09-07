@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -199,7 +198,7 @@ export default function Home() {
               Explore by Category
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Find exactly what you're looking for with our organized content categories.
+              Find exactly what you&apos;re looking for with our organized content categories.
             </p>
           </div>
 
