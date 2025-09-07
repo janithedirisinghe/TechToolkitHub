@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
 import type { Article, Category } from '@/types/article';
-import { fetchApi } from '@/lib/url';
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Culture & Lifestyle - Sri Lanka How",
@@ -16,7 +18,12 @@ export const metadata: Metadata = {
 // Fetch data from APIs
 async function getCultureArticles(): Promise<Article[]> {
   try {
-    const response = await fetchApi('/api/articles?category=culture', {
+    // Use absolute URL for Vercel
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://srilankahow.vercel.app';
+    
+    const response = await fetch(`${baseUrl}/api/articles?category=culture`, {
       cache: 'no-store'
     });
 
@@ -34,7 +41,12 @@ async function getCultureArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetchApi('/api/categories', {
+    // Use absolute URL for Vercel
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://srilankahow.vercel.app';
+    
+    const response = await fetch(`${baseUrl}/api/categories`, {
       cache: 'no-store'
     });
 

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { fetchApi } from '@/lib/url';
+
+// Force dynamic rendering for Vercel
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Travel Guides - Sri Lanka How",
@@ -42,7 +44,12 @@ interface Category {
 // Fetch data from APIs
 async function getTravelArticles(): Promise<Article[]> {
   try {
-    const response = await fetchApi('/api/articles?category=travel', {
+    // Use absolute URL for Vercel
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://srilankahow.vercel.app';
+    
+    const response = await fetch(`${baseUrl}/api/articles?category=travel`, {
       cache: 'no-store'
     });
 
@@ -60,7 +67,12 @@ async function getTravelArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetchApi('/api/categories', {
+    // Use absolute URL for Vercel
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'https://srilankahow.vercel.app';
+    
+    const response = await fetch(`${baseUrl}/api/categories`, {
       cache: 'no-store'
     });
 

@@ -5,7 +5,16 @@ import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import ArticleEnhancements from '@/components/ArticleEnhancements';
 import type { Article } from '@/types/article';
-import { fetchApi, getBaseUrl } from '@/lib/url';
+
+// Force dynamic rendering for Vercel
+export const dynamic = 'force-dynamic';
+
+// Helper function for base URL
+function getBaseUrl(): string {
+  return process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'https://srilankahow.vercel.app';
+}
 
 interface ArticlePageProps {
   params: {
@@ -17,7 +26,7 @@ interface ArticlePageProps {
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const response = await fetchApi(`/api/articles/${slug}`, {
+    const response = await fetch(`${getBaseUrl()}/api/articles/${slug}`, {
       cache: 'no-store'
     });
 
@@ -89,7 +98,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 // Fetch article data
 async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const response = await fetchApi(`/api/articles/${slug}`, {
+    const response = await fetch(`${getBaseUrl()}/api/articles/${slug}`, {
       cache: 'no-store'
     });
 

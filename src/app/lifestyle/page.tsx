@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { fetchApi } from '@/lib/url';
+
+// Force dynamic rendering for Vercel
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Lifestyle & Tips - Sri Lanka How",
@@ -42,7 +44,7 @@ interface Category {
 // Fetch data from APIs
 async function getLifestyleArticles(): Promise<Article[]> {
   try {
-    const response = await fetchApi('/api/articles?category=lifestyle', {
+    const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://srilankahow.vercel.app'}/api/articles?category=lifestyle`, {
       cache: 'no-store'
     });
 
@@ -60,7 +62,7 @@ async function getLifestyleArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetchApi('/api/categories', {
+    const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://srilankahow.vercel.app'}/api/categories`, {
       cache: 'no-store'
     });
 
