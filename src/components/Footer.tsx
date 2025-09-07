@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Footer = () => {
   return (
@@ -8,9 +9,7 @@ const Footer = () => {
           {/* About Section */}
           <div className="col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">SL</span>
-              </div>
+              <Image src="/Logo.png" alt="Sri Lanka How logo" width={32} height={32} />
               <h3 className="text-lg font-bold">Sri Lanka How</h3>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">

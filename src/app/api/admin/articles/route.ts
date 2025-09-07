@@ -5,6 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
+import sanitizeHtml from 'sanitize-html';
 
 // GET all articles (admin)
 export async function GET(request: NextRequest) {
@@ -126,11 +127,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const cleanContent = sanitizeHtml(content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'h1', 'h2', 'h3', 'table', 'thead', 'tbody', 'tr', 'th', 'td']),
+      allowedAttributes: {
+        ...sanitizeHtml.defaults.allowedAttributes,
+        a: ['href', 'name', 'target', 'rel'],
+        img: ['src', 'alt', 'title', 'width', 'height'],
+        td: ['colspan', 'rowspan'],
+        th: ['colspan', 'rowspan'],
+      },
+      allowedSchemes: ['http', 'https', 'mailto'],
+      allowProtocolRelative: true,
+    });
+
     const article = new Article({
       title,
       slug: slug.toLowerCase(),
       excerpt,
-      content,
+      content: cleanContent,
       category: categoryDoc._id,
       tags: Array.isArray(tags) ? tags : tags?.split(',').map((tag: string) => tag.trim()) || [],
       featuredImage,
@@ -142,7 +156,7 @@ export async function POST(request: NextRequest) {
       metaKeywords
     });
 
-    await article.save();
+  await article.save();
     
     // Update category article count
     await Category.findByIdAndUpdate(

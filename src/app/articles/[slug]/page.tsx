@@ -236,20 +236,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         )}
 
         {/* Article Content */}
-        <div className="prose prose-lg max-w-none">
-          {article.content ? (
-            <div
-              className="text-gray-800 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
-          ) : (
-            <div className="text-gray-600 italic text-center py-12">
-              <div className="text-6xl mb-4">📝</div>
-              <p className="text-xl">Article content is being prepared...</p>
-              <p className="text-sm mt-2">Please check back later for the full article.</p>
-            </div>
-          )}
-        </div>
+        {article.content ? (
+          <div
+            id="article-content"
+            className="prose prose-lg max-w-none text-gray-800 leading-relaxed prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:underline prose-img:rounded-lg"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+        ) : (
+          <div className="text-gray-600 italic text-center py-12">
+            <div className="text-6xl mb-4">📝</div>
+            <p className="text-xl">Article content is being prepared...</p>
+            <p className="text-sm mt-2">Please check back later for the full article.</p>
+          </div>
+        )}
 
         {/* Social Sharing */}
         <div className="mt-8 pt-8 border-t border-gray-200">
@@ -350,6 +349,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   } catch (e) { /* ignore */ }
                 });
               }
+
+              // Enhance content links and tables
+              const contentEl = document.getElementById('article-content');
+              if (contentEl) {
+                contentEl.querySelectorAll('a[href]').forEach((a) => {
+                  a.setAttribute('target', '_blank');
+                  a.setAttribute('rel', 'noopener noreferrer nofollow');
+                });
+                contentEl.querySelectorAll('table').forEach((t) => {
+                  t.classList.add('article-table');
+                });
+              }
             });
           `
         }}
@@ -376,7 +387,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               "name": "Sri Lanka How",
               "logo": {
                 "@type": "ImageObject",
-                "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/logo.png`
+                "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/Logo.png`
               }
             },
             "mainEntityOfPage": {

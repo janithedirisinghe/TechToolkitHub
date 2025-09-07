@@ -1,6 +1,7 @@
 'use client';
 
 import AdminLayout from '@/components/AdminLayout';
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -11,6 +12,7 @@ interface Category {
 }
 
 export default function NewArticlePage() {
+  const RichTextEditor = dynamic(() => import('@/components/RichTextEditor'), { ssr: false });
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -159,18 +161,11 @@ export default function NewArticlePage() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Content *
                   </label>
-                  <textarea
-                    name="content"
+                  <RichTextEditor
                     value={formData.content}
-                    onChange={handleInputChange}
-                    rows={20}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="Write your article content here..."
-                    required
+                    onChange={(html: string) => setFormData(prev => ({ ...prev, content: html }))}
+                    placeholder="Write your article content with formatting (bold, italic, tables, etc.)"
                   />
-                  <p className="mt-1 text-sm text-gray-500">
-                    You can use Markdown formatting for your content.
-                  </p>
                 </div>
               </div>
 

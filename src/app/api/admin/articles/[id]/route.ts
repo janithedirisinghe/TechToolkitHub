@@ -5,6 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
+import sanitizeHtml from 'sanitize-html';
 
 // GET single article
 export async function GET(
@@ -114,13 +115,26 @@ export async function PUT(
     }
 
     // Update article
+    const cleanContent = sanitizeHtml(content, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'h1', 'h2', 'h3', 'table', 'thead', 'tbody', 'tr', 'th', 'td']),
+      allowedAttributes: {
+        ...sanitizeHtml.defaults.allowedAttributes,
+        a: ['href', 'name', 'target', 'rel'],
+        img: ['src', 'alt', 'title', 'width', 'height'],
+        td: ['colspan', 'rowspan'],
+        th: ['colspan', 'rowspan'],
+      },
+      allowedSchemes: ['http', 'https', 'mailto'],
+      allowProtocolRelative: true,
+    });
+
     const article = await Article.findByIdAndUpdate(
       id,
       {
         title,
         slug: slug.toLowerCase(),
         excerpt,
-        content,
+        content: cleanContent,
         category: categoryDoc._id,
         tags: Array.isArray(tags) ? tags : tags?.split(',').map((tag: string) => tag.trim()) || [],
         featuredImage,

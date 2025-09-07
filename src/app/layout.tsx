@@ -51,6 +51,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+  icons: {
+    icon: [
+      { url: "/Logo.png", type: "image/png", sizes: "32x32" },
+      { url: "/Logo.png", type: "image/png", sizes: "16x16" },
+      { url: "/Logo.png", type: "image/png", sizes: "any" },
+    ],
+    apple: "/Logo.png",
+    shortcut: "/Logo.png",
+  },
   twitter: {
     card: "summary_large_image",
     title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
