@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
+import { getBaseUrl } from '@/lib/url';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
@@ -44,12 +45,7 @@ interface Category {
 // Fetch data from APIs
 async function getTravelArticles(): Promise<Article[]> {
   try {
-    // Use absolute URL for Vercel
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://srilankahow.vercel.app';
-    
-    const response = await fetch(`${baseUrl}/api/articles?category=travel`, {
+    const response = await fetch(`${getBaseUrl()}/api/articles?category=travel`, {
       cache: 'no-store'
     });
 
@@ -67,12 +63,7 @@ async function getTravelArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    // Use absolute URL for Vercel
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://srilankahow.vercel.app';
-    
-    const response = await fetch(`${baseUrl}/api/categories`, {
+    const response = await fetch(`${getBaseUrl()}/api/categories`, {
       cache: 'no-store'
     });
 

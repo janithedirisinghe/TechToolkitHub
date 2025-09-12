@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
+import { getBaseUrl } from '@/lib/url';
 import type { Metadata } from "next";
 import type { Article, Category } from '@/types/article';
 
@@ -19,12 +20,7 @@ export const metadata: Metadata = {
 // Fetch data from APIs
 async function getFeaturedArticles(): Promise<Article[]> {
   try {
-    // Use absolute URL for Vercel
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://srilankahow.vercel.app';
-    
-    const response = await fetch(`${baseUrl}/api/articles?featured=true&limit=6`, {
+    const response = await fetch(`${getBaseUrl()}/api/articles?featured=true&limit=6`, {
       cache: 'no-store'
     });
 
@@ -42,12 +38,7 @@ async function getFeaturedArticles(): Promise<Article[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    // Use absolute URL for Vercel
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://srilankahow.vercel.app';
-    
-    const response = await fetch(`${baseUrl}/api/categories`, {
+    const response = await fetch(`${getBaseUrl()}/api/categories`, {
       cache: 'no-store'
     });
 

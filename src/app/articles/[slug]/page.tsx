@@ -4,17 +4,11 @@ import { notFound } from 'next/navigation';
 import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import ArticleEnhancements from '@/components/ArticleEnhancements';
+import { getBaseUrl } from '@/lib/url';
 import type { Article } from '@/types/article';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
-
-// Helper function for base URL
-function getBaseUrl(): string {
-  return process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : 'https://srilankahow.vercel.app';
-}
 
 interface ArticlePageProps {
   params: {
