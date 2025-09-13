@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Open_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// Conditional hiding of site chrome for admin handled by a client component
+import ClientChrome from '@/components/ClientChrome';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -79,21 +79,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${openSans.variable} font-sans antialiased`}
-      >
-        <Header />
-        <main className="min-h-screen">
+      <body className={`${inter.variable} ${openSans.variable} font-sans antialiased`}>
+        <ClientChrome>
           {children}
-        </main>
-        <Footer />
+        </ClientChrome>
       </body>
     </html>
   );
