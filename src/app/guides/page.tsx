@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { getBaseUrl, fetchApi } from '@/lib/url';
+import { searchArticles, getActiveCategories } from '@/lib/data';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
@@ -44,111 +44,15 @@ interface Category {
 
 // Fetch data from APIs
 async function getGuidesArticles(): Promise<Article[]> {
-  const endpoint = '/api/articles?category=guides';
-  try {
-    const isServer = typeof window === 'undefined';
-    if (isServer) {
-      // Prefer relative URL on server (avoids cross-origin / preview domain auth edge cases)
-      console.log('[DEBUG] Guides Page - Server fetch (relative) for guides articles:', endpoint);
-      let response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) {
-        console.warn('[DEBUG] Relative fetch failed status:', response.status, response.statusText);
-        if (response.status === 401) {
-          console.warn('[DEBUG] 401 received on public articles endpoint (server relative). Retrying with absolute URL.');
-        }
-        // Attempt absolute fallback
-        const baseUrl = getBaseUrl();
-        const absoluteUrl = `${baseUrl}${endpoint}`;
-        console.log('[DEBUG] Guides Page - Retrying guides articles with absolute URL:', absoluteUrl);
-        response = await fetch(absoluteUrl, { cache: 'no-store' });
-        if (!response.ok) {
-          console.error('[DEBUG] Guides articles fetch failed after retry:', response.status, response.statusText);
-          throw new Error('Failed to fetch guides articles');
-        }
-        const retryData = await response.json();
-        console.log('[DEBUG] Guides articles data received after retry:', retryData.articles?.length || 0);
-        return retryData.articles || [];
-      }
-      const data = await response.json();
-      console.log('[DEBUG] Guides articles data received:', data.articles?.length || 0, 'articles');
-      return data.articles || [];
-    } else {
-      // Client side (should normally not run due to server component, but kept for completeness)
-      console.log('[DEBUG] Guides Page - Client fetch for guides articles');
-      const response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed client fetch');
-      const data = await response.json();
-      return data.articles || [];
-    }
-  } catch (error) {
-    console.error('[DEBUG] Error fetching guides articles:', error);
-    // Final fallback using fetchApi helper (which contains its own base URL logic)
-    try {
-      console.log('[DEBUG] Guides Page - Final fallback using fetchApi for articles');
-      const response = await fetchApi(endpoint, { cache: 'no-store' });
-      if (response.ok) {
-        const data = await response.json();
-        return data.articles || [];
-      } else {
-        console.error('[DEBUG] fetchApi fallback failed status:', response.status);
-      }
-    } catch (fallbackError) {
-      console.error('[DEBUG] fetchApi fallback error:', fallbackError);
-    }
-    return [];
-  }
+  console.log('[DEBUG] Guides Page - Direct DB query for category=guides');
+  const { articles } = await searchArticles({ categorySlug: 'guides', limit: 100 });
+  return articles as unknown as Article[];
 }
 
 async function getCategories(): Promise<Category[]> {
-  const endpoint = '/api/categories';
-  try {
-    const isServer = typeof window === 'undefined';
-    if (isServer) {
-      console.log('[DEBUG] Guides Page - Server fetch (relative) for categories:', endpoint);
-      let response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) {
-        console.warn('[DEBUG] Relative categories fetch failed status:', response.status, response.statusText);
-        if (response.status === 401) {
-          console.warn('[DEBUG] 401 received on public categories endpoint (server relative). Retrying with absolute URL.');
-        }
-        const baseUrl = getBaseUrl();
-        const absoluteUrl = `${baseUrl}${endpoint}`;
-        console.log('[DEBUG] Guides Page - Retrying categories with absolute URL:', absoluteUrl);
-        response = await fetch(absoluteUrl, { cache: 'no-store' });
-        if (!response.ok) {
-          console.error('[DEBUG] Categories fetch failed after retry:', response.status, response.statusText);
-          throw new Error('Failed to fetch categories');
-        }
-        const retryData = await response.json();
-        console.log('[DEBUG] Categories data received after retry:', retryData.categories?.length || 0);
-        return retryData.categories || [];
-      }
-      const data = await response.json();
-      console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
-      return data.categories || [];
-    } else {
-      console.log('[DEBUG] Guides Page - Client fetch for categories');
-      const response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed client fetch');
-      const data = await response.json();
-      return data.categories || [];
-    }
-  } catch (error) {
-    console.error('[DEBUG] Error fetching categories:', error);
-    try {
-      console.log('[DEBUG] Guides Page - Final fallback using fetchApi for categories');
-      const response = await fetchApi(endpoint, { cache: 'no-store' });
-      if (response.ok) {
-        const data = await response.json();
-        return data.categories || [];
-      } else {
-        console.error('[DEBUG] fetchApi categories fallback failed status:', response.status);
-      }
-    } catch (fallbackError) {
-      console.error('[DEBUG] fetchApi categories fallback error:', fallbackError);
-    }
-    return [];
-  }
+  console.log('[DEBUG] Guides Page - Direct DB query for categories');
+  const categories = await getActiveCategories();
+  return categories as unknown as Category[];
 }
 
 

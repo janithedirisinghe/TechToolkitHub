@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { getBaseUrl, fetchApi } from '@/lib/url';
+import { searchArticles, getActiveCategories } from '@/lib/data';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
@@ -44,103 +44,15 @@ interface Category {
 
 // Fetch data from APIs
 async function getTravelArticles(): Promise<Article[]> {
-  const endpoint = '/api/articles?category=travel';
-  try {
-    const isServer = typeof window === 'undefined';
-    if (isServer) {
-      console.log('[DEBUG] Travel Page - Server fetch (relative) for travel articles:', endpoint);
-      let response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) {
-        console.warn('[DEBUG] Travel relative fetch failed status:', response.status, response.statusText);
-        if (response.status === 401) console.warn('[DEBUG] 401 on public travel articles endpoint - retrying absolute');
-        const baseUrl = getBaseUrl();
-        const absoluteUrl = `${baseUrl}${endpoint}`;
-        console.log('[DEBUG] Travel Page - Retrying articles with absolute URL:', absoluteUrl);
-        response = await fetch(absoluteUrl, { cache: 'no-store' });
-        if (!response.ok) {
-          console.error('[DEBUG] Travel articles fetch failed after retry:', response.status, response.statusText);
-          throw new Error('Failed to fetch travel articles');
-        }
-        const retryData = await response.json();
-        console.log('[DEBUG] Travel articles data received after retry:', retryData.articles?.length || 0);
-        return retryData.articles || [];
-      }
-      const data = await response.json();
-      console.log('[DEBUG] Travel articles data received:', data.articles?.length || 0, 'articles');
-      return data.articles || [];
-    } else {
-      console.log('[DEBUG] Travel Page - Client fetch for travel articles');
-      const response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed client travel fetch');
-      const data = await response.json();
-      return data.articles || [];
-    }
-  } catch (error) {
-    console.error('[DEBUG] Error fetching travel articles:', error);
-    try {
-      console.log('[DEBUG] Travel Page - Final fallback using fetchApi for travel articles');
-      const response = await fetchApi(endpoint, { cache: 'no-store' });
-      if (response.ok) {
-        const data = await response.json();
-        return data.articles || [];
-      } else {
-        console.error('[DEBUG] fetchApi travel articles fallback failed status:', response.status);
-      }
-    } catch (fallbackError) {
-      console.error('[DEBUG] fetchApi travel articles fallback error:', fallbackError);
-    }
-    return [];
-  }
+  console.log('[DEBUG] Travel Page - Direct DB query for category=travel');
+  const { articles } = await searchArticles({ categorySlug: 'travel', limit: 100 });
+  return articles as unknown as Article[];
 }
 
 async function getCategories(): Promise<Category[]> {
-  const endpoint = '/api/categories';
-  try {
-    const isServer = typeof window === 'undefined';
-    if (isServer) {
-      console.log('[DEBUG] Travel Page - Server fetch (relative) for categories:', endpoint);
-      let response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) {
-        console.warn('[DEBUG] Travel categories relative fetch failed status:', response.status, response.statusText);
-        if (response.status === 401) console.warn('[DEBUG] 401 on public categories endpoint - retrying absolute');
-        const baseUrl = getBaseUrl();
-        const absoluteUrl = `${baseUrl}${endpoint}`;
-        console.log('[DEBUG] Travel Page - Retrying categories with absolute URL:', absoluteUrl);
-        response = await fetch(absoluteUrl, { cache: 'no-store' });
-        if (!response.ok) {
-          console.error('[DEBUG] Categories fetch failed after retry:', response.status, response.statusText);
-          throw new Error('Failed to fetch categories');
-        }
-        const retryData = await response.json();
-        console.log('[DEBUG] Categories data received after retry:', retryData.categories?.length || 0);
-        return retryData.categories || [];
-      }
-      const data = await response.json();
-      console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
-      return data.categories || [];
-    } else {
-      console.log('[DEBUG] Travel Page - Client fetch for categories');
-      const response = await fetch(endpoint, { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed client categories fetch');
-      const data = await response.json();
-      return data.categories || [];
-    }
-  } catch (error) {
-    console.error('[DEBUG] Error fetching categories:', error);
-    try {
-      console.log('[DEBUG] Travel Page - Final fallback using fetchApi for categories');
-      const response = await fetchApi(endpoint, { cache: 'no-store' });
-      if (response.ok) {
-        const data = await response.json();
-        return data.categories || [];
-      } else {
-        console.error('[DEBUG] fetchApi travel categories fallback failed status:', response.status);
-      }
-    } catch (fallbackError) {
-      console.error('[DEBUG] fetchApi travel categories fallback error:', fallbackError);
-    }
-    return [];
-  }
+  console.log('[DEBUG] Travel Page - Direct DB query for categories');
+  const categories = await getActiveCategories();
+  return categories as unknown as Category[];
 }
 
 export default async function TravelPage() {
