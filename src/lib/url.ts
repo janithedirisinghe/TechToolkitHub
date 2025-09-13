@@ -9,37 +9,26 @@ export function getBaseUrl(): string {
   console.log('[DEBUG] - process.env.NODE_ENV:', process.env.NODE_ENV);
   console.log('[DEBUG] - typeof window:', typeof window);
   
-  // For server-side rendering on Vercel
-  if (process.env.VERCEL_URL) {
-    const url = `https://${process.env.VERCEL_URL}`;
-    console.log('[DEBUG] Using VERCEL_URL:', url);
-    return url;
+  // If running on the server, prefer returning an empty string so that callers can safely
+  // prefix relative paths without forcing an absolute host (avoids preview domain 401 issues).
+  if (typeof window === 'undefined') {
+    // Still log what WOULD have been chosen for debugging.
+    if (process.env.VERCEL_URL) {
+      console.log('[DEBUG] (Info) VERCEL_URL available but returning empty string for relative server fetches.');
+    } else if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+      console.log('[DEBUG] (Info) VERCEL_PROJECT_PRODUCTION_URL available but returning empty string for relative server fetches.');
+    }
+    return '';
   }
-  
-  // Check for custom domain in Vercel
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    const url = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-    console.log('[DEBUG] Using VERCEL_PROJECT_PRODUCTION_URL:', url);
-    return url;
-  }
-  
-  // For client-side
+
+  // Client-side must use absolute origin.
   if (typeof window !== 'undefined') {
     console.log('[DEBUG] Using window.location.origin:', window.location.origin);
     return window.location.origin;
   }
-  
-  // Production fallback - use your actual domain
-  if (process.env.NODE_ENV === 'production') {
-    const url = 'https://srilankahow.vercel.app';
-    console.log('[DEBUG] Using production fallback:', url);
-    return url;
-  }
-  
-  // Fallback for local development
-  const fallback = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  console.log('[DEBUG] Using development fallback:', fallback);
-  return fallback;
+
+  // Fallback (should rarely execute)
+  return '';
 }
 
 /**
@@ -50,31 +39,29 @@ export async function fetchApi(endpoint: string, options?: RequestInit) {
   
   // For server-side rendering, use relative URLs when possible
   if (typeof window === 'undefined') {
-    // Server-side: try relative URL first
+    // Server-side: always attempt relative path (baseUrl may be empty by design for internal calls)
     url = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    
-    // If that doesn't work, fall back to full URL
     try {
-      const response = await fetch(url, {
+      return await fetch(url, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
       });
-      
-      if (response.ok) {
-        return response;
-      }
     } catch (error) {
-      console.warn('Relative URL failed, trying absolute URL:', error);
+      console.warn('[fetchApi] Relative server fetch failed, attempting absolute fallback:', error);
+      const baseUrl = getBaseUrl();
+      const absolute = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+      return await fetch(absolute, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options?.headers,
+        },
+      });
     }
-    
-    // Fallback to absolute URL
-    const baseUrl = getBaseUrl();
-    url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   } else {
-    // Client-side: use relative URLs
     url = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
   }
   
