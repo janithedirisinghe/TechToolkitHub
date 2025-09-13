@@ -20,36 +20,58 @@ export const metadata: Metadata = {
 // Fetch data from APIs
 async function getFeaturedArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/articles?featured=true&limit=6`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/articles?featured=true&limit=6`;
+    
+    console.log('[DEBUG] Home Page - Fetching featured articles from:', apiUrl);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Featured articles response status:', response.status);
+    console.log('[DEBUG] Featured articles response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Featured articles fetch failed:', response.status, response.statusText);
       throw new Error('Failed to fetch featured articles');
     }
 
     const data = await response.json();
+    console.log('[DEBUG] Featured articles data received:', data.articles?.length || 0, 'articles');
     return data.articles || [];
   } catch (error) {
-    console.error('Error fetching featured articles:', error);
+    console.error('[DEBUG] Error fetching featured articles:', error);
     return [];
   }
 }
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/categories`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/categories`;
+    
+    console.log('[DEBUG] Home Page - Fetching categories from:', apiUrl);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Categories response status:', response.status);
+    console.log('[DEBUG] Categories response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Categories fetch failed:', response.status, response.statusText);
       throw new Error('Failed to fetch categories');
     }
 
     const data = await response.json();
+    console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
     return data.categories || [];
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error('[DEBUG] Error fetching categories:', error);
     return [];
   }
 }

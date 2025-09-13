@@ -20,11 +20,22 @@ interface ArticlePageProps {
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const response = await fetch(`${getBaseUrl()}/api/articles/${slug}`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/articles/${slug}`;
+    
+    console.log('[DEBUG] Article Metadata - Fetching article metadata from:', apiUrl);
+    console.log('[DEBUG] Article slug:', slug);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Article metadata response status:', response.status);
+    console.log('[DEBUG] Article metadata response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Article metadata fetch failed:', response.status, response.statusText);
       return {
         title: 'Article Not Found - Sri Lanka How',
         description: 'The requested article could not be found.',
@@ -33,6 +44,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
     const data = await response.json();
     const article = data.article;
+    console.log('[DEBUG] Article metadata received for:', article?.title || 'Unknown title');
 
     return {
       title: `${article.title} - Sri Lanka How`,
@@ -92,18 +104,30 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 // Fetch article data
 async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/articles/${slug}`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/articles/${slug}`;
+    
+    console.log('[DEBUG] Article Detail - Fetching article from:', apiUrl);
+    console.log('[DEBUG] Article slug:', slug);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Article detail response status:', response.status);
+    console.log('[DEBUG] Article detail response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Article detail fetch failed:', response.status, response.statusText);
       return null;
     }
 
     const data = await response.json();
+    console.log('[DEBUG] Article detail data received for:', data.article?.title || 'Unknown title');
     return data.article;
   } catch (error) {
-    console.error('Error fetching article:', error);
+    console.error('[DEBUG] Error fetching article:', error);
     return null;
   }
 }

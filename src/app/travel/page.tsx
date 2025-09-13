@@ -45,36 +45,58 @@ interface Category {
 // Fetch data from APIs
 async function getTravelArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/articles?category=travel`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/articles?category=travel`;
+    
+    console.log('[DEBUG] Travel Page - Fetching travel articles from:', apiUrl);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Travel articles response status:', response.status);
+    console.log('[DEBUG] Travel articles response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Travel articles fetch failed:', response.status, response.statusText);
       throw new Error('Failed to fetch travel articles');
     }
 
     const data = await response.json();
+    console.log('[DEBUG] Travel articles data received:', data.articles?.length || 0, 'articles');
     return data.articles || [];
   } catch (error) {
-    console.error('Error fetching travel articles:', error);
+    console.error('[DEBUG] Error fetching travel articles:', error);
     return [];
   }
 }
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/categories`, {
+    const baseUrl = getBaseUrl();
+    const apiUrl = `${baseUrl}/api/categories`;
+    
+    console.log('[DEBUG] Travel Page - Fetching categories from:', apiUrl);
+    console.log('[DEBUG] Base URL resolved to:', baseUrl);
+    
+    const response = await fetch(apiUrl, {
       cache: 'no-store'
     });
 
+    console.log('[DEBUG] Categories response status:', response.status);
+    console.log('[DEBUG] Categories response ok:', response.ok);
+
     if (!response.ok) {
+      console.error('[DEBUG] Categories fetch failed:', response.status, response.statusText);
       throw new Error('Failed to fetch categories');
     }
 
     const data = await response.json();
+    console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
     return data.categories || [];
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error('[DEBUG] Error fetching categories:', error);
     return [];
   }
 }

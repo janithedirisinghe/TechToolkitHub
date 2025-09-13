@@ -3,28 +3,43 @@
  * This handles Vercel deployment automatically
  */
 export function getBaseUrl(): string {
+  console.log('[DEBUG] URL Resolution - Environment check:');
+  console.log('[DEBUG] - process.env.VERCEL_URL:', process.env.VERCEL_URL);
+  console.log('[DEBUG] - process.env.VERCEL_PROJECT_PRODUCTION_URL:', process.env.VERCEL_PROJECT_PRODUCTION_URL);
+  console.log('[DEBUG] - process.env.NODE_ENV:', process.env.NODE_ENV);
+  console.log('[DEBUG] - typeof window:', typeof window);
+  
   // For server-side rendering on Vercel
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    const url = `https://${process.env.VERCEL_URL}`;
+    console.log('[DEBUG] Using VERCEL_URL:', url);
+    return url;
   }
   
   // Check for custom domain in Vercel
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    const url = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    console.log('[DEBUG] Using VERCEL_PROJECT_PRODUCTION_URL:', url);
+    return url;
   }
   
   // For client-side
   if (typeof window !== 'undefined') {
+    console.log('[DEBUG] Using window.location.origin:', window.location.origin);
     return window.location.origin;
   }
   
   // Production fallback - use your actual domain
   if (process.env.NODE_ENV === 'production') {
-    return 'https://srilankahow.vercel.app';
+    const url = 'https://srilankahow.vercel.app';
+    console.log('[DEBUG] Using production fallback:', url);
+    return url;
   }
   
   // Fallback for local development
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const fallback = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  console.log('[DEBUG] Using development fallback:', fallback);
+  return fallback;
 }
 
 /**
