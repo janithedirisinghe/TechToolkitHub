@@ -131,7 +131,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       {/* Mobile menu overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-[1px] z-40 lg:hidden animate-fadeIn"
+          className="fixed inset-0 bg-black/50 backdrop-blur-[1px] z-40 md:hidden animate-fadeIn"
           onClick={closeSidebar}
           aria-hidden="true"
         />
@@ -140,7 +140,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-full bg-white shadow-xl ring-1 ring-gray-200/60 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out sm:w-64 lg:translate-x-0 lg:static lg:inset-0 flex flex-col`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl ring-1 ring-gray-200/60 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-0 flex flex-col`}
         role="dialog"
         aria-modal="true"
         aria-label="Admin navigation sidebar"
@@ -196,14 +196,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="lg:ml-64 flex flex-col min-h-screen">
+  <div className="md:ml-64 flex flex-col min-h-screen">
         {/* Top header */}
         <header className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 shadow-sm border-b border-gray-200 sticky top-0 z-30">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6">
             <div className="flex items-center">
               <button
                 onClick={openSidebar}
-                className="lg:hidden text-gray-500 hover:text-gray-700 mr-3 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="md:hidden text-gray-500 hover:text-gray-700 mr-3 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 aria-label="Open navigation menu"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
