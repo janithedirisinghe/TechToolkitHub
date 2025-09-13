@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { getBaseUrl } from '@/lib/url';
+import { getBaseUrl, fetchApi } from '@/lib/url';
 import type { Metadata } from "next";
 import type { Article, Category } from '@/types/article';
 
@@ -19,59 +19,105 @@ export const metadata: Metadata = {
 
 // Fetch data from APIs
 async function getFeaturedArticles(): Promise<Article[]> {
+  const endpoint = '/api/articles?featured=true&limit=6';
   try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/articles?featured=true&limit=6`;
-    
-    console.log('[DEBUG] Home Page - Fetching featured articles from:', apiUrl);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Featured articles response status:', response.status);
-    console.log('[DEBUG] Featured articles response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Featured articles fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch featured articles');
+    const isServer = typeof window === 'undefined';
+    if (isServer) {
+      console.log('[DEBUG] Home Page - Server fetch (relative) for featured articles:', endpoint);
+      let response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) {
+        console.warn('[DEBUG] Featured relative fetch failed status:', response.status, response.statusText);
+        if (response.status === 401) {
+          console.warn('[DEBUG] 401 on public featured articles endpoint - retrying absolute');
+        }
+        const baseUrl = getBaseUrl();
+        const absoluteUrl = `${baseUrl}${endpoint}`;
+        console.log('[DEBUG] Home Page - Retrying featured with absolute URL:', absoluteUrl);
+        response = await fetch(absoluteUrl, { cache: 'no-store' });
+        if (!response.ok) {
+          console.error('[DEBUG] Featured articles fetch failed after retry:', response.status, response.statusText);
+          throw new Error('Failed to fetch featured articles');
+        }
+        const retryData = await response.json();
+        console.log('[DEBUG] Featured articles data received after retry:', retryData.articles?.length || 0);
+        return retryData.articles || [];
+      }
+      const data = await response.json();
+      console.log('[DEBUG] Featured articles data received:', data.articles?.length || 0, 'articles');
+      return data.articles || [];
+    } else {
+      console.log('[DEBUG] Home Page - Client fetch for featured articles');
+      const response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Failed client featured fetch');
+      const data = await response.json();
+      return data.articles || [];
     }
-
-    const data = await response.json();
-    console.log('[DEBUG] Featured articles data received:', data.articles?.length || 0, 'articles');
-    return data.articles || [];
   } catch (error) {
     console.error('[DEBUG] Error fetching featured articles:', error);
+    try {
+      console.log('[DEBUG] Home Page - Final fallback using fetchApi for featured');
+      const response = await fetchApi(endpoint, { cache: 'no-store' });
+      if (response.ok) {
+        const data = await response.json();
+        return data.articles || [];
+      } else {
+        console.error('[DEBUG] fetchApi featured fallback failed status:', response.status);
+      }
+    } catch (fallbackError) {
+      console.error('[DEBUG] fetchApi featured fallback error:', fallbackError);
+    }
     return [];
   }
 }
 
 async function getCategories(): Promise<Category[]> {
+  const endpoint = '/api/categories';
   try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/categories`;
-    
-    console.log('[DEBUG] Home Page - Fetching categories from:', apiUrl);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Categories response status:', response.status);
-    console.log('[DEBUG] Categories response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Categories fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch categories');
+    const isServer = typeof window === 'undefined';
+    if (isServer) {
+      console.log('[DEBUG] Home Page - Server fetch (relative) for categories:', endpoint);
+      let response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) {
+        console.warn('[DEBUG] Categories relative fetch failed status:', response.status, response.statusText);
+        if (response.status === 401) {
+          console.warn('[DEBUG] 401 on public categories endpoint - retrying absolute');
+        }
+        const baseUrl = getBaseUrl();
+        const absoluteUrl = `${baseUrl}${endpoint}`;
+        console.log('[DEBUG] Home Page - Retrying categories with absolute URL:', absoluteUrl);
+        response = await fetch(absoluteUrl, { cache: 'no-store' });
+        if (!response.ok) {
+          console.error('[DEBUG] Categories fetch failed after retry:', response.status, response.statusText);
+          throw new Error('Failed to fetch categories');
+        }
+        const retryData = await response.json();
+        console.log('[DEBUG] Categories data received after retry:', retryData.categories?.length || 0);
+        return retryData.categories || [];
+      }
+      const data = await response.json();
+      console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
+      return data.categories || [];
+    } else {
+      console.log('[DEBUG] Home Page - Client fetch for categories');
+      const response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Failed client categories fetch');
+      const data = await response.json();
+      return data.categories || [];
     }
-
-    const data = await response.json();
-    console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
-    return data.categories || [];
   } catch (error) {
     console.error('[DEBUG] Error fetching categories:', error);
+    try {
+      console.log('[DEBUG] Home Page - Final fallback using fetchApi for categories');
+      const response = await fetchApi(endpoint, { cache: 'no-store' });
+      if (response.ok) {
+        const data = await response.json();
+        return data.categories || [];
+      } else {
+        console.error('[DEBUG] fetchApi categories fallback failed status:', response.status);
+      }
+    } catch (fallbackError) {
+      console.error('[DEBUG] fetchApi categories fallback error:', fallbackError);
+    }
     return [];
   }
 }
