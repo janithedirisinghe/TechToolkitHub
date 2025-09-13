@@ -6,7 +6,14 @@ import Article from '@/models/Article';
 // GET published articles (public)
 export async function GET(request: NextRequest) {
   try {
+    console.log('[DEBUG] Articles API - Starting...');
+    console.log('[DEBUG] MONGODB_URI exists:', !!process.env.MONGODB_URI);
+    console.log('[DEBUG] NODE_ENV:', process.env.NODE_ENV);
+    console.log('[DEBUG] Request URL:', request.url);
+    
     await connectDB();
+    console.log('[DEBUG] Articles API - Database connected');
+    
   // Ensure referenced models are registered before queries that populate
   try { mongoose.model('Category'); } catch { await import('@/models/Category'); }
   try { mongoose.model('Admin'); } catch { await import('@/models/Admin'); }
@@ -58,6 +65,8 @@ export async function GET(request: NextRequest) {
 
     const total = await Article.countDocuments(query);
 
+    console.log('[DEBUG] Articles API - Found articles:', articles.length, 'total:', total);
+
     return NextResponse.json({
       success: true,
       articles,
@@ -70,9 +79,15 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Get public articles error:', error);
+    console.error('[DEBUG] Articles API error:', error);
+    console.error('[DEBUG] Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      name: error instanceof Error ? error.name : undefined
+    });
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
