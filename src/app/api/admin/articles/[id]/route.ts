@@ -73,7 +73,8 @@ export async function PUT(
       featured,
       metaTitle,
       metaDescription,
-      metaKeywords
+      metaKeywords,
+      sections
     } = await request.json();
 
     if (!title || !slug || !excerpt || !content || !category) {
@@ -148,7 +149,14 @@ export async function PUT(
         featured: featured || false,
         metaTitle: metaTitle || title.substring(0, 60),
         metaDescription: metaDescription || excerpt.substring(0, 160),
-        metaKeywords
+        metaKeywords,
+        sections: Array.isArray(sections)
+          ? sections.map((s: { heading?: string; content?: string; order?: number }, index: number) => ({
+              heading: s.heading?.trim() || `Section ${index + 1}`,
+              content: s.content || '',
+              order: typeof s.order === 'number' ? s.order : index
+            })).sort((a, b) => a.order - b.order)
+          : undefined
       },
       { new: true }
     );

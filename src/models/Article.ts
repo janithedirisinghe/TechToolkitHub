@@ -18,6 +18,11 @@ export interface IArticle extends Document {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string;
+  sections?: Array<{
+    heading: string;
+    content: string;
+    order: number;
+  }>;
   views: number;
   publishedAt?: Date;
   createdAt: Date;
@@ -87,6 +92,13 @@ const ArticleSchema: Schema = new Schema({
     type: String,
     trim: true
   },
+  sections: [
+    {
+      heading: { type: String, trim: true, required: true },
+      content: { type: String, required: true },
+      order: { type: Number, required: true, default: 0 }
+    }
+  ],
   views: {
     type: Number,
     default: 0

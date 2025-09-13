@@ -35,6 +35,13 @@ export default function EditArticlePage() {
     metaKeywords: ''
   });
 
+  interface Section {
+    heading: string;
+    content: string;
+    order: number;
+  }
+  const [sections, setSections] = useState<Section[]>([]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -78,16 +85,26 @@ export default function EditArticlePage() {
           title: article.title || '',
           slug: article.slug || '',
           excerpt: article.excerpt || '',
+            // Prefer raw content if available else fallback
           content: article.content || '',
           category: article.category?.name || '',
-          tags: '', // You might want to add tags to your Article model
-          featuredImage: '', // You might want to add featuredImage to your Article model
+          tags: (article.tags || []).join(', '),
+          featuredImage: article.featuredImage || '',
           status: article.status === 'published' ? 'published' : 'draft',
           featured: article.featured || false,
-          metaTitle: '', // You might want to add SEO fields to your Article model
-          metaDescription: '',
-          metaKeywords: ''
+          metaTitle: article.metaTitle || (article.title || '').substring(0,60),
+          metaDescription: article.metaDescription || (article.excerpt || '').substring(0,160),
+          metaKeywords: article.metaKeywords || ''
         });
+        if (Array.isArray(article.sections)) {
+          setSections(article.sections.map((s: { heading?: string; content?: string; order?: number }, index: number) => ({
+            heading: s.heading || `Section ${index+1}`,
+            content: s.content || '',
+            order: typeof s.order === 'number' ? s.order : index
+          })).sort((a: Section,b: Section)=>a.order-b.order));
+        } else {
+          setSections([]);
+        }
       } catch (err) {
         console.error('Error fetching data:', err);
         setError(err instanceof Error ? err.message : 'Failed to load data');
@@ -162,6 +179,13 @@ export default function EditArticlePage() {
           metaTitle: formData.metaTitle,
           metaDescription: formData.metaDescription,
           metaKeywords: formData.metaKeywords,
+          featuredImage: formData.featuredImage,
+          tags: formData.tags,
+          sections: sections.map((s, idx) => ({
+            heading: s.heading.trim() || `Section ${idx+1}`,
+            content: s.content,
+            order: idx
+          }))
         }),
       });
 
@@ -505,8 +529,8 @@ export default function EditArticlePage() {
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                 >
-                  <option value="Draft">Draft</option>
-                  <option value="Published">Published</option>
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
                 </select>
               </div>
 
@@ -530,6 +554,107 @@ export default function EditArticlePage() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Article Sections */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Article Sections</h2>
+              <button
+                type="button"
+                onClick={() => setSections(prev => [...prev, { heading: `Section ${prev.length+1}`, content: '', order: prev.length }])}
+                className="px-3 py-1.5 text-sm bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
+              >
+                + Add Section
+              </button>
+            </div>
+            {sections.length === 0 && (
+              <p className="text-sm text-gray-500">No sections yet. Add sections to break your article into structured parts.</p>
+            )}
+            <div className="space-y-6">
+              {sections.map((section, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4 relative group bg-gray-50">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1 space-y-3">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Heading</label>
+                        <input
+                          type="text"
+                          value={section.heading}
+                          onChange={e => setSections(prev => prev.map((s,i)=> i===index ? { ...s, heading: e.target.value } : s))}
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+                          placeholder={`Section ${index+1} Heading`}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Content (HTML)</label>
+                        <textarea
+                          value={section.content}
+                          onChange={e => setSections(prev => prev.map((s,i)=> i===index ? { ...s, content: e.target.value } : s))}
+                          rows={5}
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm font-mono"
+                          placeholder="<p>Section content...</p>"
+                        />
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-gray-500">
+                        <span>Order:</span>
+                        <input
+                          type="number"
+                          min={0}
+                          value={section.order}
+                          onChange={e => {
+                            const newOrder = parseInt(e.target.value, 10);
+                            if (!Number.isNaN(newOrder)) {
+                              setSections(prev => prev.map((s,i)=> i===index ? { ...s, order: newOrder } : s).sort((a,b)=>a.order-b.order));
+                            }
+                          }}
+                          className="w-16 px-2 py-1 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSections(prev => prev.filter((_,i)=>i!==index))}
+                        className="text-red-600 hover:text-red-800 text-xs"
+                      >
+                        Remove
+                      </button>
+                      {index>0 && (
+                        <button
+                          type="button"
+                          onClick={() => setSections(prev => {
+                            const copy = [...prev];
+                            const tmp = copy[index-1];
+                            copy[index-1] = copy[index];
+                            copy[index] = tmp;
+                            return copy.map((s,i)=> ({...s, order:i}));
+                          })}
+                          className="text-gray-600 hover:text-gray-900 text-xs"
+                        >
+                          ↑ Up
+                        </button>
+                      )}
+                      {index < sections.length -1 && (
+                        <button
+                          type="button"
+                          onClick={() => setSections(prev => {
+                            const copy = [...prev];
+                            const tmp = copy[index+1];
+                            copy[index+1] = copy[index];
+                            copy[index] = tmp;
+                            return copy.map((s,i)=> ({...s, order:i}));
+                          })}
+                          className="text-gray-600 hover:text-gray-900 text-xs"
+                        >
+                          ↓ Down
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
