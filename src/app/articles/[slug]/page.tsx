@@ -4,7 +4,10 @@ import { notFound } from 'next/navigation';
 import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import ArticleEnhancements from '@/components/ArticleEnhancements';
+import { getArticleFullContent } from '@/lib/data';
 import { getBaseUrl } from '@/lib/url';
+import type { IArticle } from '@/models/Article';
+import type { ICategory } from '@/models/Category';
 import type { Article } from '@/types/article';
 
 // Force dynamic rendering for Vercel
@@ -18,68 +21,43 @@ interface ArticlePageProps {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/articles/${slug}`;
-    
-    console.log('[DEBUG] Article Metadata - Fetching article metadata from:', apiUrl);
-    console.log('[DEBUG] Article slug:', slug);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Article metadata response status:', response.status);
-    console.log('[DEBUG] Article metadata response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Article metadata fetch failed:', response.status, response.statusText);
+  const articleDoc = await getArticleFullContent(slug) as (IArticle & { category?: ICategory; author?: { name?: string } });
+    if (!articleDoc) {
       return {
         title: 'Article Not Found - Sri Lanka How',
-        description: 'The requested article could not be found.',
+        description: 'The requested article could not be found.'
       };
     }
-
-    const data = await response.json();
-    const article = data.article;
-    console.log('[DEBUG] Article metadata received for:', article?.title || 'Unknown title');
-
+    const base = getBaseUrl();
+    const canonical = `${base}/articles/${articleDoc.slug}`;
+    const image = articleDoc.featuredImage || '/default-article-image.jpg';
     return {
-      title: `${article.title} - Sri Lanka How`,
-      description: article.excerpt || article.metaDescription || `Read ${article.title} on Sri Lanka How - Your ultimate guide to Sri Lanka.`,
-      keywords: article.tags?.join(', ') || article.category?.name,
-      authors: [{ name: article.author?.name || 'Sri Lanka How' }],
+      title: `${articleDoc.title} - Sri Lanka How`,
+      description: articleDoc.excerpt || articleDoc.metaDescription || `Read ${articleDoc.title} on Sri Lanka How - Your ultimate guide to Sri Lanka.`,
+      keywords: articleDoc.tags?.join(', ') || articleDoc.category?.name,
+      authors: [{ name: articleDoc.author?.name || 'Sri Lanka How' }],
       openGraph: {
-        title: article.title,
-        description: article.excerpt || article.metaDescription,
-        url: `${getBaseUrl()}/articles/${article.slug}`,
+        title: articleDoc.title,
+        description: articleDoc.excerpt || articleDoc.metaDescription,
+        url: canonical,
         siteName: 'Sri Lanka How',
-        images: [
-          {
-            url: article.featuredImage || article.image || '/default-article-image.jpg',
-            width: 1200,
-            height: 630,
-            alt: article.title,
-          },
-        ],
+        images: [{ url: image, width: 1200, height: 630, alt: articleDoc.title }],
         locale: 'en_US',
         type: 'article',
-        publishedTime: article.publishedAt,
-        modifiedTime: article.updatedAt,
-        authors: [article.author?.name || 'Sri Lanka How'],
-        tags: article.tags,
+        publishedTime: articleDoc.publishedAt as unknown as string,
+        modifiedTime: (articleDoc as unknown as { updatedAt?: string }).updatedAt,
+        authors: [articleDoc.author?.name || 'Sri Lanka How'],
+        tags: articleDoc.tags,
       },
       twitter: {
         card: 'summary_large_image',
-        title: article.title,
-        description: article.excerpt || article.metaDescription,
-        images: [article.featuredImage || article.image || '/default-article-image.jpg'],
+        title: articleDoc.title,
+        description: articleDoc.excerpt || articleDoc.metaDescription,
+        images: [image],
       },
-      alternates: {
-        canonical: `${getBaseUrl()}/articles/${article.slug}`,
-      },
+      alternates: { canonical },
       robots: {
         index: true,
         follow: true,
@@ -92,11 +70,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
         },
       },
     };
-  } catch (error) {
-    console.error('Error generating metadata:', error);
+  } catch (err) {
+    console.error('[DEBUG] generateMetadata error:', err);
     return {
       title: 'Sri Lanka How - Your Ultimate Guide to Sri Lanka',
-      description: 'Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.',
+      description: 'Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.'
     };
   }
 }
@@ -104,36 +82,17 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 // Fetch article data
 async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/articles/${slug}`;
-    
-    console.log('[DEBUG] Article Detail - Fetching article from:', apiUrl);
-    console.log('[DEBUG] Article slug:', slug);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Article detail response status:', response.status);
-    console.log('[DEBUG] Article detail response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Article detail fetch failed:', response.status, response.statusText);
-      return null;
-    }
-
-    const data = await response.json();
-    console.log('[DEBUG] Article detail data received for:', data.article?.title || 'Unknown title');
-    return data.article;
-  } catch (error) {
-    console.error('[DEBUG] Error fetching article:', error);
+    const doc = await getArticleFullContent(slug);
+    if (!doc) return null;
+    return doc as unknown as Article;
+  } catch (err) {
+    console.error('[DEBUG] getArticle error:', err);
     return null;
   }
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const article = await getArticle(slug);
 
   if (!article) {
