@@ -4,7 +4,7 @@ import Article from '@/models/Article'
 import Category from '@/models/Category'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl ='https://www.techtoolkithub.com/'
+  const baseUrl ='https://www.techtoolkithub.com'
   
   try {
     await connectDB()
