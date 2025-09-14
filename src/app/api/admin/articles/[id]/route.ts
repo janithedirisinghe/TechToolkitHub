@@ -5,6 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
+import { revalidateSitemap } from '@/lib/sitemap';
 import sanitizeHtml from 'sanitize-html';
 
 // GET single article
@@ -176,6 +177,14 @@ export async function PUT(
       );
     }
 
+    // Revalidate sitemap if status changed to published or if it was already published
+    const wasPublished = currentArticle.status === 'published';
+    const isNowPublished = status === 'published';
+    
+    if (wasPublished || isNowPublished) {
+      await revalidateSitemap();
+    }
+
     // Populate for response
     await article?.populate('category', 'name slug');
     await article?.populate('author', 'name email');
@@ -225,6 +234,11 @@ export async function DELETE(
       article.category,
       { $inc: { articleCount: -1 } }
     );
+
+    // Revalidate sitemap if published article was deleted
+    if (article.status === 'published') {
+      await revalidateSitemap();
+    }
 
     return NextResponse.json({
       success: true,

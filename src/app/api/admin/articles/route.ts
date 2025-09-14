@@ -5,6 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
+import { revalidateSitemap } from '@/lib/sitemap';
 import sanitizeHtml from 'sanitize-html';
 
 // GET all articles (admin)
@@ -169,6 +170,11 @@ export async function POST(request: NextRequest) {
       categoryDoc._id,
       { $inc: { articleCount: 1 } }
     );
+
+    // Revalidate sitemap when new article is published
+    if (status === 'published') {
+      await revalidateSitemap();
+    }
 
     // Populate for response
     await article.populate('category', 'name slug');
