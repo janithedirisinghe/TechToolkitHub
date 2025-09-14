@@ -2,190 +2,141 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Sri Lanka How",
-  description: "Sri Lanka How privacy policy. Learn how we collect, use, and protect your personal information when you use our website and services.",
+  title: "Privacy Policy - TechToolkitHub",
+  description: "Privacy Policy for TechToolkitHub: how we collect, use, store and safeguard data including cookies, analytics, and affiliate tracking.",
   robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gray-900 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-            Privacy Policy
-          </h1>
-          <p className="text-lg text-gray-300">
-            Last updated: September 7, 2025
-          </p>
+      <section className="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-800 text-white py-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">Privacy Policy</h1>
+          <p className="text-sm mt-3 text-indigo-200">Last updated: September 14, 2025</p>
         </div>
       </section>
 
-      {/* Breadcrumbs */}
       <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-4">
-              <li>
-                <Link href="/" className="text-gray-500 hover:text-gray-700">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <span className="text-gray-400">/</span>
-              </li>
-              <li>
-                <span className="text-gray-900 font-medium">Privacy Policy</span>
-              </li>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <nav aria-label="Breadcrumb" className="text-sm">
+            <ol className="flex items-center space-x-2 text-gray-500">
+              <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
+              <li className="text-gray-400">/</li>
+              <li className="text-gray-900 font-medium">Privacy Policy</li>
             </ol>
           </nav>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <div className="prose prose-lg max-w-none">
-            <p className="text-gray-600 mb-8">
-              At Sri Lanka How, we are committed to protecting your privacy and ensuring 
-              the security of your personal information. This Privacy Policy explains how 
-              we collect, use, disclose, and safeguard your information when you visit our 
-              website srilankahow.com.
-            </p>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 lg:p-10">
+          <div className="prose prose-slate max-w-none prose-headings:font-semibold">
+            <p className="text-gray-600">This Privacy Policy explains how <span className="font-semibold text-gray-900">TechToolkitHub</span> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) collects, uses, stores, and protects information when you access our software reviews, guides, comparison tools, and related resources.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Information We Collect</h2>
-            
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Personal Information</h3>
-            <p className="text-gray-600 mb-4">
-              We may collect personal information that you voluntarily provide when you:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Subscribe to our newsletter</li>
-              <li>Contact us through our contact form</li>
-              <li>Leave comments on our articles</li>
-              <li>Participate in surveys or promotions</li>
+            <h2>1. Summary Overview</h2>
+            <p className="text-sm text-gray-500">(For a quick read—details are below)</p>
+            <ul>
+              <li>We minimize personal data collection.</li>
+              <li>We use privacy‑respecting analytics aggregation where possible.</li>
+              <li>Affiliate links may include tracking parameters for commission attribution.</li>
+              <li>Most non‑essential scripts are deferred until consent.</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Automatically Collected Information</h3>
-            <p className="text-gray-600 mb-4">
-              When you visit our website, we may automatically collect certain information:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>IP address and location data</li>
-              <li>Browser type and version</li>
-              <li>Device information</li>
-              <li>Pages visited and time spent on site</li>
-              <li>Referring website</li>
+            <h2>2. Data We Collect</h2>
+            <h3>Voluntarily Provided</h3>
+            <ul>
+              <li>Contact form submissions (name, email, message).</li>
+              <li>Newsletter sign‑ups (email address).</li>
+              <li>Feedback or survey responses (contextual answers only).</li>
+            </ul>
+            <h3>Automatically Collected (Server / Client Logs)</h3>
+            <ul>
+              <li>IP (short‑lived in logs for security + rate limiting, then rotated / anonymized).</li>
+              <li>User agent, device type, referrer.</li>
+              <li>Pages viewed, time on page, interaction events (aggregated).</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">How We Use Your Information</h2>
-            <p className="text-gray-600 mb-4">
-              We use the information we collect for the following purposes:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>To provide and maintain our website</li>
-              <li>To send newsletters and updates (with your consent)</li>
-              <li>To respond to your inquiries and provide customer support</li>
-              <li>To analyze website usage and improve our content</li>
-              <li>To prevent fraud and ensure website security</li>
-              <li>To comply with legal obligations</li>
+            <h2>3. Cookies & Tracking Categories</h2>
+            <p>We group storage & tracking into categories surfaced in the cookie banner:</p>
+            <ul>
+              <li><strong>Essential:</strong> Core site delivery, load balancing, security (cannot be disabled).</li>
+              <li><strong>Analytics:</strong> Understand article performance & feature usefulness.</li>
+              <li><strong>Preferences:</strong> Theme, dismissed banners, saved comparison filters.</li>
+              <li><strong>Affiliate Attribution:</strong> Tracks outbound vendor click conversions (anonymized, no user profile building).</li>
+            </ul>
+            <p>We do not serve behavioral advertising or run retargeting pixels.</p>
+
+            <h2>4. Analytics Approach</h2>
+            <p>We may use privacy‑minded platforms or self‑hosted tooling to measure high‑level product interest (e.g., category popularity, feature comparison usage). IP addresses may be truncated; we do not merge analytics events with personal form submissions.</p>
+
+            <h2>5. Affiliate Links</h2>
+            <p>Clicking certain outbound links may append a vendor parameter (e.g., <code>?ref</code> or <code>utm_*</code>). This helps attribute referrals. We do not receive personal data about your downstream vendor account—only aggregated commission reporting.</p>
+
+            <h2>6. Legal Bases (EEA / Similar Jurisdictions)</h2>
+            <ul>
+              <li>Legitimate interest: security logging, service integrity.</li>
+              <li>Consent: non‑essential cookies (analytics, preferences, affiliate tags where required).</li>
+              <li>Contract: responding to direct inquiries you initiate.</li>
+              <li>Legal obligation: compliance with regulatory inquiries.</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Cookies and Tracking Technologies</h2>
-            <p className="text-gray-600 mb-4">
-              We use cookies and similar tracking technologies to enhance your browsing experience:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li><strong>Essential Cookies:</strong> Required for basic website functionality</li>
-              <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site</li>
-              <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
-            </ul>
-            <p className="text-gray-600 mb-6">
-              You can control cookies through your browser settings, but disabling certain 
-              cookies may limit website functionality.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Information Sharing and Disclosure</h2>
-            <p className="text-gray-600 mb-4">
-              We do not sell, trade, or rent your personal information to third parties. 
-              We may share your information only in the following circumstances:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>With your explicit consent</li>
-              <li>To comply with legal requirements or court orders</li>
-              <li>To protect our rights, property, or safety</li>
-              <li>With trusted service providers who assist in operating our website</li>
-              <li>In connection with a business transfer or merger</li>
+            <h2>7. Data Retention</h2>
+            <ul>
+              <li>Error & access logs: typically ≤ 30–90 days (security review cycles).</li>
+              <li>Newsletter emails: retained until you unsubscribe.</li>
+              <li>Support / contact threads: up to 12 months for continuity.</li>
+              <li>Aggregated analytics: indefinite in non‑identifiable form.</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Third-Party Services</h2>
-            <p className="text-gray-600 mb-4">
-              Our website may contain links to third-party websites or integrate with 
-              third-party services. We use the following third-party services:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Google Analytics for website analytics</li>
-              <li>Email service providers for newsletters</li>
-              <li>Social media platforms for content sharing</li>
+            <h2>8. Information Sharing</h2>
+            <ul>
+              <li>Vendors assisting with infrastructure (hosting, email delivery) under confidentiality terms.</li>
+              <li>Regulatory authorities where legally compelled.</li>
+              <li>Potential acquirer in a merger or asset transfer (with continuity safeguards).</li>
             </ul>
-            <p className="text-gray-600 mb-6">
-              These third parties have their own privacy policies, and we are not 
-              responsible for their practices.
-            </p>
+            <p>We do <span className="font-semibold">not</span> sell personal data.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Data Security</h2>
-            <p className="text-gray-600 mb-6">
-              We implement appropriate security measures to protect your personal information 
-              against unauthorized access, alteration, disclosure, or destruction. However, 
-              no method of transmission over the internet is 100% secure, and we cannot 
-              guarantee absolute security.
-            </p>
+            <h2>9. International Transfers</h2>
+            <p>Data may be processed in multiple jurisdictions. Where required, we rely on standard contractual clauses or equivalent safeguards for cross‑border transfers.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Your Rights</h2>
-            <p className="text-gray-600 mb-4">
-              Depending on your location, you may have the following rights regarding your personal information:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Access: Request access to your personal data</li>
-              <li>Correction: Request correction of inaccurate data</li>
-              <li>Deletion: Request deletion of your personal data</li>
-              <li>Portability: Request transfer of your data</li>
-              <li>Withdrawal: Withdraw consent for data processing</li>
+            <h2>10. Security Measures</h2>
+            <ul>
+              <li>Hardened hosting + TLS encryption.</li>
+              <li>Principle of least privilege for internal tooling.</li>
+              <li>Periodic dependency & vulnerability scanning.</li>
+              <li>Content Security Policy (CSP) (progressively tightening).</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Children&apos;s Privacy</h2>
-            <p className="text-gray-600 mb-6">
-              Our website is not intended for children under 13 years of age. We do not 
-              knowingly collect personal information from children under 13. If we become 
-              aware that we have collected personal information from a child under 13, 
-              we will take steps to delete such information.
-            </p>
+            <h2>11. Your Rights (Depending on Region)</h2>
+            <ul>
+              <li>Access / export your personal data.</li>
+              <li>Rectify inaccuracies.</li>
+              <li>Erase (where retention is not legally required).</li>
+              <li>Restrict or object to certain processing.</li>
+              <li>Withdraw consent for analytics / preferences at any time (use the cookie settings link or clear local storage).</li>
+            </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">International Data Transfers</h2>
-            <p className="text-gray-600 mb-6">
-              Your information may be transferred to and processed in countries other than 
-              your own. We ensure that such transfers comply with applicable data protection 
-              laws and provide adequate protection for your personal information.
-            </p>
+            <h2>12. Children</h2>
+            <p>The site is not directed to children under 13 (or higher age as defined by local law). We do not knowingly collect their data. Requests for removal can be submitted via the contact channels below.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Changes to This Privacy Policy</h2>
-            <p className="text-gray-600 mb-6">
-              We may update this Privacy Policy from time to time. We will notify you of 
-              any material changes by posting the new Privacy Policy on our website and 
-              updating the &quot;Last updated&quot; date. Your continued use of our website after 
-              any changes constitutes acceptance of the updated policy.
-            </p>
+            <h2>13. Automated Decision‑Making</h2>
+            <p>We do not conduct automated decision‑making producing legal or similarly significant effects.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Us</h2>
-            <p className="text-gray-600 mb-4">
-              If you have any questions about this Privacy Policy or our data practices, 
-              please contact us:
-            </p>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-gray-700">
-                <strong>Email:</strong> privacy@srilankahow.com<br />
-                <strong>Website:</strong> <Link href="/contact" className="text-emerald-600 hover:text-emerald-700">Contact Form</Link>
-              </p>
+            <h2>14. Updates to This Policy</h2>
+            <p>Material changes will be timestamped at the top of this page. Continued use after publication constitutes acceptance.</p>
+
+            <h2>15. Contact</h2>
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 not-prose text-sm">
+              <p className="text-gray-800"><strong>Email:</strong> privacy@techtoolkithub.com<br />
+              <strong>Contact:</strong> <Link href="/contact" className="text-indigo-600 hover:text-indigo-700">Contact Form</Link></p>
+            </div>
+
+            <h2>16. Quick Opt-Out Guidance</h2>
+            <p>You may clear site data in your browser settings to remove stored preferences. After that, the cookie banner will reappear allowing you to reapply consent choices.</p>
+
+            <div className="mt-8 p-4 bg-slate-50 border border-slate-200 rounded-lg not-prose text-xs leading-relaxed text-slate-600">
+              <p><strong>Note:</strong> This document is provided for transparency and does not create contractual obligations beyond those outlined in the Terms &amp; Conditions.</p>
             </div>
           </div>
         </div>

@@ -2,196 +2,113 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Sri Lanka How",
-  description: "Terms of Service for Sri Lanka How. Read our terms and conditions for using our website, content, and services.",
+  title: "Terms & Conditions - TechToolkitHub",
+  description: "Terms & Conditions governing use of TechToolkitHub software reviews, guides, and related services.",
   robots: { index: true, follow: true },
 };
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gray-900 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-            Terms of Service
-          </h1>
-          <p className="text-lg text-gray-300">
-            Last updated: September 7, 2025
-          </p>
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white py-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">Terms & Conditions</h1>
+          <p className="text-sm mt-3 text-blue-200">Last updated: September 14, 2025</p>
         </div>
       </section>
 
       {/* Breadcrumbs */}
       <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-4">
-              <li>
-                <Link href="/" className="text-gray-500 hover:text-gray-700">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <span className="text-gray-400">/</span>
-              </li>
-              <li>
-                <span className="text-gray-900 font-medium">Terms of Service</span>
-              </li>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <nav aria-label="Breadcrumb" className="text-sm">
+            <ol className="flex items-center space-x-2 text-gray-500">
+              <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
+              <li className="text-gray-400">/</li>
+              <li className="text-gray-900 font-medium">Terms & Conditions</li>
             </ol>
           </nav>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <div className="prose prose-lg max-w-none">
-            <p className="text-gray-600 mb-8">
-              Welcome to Sri Lanka How. These Terms of Service (&quot;Terms&quot;) govern your 
-              use of our website located at srilankahow.com and any related services 
-              provided by Sri Lanka How.
-            </p>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 lg:p-10">
+          <div className="prose prose-slate prose-headings:font-semibold max-w-none">
+            <p className="text-gray-600">Welcome to <span className="font-semibold text-gray-900">TechToolkitHub</span> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;). These Terms &amp; Conditions (&quot;Terms&quot;) govern your access to and use of the TechToolkitHub website, content, tools, review materials, and any related services. By accessing or using the site you agree to these Terms. If you disagree with any part, do not use the site.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Acceptance of Terms</h2>
-            <p className="text-gray-600 mb-6">
-              By accessing and using this website, you accept and agree to be bound by 
-              the terms and provision of this agreement. If you do not agree to abide 
-              by the above, please do not use this service.
-            </p>
+            <h2>1. Purpose of the Site</h2>
+            <p>TechToolkitHub provides independent software reviews, comparisons, pricing breakdowns, productivity guides, tutorials, and industry commentary. Content is offered for informational and educational purposes only and does not constitute professional, legal, security, accounting, or investment advice.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Use License</h2>
-            <p className="text-gray-600 mb-4">
-              Permission is granted to temporarily download one copy of the materials 
-              on Sri Lanka How&apos;s website for personal, non-commercial transitory viewing only. 
-              This is the grant of a license, not a transfer of title, and under this license you may not:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Modify or copy the materials</li>
-              <li>Use the materials for any commercial purpose or for any public display</li>
-              <li>Attempt to reverse engineer any software contained on the website</li>
-              <li>Remove any copyright or other proprietary notations from the materials</li>
+            <h2>2. Review Independence & Methodology</h2>
+            <p>We aim for objectivity. Reviews may reference hands‑on testing, vendor documentation, release notes, performance benchmarks, user feedback, pricing transparency, integration breadth, and security posture (where publicly disclosed). While we strive for accuracy, software evolves rapidly and no guarantee is made that older reviews remain current.</p>
+            <ul>
+              <li>We do not sell ranking positions.</li>
+              <li>Sponsored placements or affiliate relationships are disclosed.</li>
+              <li>Subjective opinions are clearly separated from factual statements where practical.</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Content and Intellectual Property</h2>
-            <p className="text-gray-600 mb-4">
-              All content on this website, including but not limited to text, graphics, 
-              logos, images, and software, is the property of Sri Lanka How or its content 
-              suppliers and is protected by international copyright laws.
-            </p>
-            <p className="text-gray-600 mb-6">
-              You may share our content with proper attribution and links back to the 
-              original source. However, republishing entire articles without permission 
-              is prohibited.
-            </p>
+            <h2>3. Affiliate & Referral Disclosure</h2>
+            <p>Some outbound links may be affiliate or tracking links. If you click such a link and make a purchase or sign up, we may earn a commission—at no additional cost to you. These relationships help fund research, testing environments, and editorial operations. Affiliate status does not affect the integrity of our evaluations.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">User-Generated Content</h2>
-            <p className="text-gray-600 mb-4">
-              When you submit comments, reviews, or other content to our website, you grant 
-              Sri Lanka How a non-exclusive, royalty-free, perpetual license to use, 
-              modify, and distribute that content. You are responsible for ensuring that 
-              any content you submit:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Is accurate and not misleading</li>
-              <li>Does not infringe on the rights of others</li>
-              <li>Is not offensive, harmful, or inappropriate</li>
-              <li>Complies with applicable laws and regulations</li>
+            <h2>4. Use of Content & License</h2>
+            <p>You are granted a limited, revocable, non‑exclusive license to access and view publicly available content for personal, non‑commercial use. Except where explicitly permitted:</p>
+            <ul>
+              <li>No bulk scraping, automated harvesting, or mirroring.</li>
+              <li>No republication of full articles without written permission.</li>
+              <li>Attribution with a do‑follow link is required for quoted excerpts (≤ 100 words).</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Prohibited Uses</h2>
-            <p className="text-gray-600 mb-4">
-              You may not use our website for any of the following purposes:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>Engaging in any unlawful or fraudulent activity</li>
-              <li>Transmitting malware, viruses, or harmful code</li>
-              <li>Spamming or sending unsolicited communications</li>
-              <li>Attempting to gain unauthorized access to our systems</li>
-              <li>Interfering with the proper functioning of the website</li>
-              <li>Impersonating another person or entity</li>
+            <h2>5. Account & Authentication (Future Features)</h2>
+            <p>If user accounts, saved toolkits, or comment systems are introduced, you agree to provide accurate information and maintain credential security. We may suspend or terminate access for misuse, abuse, fraud, or violation of these Terms.</p>
+
+            <h2>6. Prohibited Activities</h2>
+            <ul>
+              <li>Security probing, vulnerability exploitation, or attempting to bypass access controls.</li>
+              <li>Injecting or distributing malware, spyware, or malicious automation.</li>
+              <li>Commercial resale of structured datasets derived from our content without license.</li>
+              <li>False impersonation of staff, experts, or vendors.</li>
+              <li>Misuse of contact channels for spam or undisclosed solicitation.</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Information Accuracy</h2>
-            <p className="text-gray-600 mb-6">
-              While we strive to provide accurate and up-to-date information about Sri Lanka, 
-              we make no warranties about the completeness, reliability, or accuracy of this 
-              information. Travel conditions, regulations, and other factors can change 
-              rapidly. You should verify important information independently before making 
-              travel decisions.
-            </p>
+            <h2>7. Intellectual Property</h2>
+            <p>All branding, layouts, curated datasets, comparison matrices, review scoring frameworks, copy, illustrations, and custom UI components are protected by copyright, trademark, and/or database rights. Third‑party marks belong to their respective owners.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Disclaimer</h2>
-            <p className="text-gray-600 mb-4">
-              The information on this website is provided on an &quot;as is&quot; basis. To the 
-              fullest extent permitted by law, Sri Lanka How excludes:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
-              <li>All warranties, whether express or implied</li>
-              <li>All liability for any direct, indirect, or consequential loss or damage</li>
-              <li>All liability arising from any user&apos;s reliance on materials found or accessed through this website</li>
-            </ul>
+            <h2>8. Third‑Party Software & Pricing Data</h2>
+            <p>Logos, pricing snapshots, feature claims, and roadmap references originate from vendor disclosures at the time of publication. These may change without notice. Always confirm critical purchase decisions directly with the vendor.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">External Links</h2>
-            <p className="text-gray-600 mb-6">
-              Our website may contain links to third-party websites. These links are 
-              provided for your convenience only. We have no control over the content 
-              of these websites and assume no responsibility for them or for any loss 
-              or damage that may arise from your use of them.
-            </p>
+            <h2>9. Disclaimers</h2>
+            <p>The site and content are provided &quot;as is&quot; without warranties of any kind—express or implied—including fitness for a particular purpose, accuracy, availability, merchantability, or non‑infringement. We do not warrant that: (a) content will remain accurate; (b) the site will be uninterrupted, secure, or error‑free; or (c) defects will be corrected.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Privacy Policy</h2>
-            <p className="text-gray-600 mb-6">
-              Your privacy is important to us. Please review our Privacy Policy, which 
-              also governs your use of the website, to understand our practices.
-            </p>
+            <h2>10. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, we shall not be liable for indirect, incidental, consequential, special, exemplary, or punitive damages; loss of profits, revenue, data, goodwill; business interruption; procurement of substitute services; or reliance damages arising from site use—even if advised of the possibility. Aggregate liability shall not exceed USD 100.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Termination</h2>
-            <p className="text-gray-600 mb-6">
-              We may terminate or suspend your access to our website immediately, without 
-              prior notice or liability, for any reason whatsoever, including without 
-              limitation if you breach the Terms.
-            </p>
+            <h2>11. External Links</h2>
+            <p>Outbound links to vendor sites, documentation, marketplaces, or community resources are provided for convenience. We do not control and are not responsible for third‑party content, security posture, availability, or privacy practices.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Limitation of Liability</h2>
-            <p className="text-gray-600 mb-6">
-              In no event shall Sri Lanka How, nor its directors, employees, partners, 
-              agents, suppliers, or affiliates, be liable for any indirect, incidental, 
-              punitive, consequential, or special damages arising from your use of the website.
-            </p>
+            <h2>12. Privacy & Data Practices</h2>
+            <p>Your use of the site is also governed by our <Link href="/privacy" className="text-blue-600 hover:text-blue-700 underline">Privacy Policy</Link>, which explains analytics, cookies, affiliate tracking, log data, and user rights.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Governing Law</h2>
-            <p className="text-gray-600 mb-6">
-              These Terms shall be interpreted and governed by the laws of Sri Lanka. 
-              Any disputes arising under these Terms shall be subject to the exclusive 
-              jurisdiction of the courts of Sri Lanka.
-            </p>
+            <h2>13. Cookies & Consent</h2>
+            <p>We use essential cookies (operational), analytics cookies (aggregated usage insights), preference cookies (UI choices), and affiliate attribution parameters. Non‑essential categories will only run after consent—see cookie banner controls.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Changes to Terms</h2>
-            <p className="text-gray-600 mb-6">
-              We reserve the right to revise these Terms at any time without notice. 
-              By using this website, you are agreeing to be bound by the then current 
-              version of these Terms.
-            </p>
+            <h2>14. Changes & Versioning</h2>
+            <p>We may amend these Terms to reflect operational, legal, or regulatory changes. Material changes will be dated at the top of this page. Continued use after updates constitutes acceptance.</p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact Information</h2>
-            <p className="text-gray-600 mb-4">
-              If you have any questions about these Terms, please contact us:
-            </p>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-gray-700">
-                <strong>Email:</strong> legal@srilankahow.com<br />
-                <strong>Website:</strong> <Link href="/contact" className="text-emerald-600 hover:text-emerald-700">Contact Form</Link>
-              </p>
+            <h2>15. Suspension & Termination</h2>
+            <p>We may restrict or terminate access for abuse, legal risk, security threats, systematic scraping, or violation of these Terms. Sections relating to IP, disclaimers, limitation of liability, and governing law survive termination.</p>
+
+            <h2>16. Governing Law & Jurisdiction</h2>
+            <p>These Terms are governed by the laws of the jurisdiction in which the site operator is established. Where required, conflict‑of‑laws principles are excluded. Disputes shall be subject to exclusive jurisdiction of competent courts in that locale unless mandatory consumer law provides otherwise.</p>
+
+            <h2>17. Contact</h2>
+            <p>Questions or legal notices:</p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 not-prose text-sm">
+              <p className="text-gray-800"><strong>Email:</strong> legal@techtoolkithub.com<br />
+              <strong>Contact:</strong> <Link href="/contact" className="text-blue-600 hover:text-blue-700">Contact Form</Link></p>
             </div>
 
-            <div className="mt-8 p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <h3 className="text-lg font-semibold text-emerald-800 mb-2">Travel Disclaimer</h3>
-              <p className="text-emerald-700 text-sm">
-                Travel involves inherent risks. While we provide information to help you 
-                make informed decisions, you travel at your own risk. Always check current 
-                travel advisories, health requirements, and local conditions before traveling 
-                to Sri Lanka.
-              </p>
+            <div className="mt-8 p-4 bg-slate-50 border border-slate-200 rounded-lg not-prose text-xs leading-relaxed text-slate-600">
+              <p><strong>Editorial Integrity Notice:</strong> We regularly refresh core comparative guides. Archived articles may remain for historical context and may not reflect new pricing tiers, licensing changes, or deprecated features.</p>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Inter, Open_Sans } from "next/font/google";
 import "./globals.css";
 // Conditional hiding of site chrome for admin handled by a client component
 import ClientChrome from '@/components/ClientChrome';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientChrome>
           {children}
         </ClientChrome>
+        <CookieConsentBanner />
       </body>
     </html>
   );
