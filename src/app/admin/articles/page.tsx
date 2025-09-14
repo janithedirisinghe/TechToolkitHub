@@ -22,7 +22,7 @@ interface Article {
   createdAt: string;
 }
 
-const categories = ['All', 'Travel', 'Guides', 'Culture', 'Lifestyle'];
+const categories = ['All', 'Software Reviews', 'Dev Tools', 'Productivity', 'Business Tools'];
 const statuses = ['All', 'Published', 'Draft'];
 
 export default function ArticlesPage() {

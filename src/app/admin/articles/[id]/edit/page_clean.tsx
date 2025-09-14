@@ -292,7 +292,7 @@ export default function EditArticlePage() {
                   placeholder="article-url-slug"
                 />
                 <p className="text-sm text-gray-500 mt-1">
-                  URL: srilankahow.com/{formData.category.toLowerCase()}/{formData.slug}
+                  URL: techtoolkithub.com/{formData.category.toLowerCase()}/{formData.slug}
                 </p>
               </div>
 

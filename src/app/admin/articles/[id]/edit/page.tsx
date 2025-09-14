@@ -265,7 +265,7 @@ export default function EditArticlePage() {
 
   return (
     <AdminLayout>
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
             {error}
@@ -273,21 +273,21 @@ export default function EditArticlePage() {
         )}
 
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Edit Article</h1>
             <p className="text-gray-600">Update your blog article</p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
             <button
               onClick={handleDelete}
-              className="text-red-600 hover:text-red-900 flex items-center"
+              className="text-red-600 hover:text-red-900 flex items-center text-sm"
             >
               🗑️ Delete Article
             </button>
             <button
               onClick={() => router.back()}
-              className="text-gray-600 hover:text-gray-900 flex items-center"
+              className="text-gray-600 hover:text-gray-900 flex items-center text-sm"
             >
               ← Back to Articles
             </button>
@@ -331,7 +331,7 @@ export default function EditArticlePage() {
                   placeholder="article-url-slug"
                 />
                 <p className="text-sm text-gray-500 mt-1">
-                  URL: srilankahow.com/{formData.category.toLowerCase()}/{formData.slug}
+                  URL: techtoolkithub.com/{formData.category.toLowerCase()}/{formData.slug}
                 </p>
               </div>
 
