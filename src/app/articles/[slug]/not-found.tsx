@@ -31,6 +31,7 @@ export default function ArticleNotFound() {
             Browse All Articles
           </Link>
         </div>
+        {/* Sample comment */}
       </div>
     </div>
   );
