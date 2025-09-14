@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { searchArticles, getActiveCategories } from '@/lib/data';
+import { searchArticles } from '@/lib/data';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
@@ -32,16 +32,6 @@ interface Article {
   views: number;
 }
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  description: string;
-  color: string;
-  order: number;
-  articleCount: number;
-}
-
 // Fetch data from APIs
 async function getGuidesArticles(): Promise<Article[]> {
   console.log('[DEBUG] Guides Page - Direct DB query for category=guides');
@@ -49,21 +39,10 @@ async function getGuidesArticles(): Promise<Article[]> {
   return articles as unknown as Article[];
 }
 
-async function getCategories(): Promise<Category[]> {
-  console.log('[DEBUG] Guides Page - Direct DB query for categories');
-  const categories = await getActiveCategories();
-  return categories as unknown as Category[];
-}
-
-
-
 export default async function GuidesPage() {
-  const [guidesArticles, categories] = await Promise.all([
-    getGuidesArticles(),
-    getCategories()
-  ]);
+  const guidesArticles = await getGuidesArticles();
 
-  const featuredArticles = guidesArticles.filter(article => article.featured);
+  const featuredArticles = guidesArticles.filter((article: Article) => article.featured);
   const allArticles = guidesArticles;
 
   return (
@@ -207,60 +186,28 @@ export default async function GuidesPage() {
             </section>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - Ad Space */}
           <div className="lg:w-1/4">
             <div className="sticky top-24 space-y-6">
-              {/* Categories */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category.name}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors flex items-center justify-between"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.articleCount})</span>
-                    </button>
-                  ))}
+              {/* Ad Space - Replace with your ads */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[400px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Difficulty Levels */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Difficulty Levels</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-                      Easy
-                    </span>
-                    <span className="text-sm text-gray-600">Quick & simple steps</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
-                      Medium
-                    </span>
-                    <span className="text-sm text-gray-600">Requires some planning</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
-                      Hard
-                    </span>
-                    <span className="text-sm text-gray-600">Complex process</span>
-                  </div>
+              {/* Additional Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[300px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Quick Tips */}
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-purple-800 mb-3">Pro Tips</h3>
-                <ul className="space-y-2 text-sm text-purple-700">
-                  <li>• Always carry copies of important documents</li>
-                  <li>• Download offline maps before traveling</li>
-                  <li>• Learn basic Sinhala/Tamil phrases</li>
-                  <li>• Keep emergency contacts handy</li>
-                  <li>• Research local customs beforehand</li>
-                </ul>
+              {/* More Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[250px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
+                </div>
               </div>
             </div>
           </div>

@@ -10,10 +10,10 @@ const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Travel', href: '/travel' },
-    { name: 'Culture', href: '/culture' },
-    { name: 'Guides', href: '/guides' },
-    { name: 'Lifestyle', href: '/lifestyle' },
+    { name: 'Reviews', href: '/software-reviews' },
+    { name: 'Dev Tools', href: '/dev-tools' },
+    { name: 'Productivity', href: '/productivity' },
+    { name: 'Business', href: '/business-tools' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -28,7 +28,7 @@ const Header = () => {
               <div className="relative h-10 w-60">
                 <Image
                   src="/logo-falcon.png"
-                  alt="Sri Lanka How"
+                  alt="TechToolkitHub"
                   fill
                   className="object-contain"
                   priority
@@ -44,7 +44,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-emerald-600 font-medium transition-colors duration-200"
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
               >
                 {item.name}
               </Link>
@@ -56,10 +56,10 @@ const Header = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search guides..."
+                placeholder="Search software reviews..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -71,7 +71,7 @@ const Header = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-emerald-600"
+              className="text-gray-700 hover:text-blue-600"
             >
               {isMenuOpen ? (
                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-4 py-2 text-gray-700 hover:text-emerald-600 hover:bg-gray-50 rounded-lg"
+                  className="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -106,10 +106,10 @@ const Header = () => {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search guides..."
+                  placeholder="Search software reviews..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
                 <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

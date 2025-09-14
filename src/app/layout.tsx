@@ -18,36 +18,36 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
-    template: "%s | Sri Lanka How"
+    default: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
+    template: "%s | TechToolkitHub"
   },
-  description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice. Your ultimate how-to resource for everything Sri Lanka.",
-  keywords: ["Sri Lanka", "travel guide", "tourism", "culture", "lifestyle", "how-to", "travel tips"],
-  authors: [{ name: "Sri Lanka How" }],
-  creator: "Sri Lanka How",
-  publisher: "Sri Lanka How",
+  description: "Discover the best software tools with our comprehensive reviews, tech guides, and expert insights. Your ultimate resource for software discovery and tech solutions.",
+  keywords: ["software reviews", "tech tools", "productivity software", "development tools", "business software", "app reviews", "software comparison"],
+  authors: [{ name: "TechToolkitHub" }],
+  creator: "TechToolkitHub",
+  publisher: "TechToolkitHub",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://srilankahow.com"),
+  metadataBase: new URL("https://techtoolkithub.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://srilankahow.com",
-    siteName: "Sri Lanka How",
-    title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
-    description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.",
+    url: "https://techtoolkithub.com",
+    siteName: "TechToolkitHub",
+    title: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
+    description: "Discover the best software tools with our comprehensive reviews, tech guides, and expert insights.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
+        alt: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
       },
     ],
   },
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
-    description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.",
+    title: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
+    description: "Discover the best software tools with our comprehensive reviews, tech guides, and expert insights.",
     images: ["/og-image.jpg"],
   },
   robots: {

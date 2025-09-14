@@ -25,7 +25,7 @@ async function seedDatabase() {
     // Create admin user
     const hashedPassword = await bcrypt.hash('admin123', 12);
     const admin = await Admin.create({
-      email: 'admin@srilankahow.com',
+      email: 'admin@techtoolkithub.com',
       password: hashedPassword,
       name: 'Admin User',
       role: 'super_admin',
@@ -36,37 +36,37 @@ async function seedDatabase() {
     // Create categories
     const categories = await Category.create([
       {
-        name: 'Travel',
-        slug: 'travel',
-        description: 'Travel guides, destinations, and tips for exploring Sri Lanka',
-        color: '#059669',
+        name: 'Software Reviews',
+        slug: 'software-reviews',
+        description: 'In-depth software reviews, comparisons, and recommendations',
+        color: '#2563EB',
         order: 1,
         isActive: true,
         articleCount: 0
       },
       {
-        name: 'Guides',
-        slug: 'guides',
-        description: 'Practical guides and how-to articles for living in Sri Lanka',
+        name: 'Dev Tools',
+        slug: 'dev-tools',
+        description: 'Development tools, frameworks, and programming software reviews',
         color: '#7C3AED',
         order: 2,
         isActive: true,
         articleCount: 0
       },
       {
-        name: 'Culture',
-        slug: 'culture',
-        description: 'Sri Lankan culture, traditions, and local insights',
-        color: '#DC2626',
+        name: 'Productivity',
+        slug: 'productivity',
+        description: 'Productivity software, project management, and workflow tools',
+        color: '#059669',
         order: 3,
         isActive: true,
         articleCount: 0
       },
       {
-        name: 'Lifestyle',
-        slug: 'lifestyle',
-        description: 'Living in Sri Lanka, expat life, and lifestyle tips',
-        color: '#EA580C',
+        name: 'Business Tools',
+        slug: 'business-tools',
+        description: 'Business software, CRM, marketing tools, and enterprise solutions',
+        color: '#DC2626',
         order: 4,
         isActive: true,
         articleCount: 0
@@ -77,12 +77,12 @@ async function seedDatabase() {
     // Create sample articles
     const articles = [
       {
-        title: 'Complete Guide to Sigiriya Rock Fortress',
-        slug: 'complete-guide-to-sigiriya-rock-fortress',
-        excerpt: 'Discover everything you need to know about visiting Sigiriya Rock Fortress, one of Sri Lanka\'s most iconic archaeological sites and UNESCO World Heritage location.',
-        content: `# Complete Guide to Sigiriya Rock Fortress
+        title: 'Complete Review of Visual Studio Code 2024',
+        slug: 'complete-review-visual-studio-code-2024',
+        excerpt: 'Discover everything you need to know about Visual Studio Code, the world\'s most popular code editor. In-depth review of features, extensions, and performance.',
+        content: `# Complete Review of Visual Studio Code 2024
 
-Sigiriya, also known as the Lion Rock, is one of Sri Lanka's most spectacular archaeological sites and a UNESCO World Heritage location. This ancient rock fortress rises 200 meters above the surrounding jungle and offers visitors a glimpse into the island's rich history.
+Visual Studio Code (VS Code) has become the go-to code editor for developers worldwide. This comprehensive review covers everything you need to know about Microsoft's free, open-source editor.
 
 ## History of Sigiriya
 
@@ -117,207 +117,343 @@ The ruins of King Kashyapa's palace at the summit offer panoramic views of the s
 4. Be prepared for a challenging climb - there are over 1,200 steps!
 
 Sigiriya is truly a must-visit destination that combines history, culture, and natural beauty in one spectacular location.`,
-        category: categories[0]._id, // Travel
-        tags: ['sigiriya', 'travel', 'unesco', 'sri lanka', 'ancient', 'history'],
-        featuredImage: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        category: categories[0]._id, // Software Reviews
+        tags: ['vscode', 'code editor', 'microsoft', 'development', 'programming', 'review'],
+        featuredImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
         status: 'published',
         featured: true,
         author: admin._id,
-        metaTitle: 'Complete Guide to Sigiriya Rock Fortress - Sri Lanka How',
-        metaDescription: 'Complete guide to visiting Sigiriya Rock Fortress, UNESCO World Heritage site in Sri Lanka with history, tips, and practical info.',
-        metaKeywords: 'sigiriya, lion rock, sri lanka, unesco, travel guide, ancient fortress',
+        metaTitle: 'Complete Review of Visual Studio Code 2024 - TechToolkitHub',
+        metaDescription: 'Comprehensive review of Visual Studio Code features, performance, pros and cons. Best code editor for developers in 2024.',
+        metaKeywords: 'visual studio code, vscode, code editor, development tools, programming',
         views: 1245,
         publishedAt: new Date('2024-09-06')
       },
       {
-        title: 'How to Get a SIM Card in Sri Lanka',
-        slug: 'how-to-get-sim-card-sri-lanka',
-        excerpt: 'A step-by-step guide to getting a local SIM card in Sri Lanka for tourists and visitors. Learn about different providers, requirements, and best deals.',
-        content: `# How to Get a SIM Card in Sri Lanka
+        title: 'Docker Desktop Review: Complete Container Development Platform',
+        slug: 'docker-desktop-review-2024',
+        excerpt: 'In-depth review of Docker Desktop for containerization and development. Features, performance, pricing, and alternatives compared.',
+        content: `# Docker Desktop Review: Complete Container Development Platform
 
-Getting a local SIM card in Sri Lanka is essential for staying connected during your visit. Here's everything you need to know about getting a SIM card as a tourist.
+Docker Desktop has become the go-to solution for developers working with containers. In this comprehensive review, we'll explore its features, performance, and whether it's worth the investment for your development workflow.
 
-## Major Telecom Providers
+## What is Docker Desktop?
 
-### Dialog
-- Largest network coverage
-- Best data speeds
-- Tourist packages available
+Docker Desktop is a comprehensive development environment that makes it easy to build, share, and run containerized applications and microservices. It provides an intuitive GUI alongside powerful CLI tools.
 
-### Mobitel
-- Good coverage island-wide
-- Competitive rates
-- Reliable service
+## Key Features
+
+### Container Management
+- Easy container lifecycle management
+- Visual container monitoring
+- Resource usage tracking
+
+### Development Integration
+- Seamless IDE integration
+- Hot reload support
+- Multi-platform builds
+
+### Kubernetes Support
+- Built-in Kubernetes cluster
+- Easy deployment testing
+- Development environment parity
 
 ### Hutch
 - Budget-friendly options
 - Good for data
 - Limited coverage in remote areas
 
-## Requirements
+## Performance Analysis
 
-To get a SIM card in Sri Lanka, you'll need:
+Our testing revealed impressive performance metrics:
 
-1. **Passport** - Original required
-2. **Passport photocopy** - Most shops can provide this
-3. **Local address** - Hotel address is acceptable
-4. **Registration form** - Provided by the shop
+1. **Startup Time** - Fast application initialization
+2. **Resource Usage** - Optimized memory consumption
+3. **Build Speed** - Efficient container building
+4. **Network Performance** - Reliable container networking
 
-## Where to Buy
+## Pricing Structure
 
-### Airport
-- Available at Bandaranaike International Airport
-- Convenient but slightly more expensive
-- Open 24/7
+### Personal Use
+- Free for personal projects
+- Educational discounts available
+- Open source project support
 
-### Telecom Shops
-- Better prices and packages
-- More options available
-- Present in most towns
+### Business Plans
+- Subscription-based pricing
+- Enterprise features included
+- Priority support available
 
-### Authorized Dealers
-- Found everywhere
-- Competitive prices
-- May require some bargaining
+### Cost Considerations
+- ROI through development efficiency
+- Reduced deployment complexity
+- Team collaboration benefits
 
-## Tourist Packages
+## Pros and Cons
 
-Most providers offer special tourist packages including:
-- Data allowances (1GB to 10GB)
-- Local calling minutes
-- International calling credits
-- Validity from 7 to 30 days
+### Advantages
+- User-friendly interface for container management
+- Excellent development workflow integration
+- Strong ecosystem and community support
+- Cross-platform compatibility
 
-## Tips
+### Disadvantages
+- Resource intensive on some systems
+- Subscription cost for commercial use
+- Learning curve for container concepts
+- Limited free tier features
 
-1. Compare packages from different providers
-2. Ask about data rollover policies
-3. Keep your receipt for any issues
-4. Download provider apps for easy top-ups
-5. Test the connection before leaving the shop
+## Alternatives to Consider
 
-Getting a SIM card in Sri Lanka is straightforward and will greatly enhance your travel experience!`,
-        category: categories[1]._id, // Guides
-        tags: ['sim card', 'mobile', 'telecommunications', 'tourist guide', 'connectivity'],
-        featuredImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
+1. **Podman** - Open source alternative
+2. **Rancher Desktop** - Kubernetes-focused solution
+3. **Colima** - Lightweight container runtime
+4. **Native Docker CLI** - Command-line only approach
+
+## Verdict
+
+Docker Desktop remains the gold standard for containerized development, offering an excellent balance of features, usability, and performance. While the pricing may be a consideration for some teams, the productivity gains often justify the investment.
+
+**Rating: 4.5/5 stars**
+
+Docker Desktop is highly recommended for development teams looking to streamline their containerization workflow.`,
+        category: categories[1]._id, // Dev Tools
+        tags: ['docker', 'containers', 'development tools', 'devops', 'containerization', 'review'],
+        featuredImage: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80',
         status: 'published',
         featured: false,
         author: admin._id,
-        metaTitle: 'How to Get a SIM Card in Sri Lanka - Complete Tourist Guide',
-        metaDescription: 'Step-by-step guide to getting a local SIM card in Sri Lanka. Learn about providers, requirements, and best tourist packages.',
-        metaKeywords: 'sri lanka sim card, mobile phone, tourist guide, dialog, mobitel, hutch',
+        metaTitle: 'Docker Desktop Review 2024: Complete Analysis',
+        metaDescription: 'Comprehensive Docker Desktop review covering features, performance, pricing, and alternatives. Is it worth it for your development workflow?',
+        metaKeywords: 'docker desktop, container development, devops tools, docker review, containerization',
         views: 892,
         publishedAt: new Date('2024-09-05')
       },
       {
-        title: 'Sri Lankan Food Culture: A Beginner\'s Guide',
-        slug: 'sri-lankan-food-culture-beginners-guide',
-        excerpt: 'Explore the rich and diverse food culture of Sri Lanka. From spicy curries to sweet treats, discover what makes Sri Lankan cuisine unique.',
-        content: `# Sri Lankan Food Culture: A Beginner's Guide
+        title: 'Notion vs. Obsidian: Ultimate Productivity App Comparison 2024',
+        slug: 'notion-vs-obsidian-productivity-comparison-2024',
+        excerpt: 'Comprehensive comparison of Notion and Obsidian for productivity and note-taking. Features, pricing, pros and cons to help you choose.',
+        content: `# Notion vs. Obsidian: Ultimate Productivity App Comparison 2024
 
-Sri Lankan cuisine is a vibrant tapestry of flavors, influenced by centuries of trade, colonization, and cultural exchange. This guide will introduce you to the essentials of Sri Lankan food culture.
+Choosing the right productivity and note-taking app can significantly impact your workflow. In this detailed comparison, we'll examine Notion and Obsidian to help you make the best choice for your needs.
 
-## Key Characteristics
+## Overview of Both Apps
 
-### Spices and Heat
-Sri Lankan food is known for its bold use of spices:
-- **Cinnamon** - Ceylon cinnamon is world-famous
-- **Cardamom** - Used in both sweet and savory dishes
-- **Chili** - Provides the signature heat
-- **Curry leaves** - Essential for authentic flavor
-- **Coconut** - Used in various forms
+### Notion
+Notion is an all-in-one workspace that combines note-taking, databases, task management, and collaboration tools in a single platform.
 
-### Rice as the Staple
-Rice is the foundation of most Sri Lankan meals:
-- **Red rice** - Traditional and nutritious
-- **White rice** - Most common variety
-- **String hoppers** - Steamed rice noodle cakes
-- **Hoppers** - Bowl-shaped pancakes
+### Obsidian
+Obsidian is a powerful knowledge management tool that uses a local folder of plain text Markdown files, focusing on linking ideas and creating a "second brain."
 
-## Essential Dishes
+## Feature Comparison
 
-### Rice and Curry
-The national dish consisting of:
+### Note-Taking Capabilities
+- **Notion**: Block-based editor with rich formatting options
+- **Obsidian**: Markdown-based with live preview
+- **Winner**: Tie - depends on preference
+
+### Database Functionality
+- **Notion**: Powerful relational databases with multiple views
+- **Obsidian**: Basic table support with community plugins
+- **Winner**: Notion
+
+### Linking and Connections
+- **Notion**: Basic internal linking
+- **Obsidian**: Advanced graph view and backlinks
+- **Winner**: Obsidian
+
+## Performance Analysis
 - Steamed rice
 - Multiple curries (vegetable, meat, fish)
 - Sambols (spicy condiments)
 - Papadams (crispy wafers)
 
-### Kottu Roti
-A popular street food made with:
-- Chopped roti bread
-- Vegetables and/or meat
-- Eggs
-- Spices
+### Speed and Performance
+- **Notion**: Can be slow with large databases
+- **Obsidian**: Fast and responsive, works offline
+- **Winner**: Obsidian
 
-### String Hoppers
-Delicate rice noodle cakes served with:
-- Coconut milk
-- Curry
-- Sambol
+### Learning Curve
+- **Notion**: Moderate learning curve, intuitive interface
+- **Obsidian**: Steeper learning curve, more customization
+- **Winner**: Notion
 
-## Eating Etiquette
+## Pricing Comparison
 
-### Traditional Style
-- Eat with your right hand
-- Mix rice with curries
-- Use fingers to make small balls
-- Never use left hand for eating
+### Notion Pricing
+- **Personal**: Free for individual use
+- **Plus**: $8/month per user
+- **Business**: $15/month per user
+- **Enterprise**: Custom pricing
 
-### Modern Style
-- Spoon and fork commonly used
-- Knife rarely needed
-- Sharing dishes is common
+### Obsidian Pricing
+- **Personal**: Free for non-commercial use
+- **Commercial**: $50/year per user
+- **Catalyst**: $25+ for early access to features
 
-## Regional Variations
-
-### Jaffna (Northern)
-- Heavy use of seafood
+## Use Case Scenarios
 - Distinct Tamil influence
 - Spicier preparations
 
 ### Kandy (Central)
 - Mountain vegetables
-- Milder spices
-- Unique preparations
+### Choose Notion If:
+- You need database functionality
+- Team collaboration is important
+- You want an all-in-one solution
+- You prefer visual organization
 
-### Galle (Southern)
-- Coconut-heavy dishes
-- Portuguese influences
-- Seafood specialties
+### Choose Obsidian If:
+- You value speed and offline access
+- You love linking ideas and concepts
+- You prefer local file storage
+- You want extensive customization
 
-## Beverages
+## Final Verdict
 
-### Traditional
-- **Ceylon tea** - World-renowned black tea
-- **King coconut water** - Fresh and nutritious
-- **Faluda** - Sweet milk drink
+Both Notion and Obsidian are excellent productivity tools, but they serve different needs:
 
-### Modern
-- Fresh fruit juices
-- Local beer (Lion, Carlsberg)
-- Arrack - Local spirit
+**Notion** excels as a comprehensive workspace for teams and individuals who need databases, project management, and collaboration features.
 
-## Dining Tips for Visitors
+**Obsidian** shines for knowledge workers, researchers, and anyone building a personal knowledge management system.
 
-1. Start with mild dishes and work up to spicier ones
-2. Always have yogurt or coconut milk nearby to cool heat
-3. Try different regional specialties
-4. Don't be afraid to eat with your hands
-5. Ask for spice levels to be adjusted
+## Our Recommendation
 
-Sri Lankan food culture is about sharing, family, and celebrating life through delicious, aromatic meals!`,
-        category: categories[2]._id, // Culture
-        tags: ['food', 'culture', 'cuisine', 'spices', 'rice', 'curry'],
-        featuredImage: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=2332&q=80',
+- **For Teams**: Notion
+- **For Personal Knowledge Management**: Obsidian
+- **For Beginners**: Notion
+- **For Power Users**: Obsidian
+
+The best choice depends on your specific workflow, team needs, and personal preferences. Consider trying both with their free tiers to see which feels more natural for your use case.`,
+        category: categories[2]._id, // Productivity
+        tags: ['notion', 'obsidian', 'productivity', 'note-taking', 'comparison', 'workflow'],
+        featuredImage: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80',
         status: 'published',
         featured: true,
         author: admin._id,
-        metaTitle: 'Sri Lankan Food Culture: Complete Beginner\'s Guide',
-        metaDescription: 'Explore Sri Lankan cuisine and food culture. Learn about traditional dishes, spices, eating etiquette, and regional variations.',
-        metaKeywords: 'sri lankan food, cuisine, culture, spices, rice and curry, traditional dishes',
+        metaTitle: 'Notion vs Obsidian 2024: Productivity Comparison',
+        metaDescription: 'Detailed comparison of Notion vs Obsidian for productivity and note-taking. Features, pricing, pros and cons to help you choose the best app.',
+        metaKeywords: 'notion vs obsidian, productivity apps, note-taking software, knowledge management, productivity comparison',
         views: 756,
         publishedAt: new Date('2024-09-04')
+      },
+      {
+        title: 'Slack vs Microsoft Teams: Complete Business Communication Comparison',
+        slug: 'slack-vs-microsoft-teams-business-communication-2024',
+        excerpt: 'Comprehensive comparison of Slack and Microsoft Teams for business communication. Features, integrations, pricing, and which is best for your team.',
+        content: `# Slack vs Microsoft Teams: Complete Business Communication Comparison
+
+Choosing the right team communication platform is crucial for business productivity. In this comprehensive comparison, we'll examine Slack and Microsoft Teams to help you make the best decision for your organization.
+
+## Platform Overview
+
+### Slack
+Slack pioneered modern workplace communication with its channel-based messaging, extensive integrations, and user-friendly interface that has become the gold standard for team collaboration.
+
+### Microsoft Teams
+Microsoft Teams is an integrated collaboration platform that combines chat, video meetings, file storage, and application integration within the Microsoft 365 ecosystem.
+
+## Core Features Comparison
+
+### Messaging and Channels
+- **Slack**: Intuitive channel organization with threads
+- **Teams**: Channel structure with conversation threading
+- **Winner**: Tie - both offer excellent messaging
+
+### Video Conferencing
+- **Slack**: Basic video calls, requires third-party for advanced features
+- **Teams**: Advanced video features, large meeting support
+- **Winner**: Microsoft Teams
+
+### File Sharing and Storage
+- **Slack**: Limited storage, integrates with cloud services
+- **Teams**: Native OneDrive/SharePoint integration, generous storage
+- **Winner**: Microsoft Teams
+
+## Integration Capabilities
+
+### Third-Party Apps
+- **Slack**: 2,000+ app integrations, robust API
+- **Teams**: Growing app store, strong Microsoft ecosystem
+- **Winner**: Slack
+
+### Microsoft 365 Integration
+- **Slack**: Available but requires setup
+- **Teams**: Native, seamless integration
+- **Winner**: Microsoft Teams
+
+## Pricing Analysis
+
+### Slack Pricing
+- **Free**: Limited features and storage
+- **Pro**: $7.25/user/month
+- **Business+**: $12.50/user/month
+- **Enterprise Grid**: Custom pricing
+
+### Teams Pricing
+- **Free**: Basic features with limitations
+- **Microsoft 365 Business Basic**: $6/user/month
+- **Microsoft 365 Business Standard**: $12.50/user/month
+- **Enterprise plans**: $8-$57/user/month
+
+## Security and Compliance
+
+### Enterprise Security
+- **Slack**: Enterprise-grade security, compliance certifications
+- **Teams**: Advanced security, extensive compliance features
+- **Winner**: Microsoft Teams (slight edge)
+
+### Data Governance
+- **Slack**: Good data retention and governance tools
+- **Teams**: Comprehensive governance within Microsoft ecosystem
+- **Winner**: Microsoft Teams
+
+## User Experience
+
+### Interface Design
+- **Slack**: Clean, intuitive, loved by users
+- **Teams**: Functional but can feel cluttered
+- **Winner**: Slack
+
+### Mobile Experience
+- **Slack**: Excellent mobile apps
+- **Teams**: Good mobile experience, improving
+- **Winner**: Slack
+
+## Decision Framework
+
+### Choose Slack If:
+- You prioritize user experience and simplicity
+- Your team uses diverse third-party tools
+- You need extensive customization options
+- You're not heavily invested in Microsoft ecosystem
+
+### Choose Microsoft Teams If:
+- You already use Microsoft 365
+- Video conferencing is a priority
+- You need comprehensive file collaboration
+- Cost efficiency within Microsoft stack is important
+
+## Final Recommendation
+
+**For Microsoft 365 Users**: Microsoft Teams is the clear winner due to seamless integration, better value, and comprehensive features.
+
+**For Non-Microsoft Environments**: Slack offers superior user experience and integration flexibility.
+
+**For Hybrid Needs**: Consider your primary workflows - Teams for document collaboration, Slack for communication-focused teams.
+
+Both platforms are excellent choices, and the best option depends on your existing technology stack and team preferences.`,
+        category: categories[3]._id, // Business Tools
+        tags: ['slack', 'microsoft teams', 'business communication', 'team collaboration', 'productivity', 'comparison'],
+        featuredImage: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        status: 'published',
+        featured: false,
+        author: admin._id,
+        metaTitle: 'Slack vs Microsoft Teams 2024: Complete Guide',
+        metaDescription: 'Detailed comparison of Slack vs Microsoft Teams for business communication. Features, pricing, integrations, and recommendations for your team.',
+        metaKeywords: 'slack vs teams, business communication, team collaboration, microsoft teams, slack comparison, workplace chat',
+        views: 1124,
+        publishedAt: new Date('2024-09-03')
       }
     ];
 
@@ -325,12 +461,13 @@ Sri Lankan food culture is about sharing, family, and celebrating life through d
     console.log('Created sample articles');
 
     // Update category article counts
-    await Category.findByIdAndUpdate(categories[0]._id, { articleCount: 1 });
-    await Category.findByIdAndUpdate(categories[1]._id, { articleCount: 1 });
-    await Category.findByIdAndUpdate(categories[2]._id, { articleCount: 1 });
+    await Category.findByIdAndUpdate(categories[0]._id, { articleCount: 1 }); // Software Reviews
+    await Category.findByIdAndUpdate(categories[1]._id, { articleCount: 1 }); // Dev Tools
+    await Category.findByIdAndUpdate(categories[2]._id, { articleCount: 1 }); // Productivity
+    await Category.findByIdAndUpdate(categories[3]._id, { articleCount: 1 }); // Business Tools
 
     console.log('Database seeded successfully!');
-    console.log('Admin login: admin@srilankahow.com / admin123');
+    console.log('Admin login: admin@techtoolkithub.com / admin123');
 
   } catch (error) {
     console.error('Seeding error:', error);

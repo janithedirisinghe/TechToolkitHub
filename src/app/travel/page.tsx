@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
-import { searchArticles, getActiveCategories } from '@/lib/data';
+import { searchArticles } from '@/lib/data';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Travel Guides - Sri Lanka How",
-  description: "Comprehensive travel guides for Sri Lanka including destinations, transportation, accommodations, and detailed itineraries for your perfect trip.",
+  title: "Software Reviews - TechToolkitHub",
+  description: "Comprehensive software reviews and comparisons. Discover the best tools for productivity, development, design, and business with detailed analysis and user insights.",
   openGraph: {
-    title: "Travel Guides - Sri Lanka How",
-    description: "Comprehensive travel guides for Sri Lanka including destinations, transportation, accommodations, and detailed itineraries.",
+    title: "Software Reviews - TechToolkitHub",
+    description: "Comprehensive software reviews and comparisons. Discover the best tools for productivity, development, design, and business.",
   },
 };
 
@@ -32,50 +32,31 @@ interface Article {
   views: number;
 }
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  description: string;
-  color: string;
-  order: number;
-  articleCount: number;
-}
-
 // Fetch data from APIs
-async function getTravelArticles(): Promise<Article[]> {
-  console.log('[DEBUG] Travel Page - Direct DB query for category=travel');
+async function getSoftwareReviews(): Promise<Article[]> {
+  console.log('[DEBUG] Reviews Page - Direct DB query for category=travel');
   const { articles } = await searchArticles({ categorySlug: 'travel', limit: 100 });
   return articles as unknown as Article[];
 }
 
-async function getCategories(): Promise<Category[]> {
-  console.log('[DEBUG] Travel Page - Direct DB query for categories');
-  const categories = await getActiveCategories();
-  return categories as unknown as Category[];
-}
-
 export default async function TravelPage() {
-  const [travelArticles, categories] = await Promise.all([
-    getTravelArticles(),
-    getCategories()
-  ]);
+  const travelArticles = await getSoftwareReviews();
 
-  const featuredArticles = travelArticles.filter(article => article.featured);
+  const featuredArticles = travelArticles.filter((article: Article) => article.featured);
   const allArticles = travelArticles;
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Travel Guides for Sri Lanka
+              Software Reviews & Analysis
             </h1>
             <p className="text-xl lg:text-2xl mb-8 max-w-3xl mx-auto">
-              Discover the best destinations, transportation tips, and travel itineraries 
-              to make your Sri Lankan adventure unforgettable.
+              Discover the best software tools with our comprehensive reviews, 
+              detailed comparisons, and expert insights to power your workflow.
             </p>
           </div>
         </div>
@@ -108,9 +89,9 @@ export default async function TravelPage() {
           <div className="lg:w-3/4">
             {/* Featured Articles */}
             <section className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Travel Guides</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Software Reviews</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {featuredArticles.slice(0, 2).map((article) => (
+                {featuredArticles.slice(0, 2).map((article: Article) => (
                   <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="relative h-48 bg-gray-200">
                       {article.featuredImage && (
@@ -124,9 +105,9 @@ export default async function TravelPage() {
                           hideOnError
                         />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20"></div>
                       <div className="absolute top-4 left-4">
-                        <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                           {article.category.name}
                         </span>
                       </div>
@@ -140,9 +121,9 @@ export default async function TravelPage() {
                       </p>
                       <Link
                         href={`/articles/${article.slug}`}
-                        className="text-emerald-600 font-medium hover:text-emerald-700 transition-colors"
+                        className="text-blue-600 font-medium hover:text-blue-700 transition-colors"
                       >
-                        Read Full Guide →
+                        Read Full Review →
                       </Link>
                     </div>
                   </article>
@@ -151,7 +132,7 @@ export default async function TravelPage() {
               
               {featuredArticles.length > 2 && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {featuredArticles.slice(2).map((article) => (
+                  {featuredArticles.slice(2).map((article: Article) => (
                     <article key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="relative h-40 bg-gray-200">
                         {article.featuredImage && (
@@ -164,9 +145,9 @@ export default async function TravelPage() {
                             hideOnError
                           />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20"></div>
                         <div className="absolute top-3 left-3">
-                          <span className="bg-emerald-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+                          <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-medium">
                             {article.category.name}
                           </span>
                         </div>
@@ -181,7 +162,7 @@ export default async function TravelPage() {
                         <div className="flex items-center justify-between">
                           <Link
                             href={`/articles/${article.slug}`}
-                            className="text-emerald-600 font-medium hover:text-emerald-700 transition-colors text-sm"
+                            className="text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm"
                           >
                             Read More →
                           </Link>
@@ -196,14 +177,14 @@ export default async function TravelPage() {
             {/* All Articles */}
             <section>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">All Travel Guides</h2>
+                <h2 className="text-2xl font-bold text-gray-900">All Software Reviews</h2>
                 <div className="text-sm text-gray-500">
-                  {allArticles.length} articles
+                  {allArticles.length} reviews
                 </div>
               </div>
 
               <div className="space-y-6">
-                {allArticles.map((article) => (
+                {allArticles.map((article: Article) => (
                   <article key={article._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="sm:w-32 sm:h-32 h-48 bg-gray-200 rounded-lg flex-shrink-0 relative overflow-hidden">
@@ -217,7 +198,7 @@ export default async function TravelPage() {
                             hideOnError
                           />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 rounded-lg"></div>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
@@ -248,35 +229,21 @@ export default async function TravelPage() {
             </section>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - Ad Space */}
           <div className="lg:w-1/4">
             <div className="sticky top-24 space-y-6">
-              {/* Categories */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category.name}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-700 transition-colors flex items-center justify-between"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.articleCount})</span>
-                    </button>
-                  ))}
+              {/* Ad Space - Replace with your ads */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[400px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Quick Tips */}
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-emerald-800 mb-3">Travel Tips</h3>
-                <ul className="space-y-2 text-sm text-emerald-700">
-                  <li>• Best time to visit: December to March</li>
-                  <li>• Visa required for most countries</li>
-                  <li>• Currency: Sri Lankan Rupee (LKR)</li>
-                  <li>• Language: Sinhala, Tamil, English</li>
-                  <li>• Driving: Left-hand side</li>
-                </ul>
+              {/* Additional Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[300px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
+                </div>
               </div>
             </div>
           </div>

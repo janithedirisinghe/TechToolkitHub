@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Sri Lanka How",
-  description: "Get in touch with Sri Lanka How. Ask questions, share feedback, or suggest new topics for our comprehensive guides and tips.",
+  title: "Contact Us - TechToolkitHub",
+  description: "Get in touch with TechToolkitHub. Ask questions about software reviews, share feedback, or suggest tools for us to review.",
   openGraph: {
-    title: "Contact Us - Sri Lanka How",
-    description: "Contact Sri Lanka How for questions, feedback, or suggestions about our comprehensive Sri Lanka guides.",
+    title: "Contact Us - TechToolkitHub",
+    description: "Contact TechToolkitHub for questions, feedback, or suggestions about software reviews and tech guides.",
   },
 };
 
@@ -14,13 +14,13 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-6">
             Contact Us
           </h1>
           <p className="text-xl lg:text-2xl">
-            We&apos;re here to help with all your Sri Lanka questions
+            We&apos;re here to help with all your software questions
           </p>
         </div>
       </section>

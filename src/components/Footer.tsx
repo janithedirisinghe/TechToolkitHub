@@ -9,12 +9,12 @@ const Footer = () => {
           {/* About Section */}
           <div className="col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Image src="/Logo.png" alt="Sri Lanka How logo" width={32} height={32} />
-              <h3 className="text-lg font-bold">Sri Lanka How</h3>
+              <Image src="/Logo.png" alt="TechToolkitHub logo" width={32} height={32} />
+              <h3 className="text-lg font-bold">TechToolkitHub</h3>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Your ultimate guide to Sri Lanka. Discover travel tips, cultural insights, 
-              lifestyle advice, and comprehensive how-to guides for everything Sri Lanka.
+              Your ultimate source for software reviews and tech guides. Discover the best 
+              tools for your workflow with our comprehensive reviews and expert insights.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -52,22 +52,22 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link href="/travel" className="text-gray-300 hover:text-white transition-colors">
-                  Travel Guides
+                  Software Reviews
                 </Link>
               </li>
               <li>
                 <Link href="/culture" className="text-gray-300 hover:text-white transition-colors">
-                  Culture & Traditions
+                  Productivity Tools
                 </Link>
               </li>
               <li>
                 <Link href="/guides" className="text-gray-300 hover:text-white transition-colors">
-                  How-to Guides
+                  Tech Guides
                 </Link>
               </li>
               <li>
                 <Link href="/lifestyle" className="text-gray-300 hover:text-white transition-colors">
-                  Lifestyle Tips
+                  Developer Tools
                 </Link>
               </li>
             </ul>
@@ -105,7 +105,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Sri Lanka How. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} TechToolkitHub. All rights reserved.</p>
         </div>
       </div>
     </footer>

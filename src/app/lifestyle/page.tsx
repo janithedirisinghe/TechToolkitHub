@@ -32,16 +32,6 @@ interface Article {
   views: number;
 }
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  description: string;
-  color: string;
-  order: number;
-  articleCount: number;
-}
-
 // Fetch data from APIs
 async function getLifestyleArticles(): Promise<Article[]> {
   try {
@@ -72,42 +62,10 @@ async function getLifestyleArticles(): Promise<Article[]> {
   }
 }
 
-async function getCategories(): Promise<Category[]> {
-  try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/categories`;
-    
-    console.log('[DEBUG] Lifestyle Page - Fetching categories from:', apiUrl);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Categories response status:', response.status);
-    console.log('[DEBUG] Categories response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Categories fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch categories');
-    }
-
-    const data = await response.json();
-    console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
-    return data.categories || [];
-  } catch (error) {
-    console.error('[DEBUG] Error fetching categories:', error);
-    return [];
-  }
-}
-
 export default async function LifestylePage() {
-  const [lifestyleArticles, categories] = await Promise.all([
-    getLifestyleArticles(),
-    getCategories()
-  ]);
+  const lifestyleArticles = await getLifestyleArticles();
 
-  const featuredArticles = lifestyleArticles.filter(article => article.featured);
+  const featuredArticles = lifestyleArticles.filter((article: Article) => article.featured);
   const allArticles = lifestyleArticles;
 
   return (
@@ -265,77 +223,34 @@ export default async function LifestylePage() {
             </section>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - Ad Space */}
           <div className="lg:w-1/4">
             <div className="sticky top-24 space-y-6">
-              {/* Categories */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category.name}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-pink-50 hover:text-pink-700 transition-colors flex items-center justify-between"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.articleCount})</span>
-                    </button>
-                  ))}
+              {/* Ad Space - Replace with your ads */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[400px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Budget Calculator */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Daily Budget Calculator</h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>Budget Hostels:</span>
-                    <span className="font-medium">$8-15/night</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Street Food:</span>
-                    <span className="font-medium">$2-5/meal</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Local Transport:</span>
-                    <span className="font-medium">$1-3/day</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Activities:</span>
-                    <span className="font-medium">$5-20/day</span>
-                  </div>
-                  <hr className="my-3" />
-                  <div className="flex justify-between font-semibold">
-                    <span>Total Budget:</span>
-                    <span className="text-pink-600">$20-45/day</span>
-                  </div>
+              {/* Additional Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[300px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Quick Tips */}
-              <div className="bg-pink-50 border border-pink-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-pink-800 mb-3">Money-Saving Tips</h3>
-                <ul className="space-y-2 text-sm text-pink-700">
-                  <li>• Eat at local rice & curry shops</li>
-                  <li>• Use public buses for long distances</li>
-                  <li>• Stay in family-run guesthouses</li>
-                  <li>• Buy water bottles in bulk</li>
-                  <li>• Negotiate tuk-tuk prices beforehand</li>
-                </ul>
+              {/* More Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[250px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
+                </div>
               </div>
 
-              {/* Popular Tags */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Tags</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Budget", "Student", "Expat", "Solo", "Health", "Work", "Shopping", "Eco"].map((tag) => (
-                    <button
-                      key={tag}
-                      className="bg-gray-100 hover:bg-pink-100 text-gray-700 hover:text-pink-700 px-3 py-1 rounded-full text-sm transition-colors"
-                    >
-                      #{tag}
-                    </button>
-                  ))}
+              {/* Additional Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[200px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
             </div>

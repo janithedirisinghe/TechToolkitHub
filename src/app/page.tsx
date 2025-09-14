@@ -8,12 +8,12 @@ import type { Article, Category } from '@/types/article';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
-  description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice. Your ultimate how-to resource for everything Sri Lanka.",
+  title: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
+  description: "Discover the best software tools with our comprehensive reviews, tech guides, and expert insights. Your ultimate resource for software discovery and tech solutions.",
   openGraph: {
-    title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
-    description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.",
-    images: ["/hero-sri-lanka.jpg"],
+    title: "TechToolkitHub - In-Depth Software Reviews & Tech Guides",
+    description: "Comprehensive software reviews, tech guides, and expert insights to help you choose the right tools for your needs.",
+    images: ["/hero-tech.jpg"],
   },
 };
 
@@ -34,29 +34,29 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-emerald-600 to-blue-600 text-white">
+      <section className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              Your Ultimate How-to Guide for Sri Lanka
+              Your Ultimate Software Review Hub
             </h1>
             <p className="text-xl lg:text-2xl mb-8 max-w-3xl mx-auto">
-              Discover travel tips, cultural insights, lifestyle advice, and comprehensive guides 
-              for everything you need to know about the Pearl of the Indian Ocean.
+              Discover the best software tools with our in-depth reviews, comprehensive guides, 
+              and expert insights to power your digital workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/guides"
-                className="bg-white text-emerald-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                href="/software-reviews"
+                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
-                Explore Guides
+                Browse Reviews
               </Link>
               <Link
-                href="/travel"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-emerald-600 transition-colors"
+                href="/dev-tools"
+                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
               >
-                Travel Tips
+                Dev Tools
               </Link>
             </div>
           </div>
@@ -68,10 +68,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Featured Articles & Popular Guides
+              Featured Software Reviews & Tech Guides
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover our most helpful and comprehensive guides to make your Sri Lanka experience unforgettable.
+              Discover our most comprehensive software reviews and tech guides to help you choose the right tools for your needs.
             </p>
           </div>
 
@@ -90,9 +90,9 @@ export default async function HomePage() {
                       hideOnError
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20"></div>
                   <div className="absolute top-4 left-4">
-                    <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                       {article.category.name}
                     </span>
                   </div>
@@ -106,7 +106,7 @@ export default async function HomePage() {
                   </p>
                   <Link
                     href={`/articles/${article.slug}`}
-                    className="text-emerald-600 font-medium hover:text-emerald-700 transition-colors"
+                    className="text-blue-600 font-medium hover:text-blue-700 transition-colors"
                   >
                     Read More →
                   </Link>
@@ -118,9 +118,9 @@ export default async function HomePage() {
           <div className="text-center mt-12">
             <Link
               href="/articles"
-              className="bg-emerald-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
-              View All Articles
+              View All Reviews
             </Link>
           </div>
         </div>
@@ -131,10 +131,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Explore by Category
+              Browse by Software Category
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Find exactly what you&apos;re looking for with our organized content categories.
+              Find the perfect software solution with our organized review categories.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ export default async function HomePage() {
                 href={`/${category.slug}`}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow group"
               >
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {category.name}
                 </h3>
                 <p className="text-gray-600 mb-4 text-sm">
@@ -153,9 +153,9 @@ export default async function HomePage() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500">
-                    {category.articleCount} articles
+                    {category.articleCount} reviews
                   </span>
-                  <span className="text-emerald-600 group-hover:translate-x-1 transition-transform">
+                  <span className="text-blue-600 group-hover:translate-x-1 transition-transform">
                     →
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export default async function HomePage() {
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Latest Articles */}
             <div className="lg:w-2/3">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Updates</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Software Reviews</h2>
               <div className="space-y-6">
                 {featuredArticles.slice(0, 4).map((article) => (
                   <div key={article._id} className="flex gap-4 pb-6 border-b border-gray-200 last:border-b-0">
@@ -186,15 +186,15 @@ export default async function HomePage() {
                           hideOnError
                         />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 opacity-20 rounded-lg"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 rounded-lg"></div>
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm text-emerald-600 font-medium">{article.category.name}</span>
+                        <span className="text-sm text-blue-600 font-medium">{article.category.name}</span>
                         <span className="text-sm text-gray-500">•</span>
                         <span className="text-sm text-gray-500">{new Date(article.publishedAt).toLocaleDateString()}</span>
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
+                      <h3 className="font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
                         <Link href={`/articles/${article.slug}`}>
                           {article.title}
                         </Link>
@@ -215,11 +215,11 @@ export default async function HomePage() {
                 <div className="space-y-4">
                   {featuredArticles.slice(0, 3).map((article, index) => (
                     <div key={article._id} className="flex items-start gap-3">
-                      <span className="bg-emerald-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                      <span className="bg-blue-600 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                         {index + 1}
                       </span>
                       <div>
-                        <h4 className="font-medium text-gray-900 text-sm hover:text-emerald-600 transition-colors">
+                        <h4 className="font-medium text-gray-900 text-sm hover:text-blue-600 transition-colors">
                           <Link href={`/articles/${article.slug}`}>
                             {article.title}
                           </Link>
@@ -231,11 +231,11 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-emerald-800 mb-3">Quick Tip</h3>
-                <p className="text-emerald-700 text-sm">
-                  Always carry a reusable water bottle in Sri Lanka. Many places have safe drinking water, 
-                  and it&apos;s an eco-friendly way to stay hydrated while exploring!
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-blue-800 mb-3">Tech Tip</h3>
+                <p className="text-blue-700 text-sm">
+                  Always check software compatibility with your operating system and hardware before purchasing. 
+                  Read user reviews and try free trials when available to ensure the tool meets your needs!
                 </p>
               </div>
             </div>

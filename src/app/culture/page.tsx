@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from '@/components/SafeImage';
 import { getBaseUrl } from '@/lib/url';
-import type { Article, Category } from '@/types/article';
+import type { Article } from '@/types/article';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -46,42 +46,10 @@ async function getCultureArticles(): Promise<Article[]> {
   }
 }
 
-async function getCategories(): Promise<Category[]> {
-  try {
-    const baseUrl = getBaseUrl();
-    const apiUrl = `${baseUrl}/api/categories`;
-    
-    console.log('[DEBUG] Culture Page - Fetching categories from:', apiUrl);
-    console.log('[DEBUG] Base URL resolved to:', baseUrl);
-    
-    const response = await fetch(apiUrl, {
-      cache: 'no-store'
-    });
-
-    console.log('[DEBUG] Categories response status:', response.status);
-    console.log('[DEBUG] Categories response ok:', response.ok);
-
-    if (!response.ok) {
-      console.error('[DEBUG] Categories fetch failed:', response.status, response.statusText);
-      throw new Error('Failed to fetch categories');
-    }
-
-    const data = await response.json();
-    console.log('[DEBUG] Categories data received:', data.categories?.length || 0, 'categories');
-    return data.categories || [];
-  } catch (error) {
-    console.error('[DEBUG] Error fetching categories:', error);
-    return [];
-  }
-}
-
 export default async function CulturePage() {
-  const [cultureArticles, categories] = await Promise.all([
-    getCultureArticles(),
-    getCategories()
-  ]);
+  const cultureArticles = await getCultureArticles();
 
-  const featuredArticles = cultureArticles.filter(article => article.featured);
+  const featuredArticles = cultureArticles.filter((article: Article) => article.featured);
   const allArticles = cultureArticles;
 
   return (
@@ -225,35 +193,21 @@ export default async function CulturePage() {
             </section>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - Ad Space */}
           <div className="lg:w-1/4">
             <div className="sticky top-24 space-y-6">
-              {/* Categories */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category.name}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-700 transition-colors flex items-center justify-between"
-                    >
-                      <span>{category.name}</span>
-                      <span className="text-sm text-gray-500">({category.articleCount})</span>
-                    </button>
-                  ))}
+              {/* Ad Space - Replace with your ads */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[400px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
                 </div>
               </div>
 
-              {/* Cultural Facts */}
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-orange-800 mb-3">Did You Know?</h3>
-                <ul className="space-y-2 text-sm text-orange-700">
-                  <li>• Sri Lanka has 4 major religions</li>
-                  <li>• Sinhala & Tamil are official languages</li>
-                  <li>• 70% of population is Buddhist</li>
-                  <li>• Over 2,500 years of recorded history</li>
-                  <li>• Home to 8 UNESCO World Heritage Sites</li>
-                </ul>
+              {/* Additional Ad Space */}
+              <div className="bg-white rounded-lg shadow-md p-6 min-h-[300px] flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <p className="text-sm">Advertisement Space</p>
+                </div>
               </div>
             </div>
           </div>
