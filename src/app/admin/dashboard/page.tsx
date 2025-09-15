@@ -1,6 +1,7 @@
 'use client';
 
 import AdminLayout from '@/components/AdminLayout';
+import SitemapRefreshButton from '@/components/SitemapRefreshButton';
 import Link from 'next/link';
 
 // Mock data - in production, this would come from your API
@@ -238,6 +239,9 @@ export default function AdminDashboard() {
                 </div>
               </div>
             </div>
+
+            {/* Sitemap Management */}
+            <SitemapRefreshButton />
           </div>
         </div>
       </div>

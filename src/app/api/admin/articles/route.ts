@@ -5,7 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
-import { revalidateSitemap } from '@/lib/sitemap';
+import { revalidatePath } from 'next/cache';
 import sanitizeHtml from 'sanitize-html';
 
 // GET all articles (admin)
@@ -173,7 +173,14 @@ export async function POST(request: NextRequest) {
 
     // Revalidate sitemap when new article is published
     if (status === 'published') {
-      await revalidateSitemap();
+      try {
+        revalidatePath('/sitemap.xml');
+        revalidatePath('/');
+        revalidatePath('/articles');
+        console.log('✅ Sitemap revalidated for new article:', slug);
+      } catch (error) {
+        console.error('❌ Error revalidating sitemap for new article:', slug, error);
+      }
     }
 
     // Populate for response

@@ -5,7 +5,7 @@ import Admin from '@/models/Admin';
 import Category from '@/models/Category';
 import Article from '@/models/Article';
 import { authenticateAdmin } from '@/lib/auth';
-import { revalidateSitemap } from '@/lib/sitemap';
+import { revalidatePath } from 'next/cache';
 import sanitizeHtml from 'sanitize-html';
 
 // GET single article
@@ -182,7 +182,14 @@ export async function PUT(
     const isNowPublished = status === 'published';
     
     if (wasPublished || isNowPublished) {
-      await revalidateSitemap();
+      try {
+        revalidatePath('/sitemap.xml');
+        revalidatePath('/');
+        revalidatePath('/articles');
+        console.log('✅ Sitemap revalidated for article:', slug);
+      } catch (error) {
+        console.error('❌ Error revalidating sitemap for article:', slug, error);
+      }
     }
 
     // Populate for response
@@ -237,7 +244,14 @@ export async function DELETE(
 
     // Revalidate sitemap if published article was deleted
     if (article.status === 'published') {
-      await revalidateSitemap();
+      try {
+        revalidatePath('/sitemap.xml');
+        revalidatePath('/');
+        revalidatePath('/articles');
+        console.log('✅ Sitemap revalidated after deleting article:', article.slug);
+      } catch (error) {
+        console.error('❌ Error revalidating sitemap after deleting article:', article.slug, error);
+      }
     }
 
     return NextResponse.json({
