@@ -191,9 +191,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <span>{readTime} min read</span>
               </div>
             )}
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <span>{article.views || 0} views</span>
-            </div>
+            </div> */}
             {article.tags && article.tags.length > 0 && (
               <div className="flex items-center gap-2">
                 <span>{article.tags.length} tag{article.tags.length > 1 ? 's' : ''}</span>
@@ -350,7 +350,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.5",
-              "reviewCount": article.views || 1
+              "reviewCount": 1 // article.views || 1
             }
           })
         }}

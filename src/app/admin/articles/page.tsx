@@ -361,7 +361,8 @@ export default function ArticlesPage() {
                       {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Not published'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {article.views.toLocaleString()}
+                      {/* {article.views.toLocaleString()} */}
+                      N/A
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">

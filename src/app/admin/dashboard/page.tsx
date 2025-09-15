@@ -148,7 +148,7 @@ export default function AdminDashboard() {
                           {article.category}
                         </span>
                         <span className="hidden sm:inline">{article.lastModified}</span>
-                        <span>{article.views} views</span>
+                        {/* <span>{article.views} views</span> */}
                       </div>
                     </div>
                     <div className="flex items-center justify-between sm:justify-end space-x-2">
