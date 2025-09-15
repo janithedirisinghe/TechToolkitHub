@@ -8,12 +8,22 @@
  */
 export async function directSitemapRefresh(): Promise<{ success: boolean; message: string }> {
   try {
-    // Call our inte rnal admin API
+    // Get the admin token if we're in a browser environment
+    const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null
+    
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+    
+    // Add authorization header if token exists
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+    
+    // Call our internal admin API
     const response = await fetch('/api/admin/refresh-sitemap', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       credentials: 'include', // Include authentication cookies
     })
 

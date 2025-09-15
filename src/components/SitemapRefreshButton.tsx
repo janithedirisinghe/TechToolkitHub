@@ -11,12 +11,23 @@ export default function SitemapRefreshButton() {
     setIsRefreshing(true)
     setMessage('')
     setMessageType('')
-
+ 
     try {
+      // Get the admin token from localStorage
+      const token = localStorage.getItem('adminToken')
+      
+      if (!token) {
+        setMessage('❌ Not authenticated. Please log in again.')
+        setMessageType('error')
+        setIsRefreshing(false)
+        return
+      }
+
       const response = await fetch('/api/admin/refresh-sitemap', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Add authorization header
         },
         credentials: 'include', // Include cookies for authentication
       })

@@ -136,13 +136,13 @@ export default function AdminLoginPage() {
             </button>
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h3 className="text-sm font-medium text-blue-800 mb-2">Demo Credentials</h3>
             <p className="text-xs text-blue-700">
               Email: admin@techtoolkithub.com<br />
               Password: admin123
             </p>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
