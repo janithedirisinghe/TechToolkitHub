@@ -27,7 +27,7 @@ const Header = () => {
             <Link href="/" className="flex items-center space-x-2">
               <div className="relative h-10 w-60">
                 <Image
-                  src="/logo-falcon.png"
+                  src="/logo-falcon-1.png"
                   alt="TechToolkitHub"
                   fill
                   className="object-contain"
