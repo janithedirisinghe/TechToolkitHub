@@ -347,11 +347,39 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "keywords": article.tags?.join(', '),
             "wordCount": wordCount,
             "timeRequired": `PT${readTime}M`,
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.5",
-              "reviewCount": 1 // article.views || 1
-            }
+            ...(article.category.slug === 'software-reviews' ? {
+              "review": {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "4.5",
+                  "bestRating": "5"
+                },
+                "author": {
+                  "@type": "Person",
+                  "name": article.author?.name || "TechToolkitHub Team"
+                },
+                "itemReviewed": {
+                  "@type": "SoftwareApplication",
+                  "name": article.title.replace(/^(Review|Test|Analysis):/i, '').trim(),
+                  "applicationCategory": "BusinessApplication",
+                  "operatingSystem": "Windows, macOS, Linux",
+                  "description": article.excerpt || article.metaDescription
+                }
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.5",
+                "reviewCount": 1,
+                "itemReviewed": {
+                  "@type": "SoftwareApplication",
+                  "name": article.title.replace(/^(Review|Test|Analysis):/i, '').trim(),
+                  "applicationCategory": "BusinessApplication",
+                  "operatingSystem": "Windows, macOS, Linux",
+                  "description": article.excerpt || article.metaDescription
+                }
+              }
+            } : {})
           })
         }}
       />
