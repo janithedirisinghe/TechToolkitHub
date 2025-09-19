@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const articleDoc = await getArticleFullContent(slug) as (IArticle & { category?: ICategory; author?: { name?: string } });
     if (!articleDoc) {
       return {
-        title: 'Article Not Found - Sri Lanka How',
+        title: 'Article Not Found',
         description: 'The requested article could not be found.'
       };
     }
@@ -34,21 +34,21 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     const canonical = `${base}/articles/${articleDoc.slug}`;
     const image = articleDoc.featuredImage || '/default-article-image.jpg';
     return {
-      title: `${articleDoc.title} - Sri Lanka How`,
-      description: articleDoc.excerpt || articleDoc.metaDescription || `Read ${articleDoc.title} on Sri Lanka How - Your ultimate guide to Sri Lanka.`,
+      title: `${articleDoc.title} -  `,
+      description: articleDoc.excerpt || articleDoc.metaDescription || `Read ${articleDoc.title} on   - Your ultimate guide to Sri Lanka.`,
       keywords: articleDoc.tags?.join(', ') || articleDoc.category?.name,
-      authors: [{ name: articleDoc.author?.name || 'Sri Lanka How' }],
+      authors: [{ name: articleDoc.author?.name || ' ' }],
       openGraph: {
         title: articleDoc.title,
         description: articleDoc.excerpt || articleDoc.metaDescription,
         url: canonical,
-        siteName: 'Sri Lanka How',
+        siteName: ' ',
         images: [{ url: image, width: 1200, height: 630, alt: articleDoc.title }],
         locale: 'en_US',
         type: 'article',
         publishedTime: articleDoc.publishedAt as unknown as string,
         modifiedTime: (articleDoc as unknown as { updatedAt?: string }).updatedAt,
-        authors: [articleDoc.author?.name || 'Sri Lanka How'],
+        authors: [articleDoc.author?.name || ' '],
         tags: articleDoc.tags,
       },
       twitter: {
@@ -73,8 +73,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   } catch (err) {
     console.error('[DEBUG] generateMetadata error:', err);
     return {
-      title: 'Sri Lanka How - Your Ultimate Guide to Sri Lanka',
-      description: 'Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.'
+      title: 'Your Ultimate Guide Tech Tools',
+      description: 'Discover the best software tools with our comprehensive reviews, tech guides, and expert insights. Your ultimate resource for software discovery and tech solutions.'
     };
   }
 }
@@ -329,11 +329,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "dateModified": article.updatedAt || article.publishedAt,
             "author": {
               "@type": "Person",
-              "name": article.author?.name || "Sri Lanka How"
+              "name": article.author?.name || " "
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Sri Lanka How",
+              "name": " ",
               "logo": {
                 "@type": "ImageObject",
                 "url": `${getBaseUrl()}/Logo.png`
@@ -348,6 +348,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "wordCount": wordCount,
             "timeRequired": `PT${readTime}M`,
             ...(article.category.slug === 'software-reviews' ? {
+              "about": {
+                "@type": "SoftwareApplication",
+                "name": article.title.replace(/^(Review|Test|Analysis):/i, '').trim(),
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Windows, macOS, Linux",
+                "description": article.excerpt || article.metaDescription
+              },
               "review": {
                 "@type": "Review",
                 "reviewRating": {
@@ -358,26 +365,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 "author": {
                   "@type": "Person",
                   "name": article.author?.name || "TechToolkitHub Team"
-                },
-                "itemReviewed": {
-                  "@type": "SoftwareApplication",
-                  "name": article.title.replace(/^(Review|Test|Analysis):/i, '').trim(),
-                  "applicationCategory": "BusinessApplication",
-                  "operatingSystem": "Windows, macOS, Linux",
-                  "description": article.excerpt || article.metaDescription
                 }
               },
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.5",
-                "reviewCount": 1,
-                "itemReviewed": {
-                  "@type": "SoftwareApplication",
-                  "name": article.title.replace(/^(Review|Test|Analysis):/i, '').trim(),
-                  "applicationCategory": "BusinessApplication",
-                  "operatingSystem": "Windows, macOS, Linux",
-                  "description": article.excerpt || article.metaDescription
-                }
+                "reviewCount": 1
               }
             } : {})
           })

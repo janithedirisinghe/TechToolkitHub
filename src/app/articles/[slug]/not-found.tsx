@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Article Not Found - Sri Lanka How',
+  title: 'Article Not Found -  ',
   description: 'The article you are looking for could not be found. Browse our collection of Sri Lanka travel guides and articles.',
 };
 

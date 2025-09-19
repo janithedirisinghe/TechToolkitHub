@@ -28,7 +28,7 @@ const Header = () => {
               <div className="relative h-10 w-40">
                 <Image
                   src="/logo-falcon.png"
-                  alt="Sri Lanka How"
+                  alt=" "
                   fill
                   className="object-contain"
                   priority

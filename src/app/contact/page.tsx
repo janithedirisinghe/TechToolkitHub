@@ -251,7 +251,7 @@ export default function ContactPage() {
             <div className="bg-white rounded-lg shadow-md p-8">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Partnership Opportunities</h3>
               <p className="text-gray-600 mb-4">
-                Interested in collaborating with Sri Lanka How? We work with:
+                Interested in collaborating with  ? We work with:
               </p>
               <ul className="space-y-2 text-gray-600">
                 <li>• Tourism businesses and hotels</li>

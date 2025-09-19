@@ -8,10 +8,10 @@ import type { Article } from '@/types/article';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Culture & Lifestyle - Sri Lanka How",
+  title: "Culture & Lifestyle -  ",
   description: "Explore Sri Lankan culture, traditions, festivals, food, and lifestyle. Learn about local customs, religious practices, and cultural experiences.",
   openGraph: {
-    title: "Culture & Lifestyle - Sri Lanka How",
+    title: "Culture & Lifestyle -  ",
     description: "Explore Sri Lankan culture, traditions, festivals, food, and lifestyle. Learn about local customs and cultural experiences.",
   },
 };

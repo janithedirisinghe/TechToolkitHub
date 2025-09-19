@@ -2,10 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
+  title: "  - Your Ultimate Guide to Sri Lanka",
   description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice. Your ultimate how-to resource for everything Sri Lanka.",
   openGraph: {
-    title: "Sri Lanka How - Your Ultimate Guide to Sri Lanka",
+    title: "  - Your Ultimate Guide to Sri Lanka",
     description: "Discover Sri Lanka with our comprehensive guides, travel tips, cultural insights, and lifestyle advice.",
     images: ["/hero-sri-lanka.jpg"],
   },

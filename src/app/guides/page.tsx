@@ -7,10 +7,10 @@ import { searchArticles } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "How-to Guides - Sri Lanka How",
+  title: "How-to Guides -  ",
   description: "Step-by-step how-to guides for everything you need to know about Sri Lanka. From practical tips to detailed instructions for travelers.",
   openGraph: {
-    title: "How-to Guides - Sri Lanka How",
+    title: "How-to Guides -  ",
     description: "Step-by-step how-to guides for everything you need to know about Sri Lanka. Practical tips and detailed instructions.",
   },
 };

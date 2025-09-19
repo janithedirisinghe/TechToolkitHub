@@ -7,10 +7,10 @@ import { getBaseUrl } from '@/lib/url';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Lifestyle & Tips - Sri Lanka How",
+  title: "Lifestyle & Tips -  ",
   description: "Lifestyle tips, budget travel advice, student guides, and life hacks for living and traveling in Sri Lanka. Practical insights for every situation.",
   openGraph: {
-    title: "Lifestyle & Tips - Sri Lanka How",
+    title: "Lifestyle & Tips -  ",
     description: "Lifestyle tips, budget travel advice, and practical life hacks for Sri Lanka. Get insider insights for every situation.",
   },
 };

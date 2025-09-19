@@ -8,10 +8,10 @@ import { getActiveCategories, searchArticles } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "All Articles - Sri Lanka How",
+  title: "All Articles -  ",
   description: "Browse all our articles about Sri Lanka including travel guides, cultural insights, lifestyle tips, and comprehensive how-to guides.",
   openGraph: {
-    title: "All Articles - Sri Lanka How",
+    title: "All Articles -  ",
     description: "Browse all our articles about Sri Lanka including travel guides, cultural insights, lifestyle tips, and comprehensive how-to guides.",
   },
 };
