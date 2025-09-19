@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Open_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 // Conditional hiding of site chrome for admin handled by a client component
 import ClientChrome from '@/components/ClientChrome';
@@ -84,6 +85,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${inter.variable} ${openSans.variable} font-sans antialiased`}>
+        {/* Google Analytics */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-PET4F3LJYN" />
+        <Script id="google-analytics">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PET4F3LJYN');
+          `}
+        </Script>
+        
         <ClientChrome>
           {children}
         </ClientChrome>
