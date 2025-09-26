@@ -4,11 +4,14 @@ import { notFound } from 'next/navigation';
 import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import ArticleEnhancements from '@/components/ArticleEnhancements';
+import EnhancedArticleUX from '@/components/EnhancedArticleUX';
 import { getArticleFullContent } from '@/lib/data';
 import { getBaseUrl } from '@/lib/url';
 import type { IArticle } from '@/models/Article';
 import type { ICategory } from '@/models/Category';
 import type { Article } from '@/types/article';
+// Import custom article styles
+import '@/styles/article-content.css';
 
 // Force dynamic rendering for Vercel
 export const dynamic = 'force-dynamic';
@@ -221,47 +224,22 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {/* Article Content - Medium-inspired styling */}
         {article.content ? (
-          <div className="overflow-x-auto">
-            <div
-              id="article-content"
-              className="prose prose-xl max-w-none text-gray-900 antialiased
-                prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight prose-headings:scroll-mt-24
-                prose-h1:text-4xl prose-h1:leading-tight prose-h1:mt-12 prose-h1:mb-8 prose-h1:font-extrabold prose-h1:text-gray-900 prose-h1:tracking-tight
-                prose-h2:text-3xl prose-h2:leading-snug prose-h2:mt-12 prose-h2:mb-6 prose-h2:font-bold prose-h2:text-gray-900
-                prose-h3:text-2xl prose-h3:leading-snug prose-h3:mt-10 prose-h3:mb-5 prose-h3:font-semibold prose-h3:text-gray-900
-                prose-h4:text-xl prose-h4:leading-snug prose-h4:mt-8 prose-h4:mb-4 prose-h4:font-semibold prose-h4:text-gray-800
-                prose-h5:text-lg prose-h5:leading-snug prose-h5:mt-6 prose-h5:mb-3 prose-h5:font-medium prose-h5:text-gray-800
-                prose-h6:text-base prose-h6:leading-snug prose-h6:mt-6 prose-h6:mb-3 prose-h6:font-medium prose-h6:text-gray-700
-                prose-p:text-xl prose-p:leading-relaxed prose-p:mb-8 prose-p:text-gray-800 prose-p:font-normal
-                prose-ul:my-8 prose-ul:space-y-3 prose-ul:text-xl prose-ul:leading-relaxed prose-ul:text-gray-800
-                prose-ol:my-8 prose-ol:space-y-3 prose-ol:text-xl prose-ol:leading-relaxed prose-ol:text-gray-800 prose-ol:list-decimal
-                prose-li:text-xl prose-li:leading-relaxed prose-li:text-gray-800 prose-li:my-2 prose-li:pl-2
-                prose-strong:font-semibold prose-strong:text-gray-900
-                prose-em:italic prose-em:text-gray-800 prose-em:font-medium
-                prose-a:text-gray-900 prose-a:underline prose-a:decoration-2 prose-a:underline-offset-2 prose-a:decoration-gray-300 
-                hover:prose-a:decoration-gray-500 prose-a:transition-all prose-a:duration-200
-                prose-img:w-full prose-img:h-auto prose-img:my-12 prose-img:rounded-none prose-img:shadow-none
-                prose-pre:bg-gray-50 prose-pre:text-gray-800 prose-pre:rounded-lg prose-pre:p-6 prose-pre:my-10 prose-pre:overflow-x-auto prose-pre:border prose-pre:border-gray-200
-                prose-code:bg-gray-100 prose-code:text-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-lg prose-code:font-mono
-                prose-code:before:content-[''] prose-code:after:content-['']
-                prose-pre:prose-code:bg-transparent prose-pre:prose-code:text-gray-800 prose-pre:prose-code:px-0 prose-pre:prose-code:py-0
-                prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-8 prose-blockquote:pr-0 prose-blockquote:py-4 
-                prose-blockquote:my-10 prose-blockquote:bg-transparent prose-blockquote:text-xl prose-blockquote:leading-relaxed 
-                prose-blockquote:text-gray-700 prose-blockquote:italic prose-blockquote:font-medium prose-blockquote:not-italic
-                prose-table:w-full prose-table:my-10 prose-table:border-collapse prose-table:bg-white prose-table:text-base
-                prose-th:px-6 prose-th:py-4 prose-th:text-left prose-th:font-semibold prose-th:text-gray-900 prose-th:border-b-2 prose-th:border-gray-200 prose-th:bg-gray-50
-                prose-td:px-6 prose-td:py-4 prose-td:text-gray-700 prose-td:border-b prose-td:border-gray-100 prose-td:text-base prose-td:leading-relaxed
-                prose-tbody:divide-y prose-tbody:divide-gray-100
-                prose-hr:border-gray-200 prose-hr:my-12 prose-hr:border-t-1
-                prose-figure:my-12 prose-figcaption:text-center prose-figcaption:text-base prose-figcaption:text-gray-600 prose-figcaption:mt-4 prose-figcaption:italic
-                first:prose-p:text-2xl first:prose-p:leading-normal first:prose-p:text-gray-700 first:prose-p:font-normal first:prose-p:mb-10
-                selection:bg-yellow-200"
-              style={{
-                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif'
-              }}
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
-          </div>
+          <>
+            {/* Reading Progress Dots */}
+            <div className="reading-progress-dot">
+              <div className="dot active" data-section="intro"></div>
+              <div className="dot" data-section="content"></div>
+              <div className="dot" data-section="conclusion"></div>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <div
+                id="article-content"
+                className="article-content"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
+            </div>
+          </>
         ) : (
           <div className="text-gray-600 italic text-center py-12">
             <div className="text-6xl mb-4">📝</div>
@@ -335,6 +313,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   {/* Client-only enhancements to avoid hydration mismatches */}
   <ArticleEnhancements articleUrl={articleUrl} title={article.title} excerpt={article.excerpt || ''} />
+  <EnhancedArticleUX content={article.content || ''} />
 
       {/* Structured Data for SEO */}
       <script
