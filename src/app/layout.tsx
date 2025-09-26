@@ -55,12 +55,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/Logo.png", type: "image/png", sizes: "32x32" },
       { url: "/Logo.png", type: "image/png", sizes: "16x16" },
-      { url: "/Logo.png", type: "image/png", sizes: "any" },
+      { url: "/Logo.png", type: "image/png", sizes: "192x192" },
+      { url: "/Logo.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: "/Logo.png",
-    shortcut: "/Logo.png",
+    apple: [
+      { url: "/Logo.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
   twitter: {
     card: "summary_large_image",
@@ -93,6 +97,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-PET4F3LJYN');
+          `}
+        </Script>
+
+        {/* Organization Structured Data for Logo */}
+        <Script id="organization-schema" type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "TechToolkitHub",
+              "url": "https://techtoolkithub.com",
+              "logo": "https://techtoolkithub.com/Logo.png",
+              "sameAs": [
+                "https://techtoolkithub.com"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "url": "https://techtoolkithub.com/contact"
+              }
+            }
           `}
         </Script>
         
