@@ -226,18 +226,32 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               id="article-content"
               className="prose prose-lg max-w-none text-gray-800 leading-relaxed 
                 prose-headings:font-semibold prose-headings:text-gray-900 prose-headings:mt-8 prose-headings:mb-4
-                prose-h2:text-2xl prose-h2:border-b prose-h2:border-gray-200 prose-h2:pb-2
-                prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-                prose-p:mb-4 prose-p:leading-relaxed
-                prose-ul:mb-4 prose-ul:pl-6 prose-li:mb-2 prose-li:leading-relaxed
-                prose-ol:mb-4 prose-ol:pl-6
+                prose-h1:text-3xl prose-h1:font-bold prose-h1:text-gray-900 prose-h1:mt-8 prose-h1:mb-6 prose-h1:border-b-2 prose-h1:border-blue-500 prose-h1:pb-3
+                prose-h2:text-2xl prose-h2:font-semibold prose-h2:text-gray-900 prose-h2:mt-8 prose-h2:mb-4 prose-h2:border-b prose-h2:border-gray-200 prose-h2:pb-2
+                prose-h3:text-xl prose-h3:font-semibold prose-h3:text-gray-800 prose-h3:mt-6 prose-h3:mb-3 prose-h3:border-l-4 prose-h3:border-blue-400 prose-h3:pl-4
+                prose-h4:text-lg prose-h4:font-medium prose-h4:text-gray-800 prose-h4:mt-5 prose-h4:mb-3
+                prose-h5:text-base prose-h5:font-medium prose-h5:text-gray-700 prose-h5:mt-4 prose-h5:mb-2
+                prose-h6:text-sm prose-h6:font-medium prose-h6:text-gray-600 prose-h6:mt-4 prose-h6:mb-2
+                prose-p:mb-4 prose-p:leading-relaxed prose-p:text-gray-700
+                prose-ul:mb-6 prose-ul:pl-6 prose-ul:space-y-2 prose-li:mb-2 prose-li:leading-relaxed prose-li:text-gray-700
+                prose-ol:mb-6 prose-ol:pl-6 prose-ol:space-y-2 prose-ol:list-decimal
                 prose-strong:font-semibold prose-strong:text-gray-900
-                prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                prose-img:rounded-lg prose-img:shadow-md
+                prose-em:italic prose-em:text-gray-600
+                prose-a:text-blue-600 prose-a:no-underline prose-a:font-medium hover:prose-a:underline hover:prose-a:text-blue-700 prose-a:transition-colors
+                prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8 prose-img:border prose-img:border-gray-200
                 prose-headings:scroll-mt-24 
-                prose-pre:bg-gray-900 prose-pre:text-gray-100 
-                prose-code:before:content-[''] prose-code:after:content-['']
-                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic"
+                prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-lg prose-pre:p-4 prose-pre:my-6 prose-pre:overflow-x-auto
+                prose-code:bg-gray-100 prose-code:text-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-[''] prose-code:after:content-['']
+                prose-pre:prose-code:bg-transparent prose-pre:prose-code:text-gray-100 prose-pre:prose-code:px-0 prose-pre:prose-code:py-0
+                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-2 prose-blockquote:bg-emerald-50 prose-blockquote:italic prose-blockquote:text-gray-700 prose-blockquote:my-6 prose-blockquote:rounded-r-lg
+                prose-table:w-full prose-table:my-8 prose-table:border-collapse prose-table:bg-white prose-table:rounded-lg prose-table:overflow-hidden prose-table:shadow-md prose-table:border prose-table:border-gray-200
+                prose-thead:bg-gray-50 prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:font-semibold prose-th:text-gray-900 prose-th:border-b prose-th:border-gray-200
+                prose-tbody:divide-y prose-tbody:divide-gray-200 prose-td:px-4 prose-td:py-3 prose-td:text-gray-700 prose-td:border-r prose-td:border-gray-100 prose-td:last:border-r-0
+                prose-tr:hover:bg-gray-50 prose-tr:transition-colors
+                prose-hr:border-gray-300 prose-hr:my-8
+                prose-dl:my-6 prose-dt:font-semibold prose-dt:text-gray-900 prose-dt:mb-1 prose-dd:text-gray-700 prose-dd:mb-4 prose-dd:pl-4
+                prose-figure:my-8 prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-gray-600 prose-figcaption:mt-2
+                selection:bg-blue-100 selection:text-blue-900"
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
           </div>
